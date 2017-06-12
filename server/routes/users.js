@@ -8,4 +8,6 @@ module.exports = (app) => {
     .get(users.findOne)
     .put(users.update)
     .delete(users.destroy);
+  app.route('/login')
+    .post(users.login);
 };

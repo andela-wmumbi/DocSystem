@@ -1,11 +1,15 @@
 const users = require('../models').Users;
-const documents = require('./../models/documents').Documents;
+const bcrypt = require('bcryptjs');
+
+const secretKey = process.env.SECRET;
+
+const jwt = require('jsonwebtoken');
 
 class userController {
   create(req, res) {
     return users
       .create({
-        userName: req.body.username,
+        userName: req.body.userName,
         email: req.body.email,
         password: req.body.password,
       })
@@ -60,10 +64,29 @@ class userController {
         }
         return users
           .destroy()
-          .then(() => res.status(204).send({ message: 'Todo deleted successfully.' }))
+          .then(() => res.status(204).send({ message: 'User deleted successfully.' }))
           .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));
+  }
+  login(req, res) {
+    return users
+      .findOne({ where: { email: req.body.email } })
+      .then((user) => {
+        if (!user) {
+          return res.status(401).json({ message: 'User not found' });
+        }
+        const password = bcrypt.compareSync(res.body.password, user.password);
+        if (!password) {
+          return 'Wrong password';
+        }
+        const token = jwt.sign({ email: user.email }, secretKey, {
+          expiresIn: 60 * 60
+        });
+        user.password = null;
+        res.status(200).json(Object.assign({},
+          { id: user.id, userName: user.userName, email: user.email }, { token }));
+      });
   }
 }
 module.exports = new userController();

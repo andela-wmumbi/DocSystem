@@ -40,11 +40,13 @@
       "error",
       {
         "require": {
-          "FunctionDeclaration": true,
-          "MethodDefinition": true,
-          "ClassDeclaration": true
+          "FunctionDeclaration": false,
+          "MethodDefinition": false,
+          "ClassDeclaration": false
         }
       }
-    ]
+    ],
+    "no-underscore-dangle": 0,
+    "class-methods-use-this": 0
   }
 }
