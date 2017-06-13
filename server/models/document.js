@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-  const Documents = sequelize.define('Documents', {
+  const document = sequelize.define('document', {
     title: {
       type: DataTypes.STRING,
       required: true
     },
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       required: true
     },
     access: {
@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     {
       classMethods: {
         associate: (models) => {
-          Documents.belongsTo(models.Users, {
+          document.belongsTo(models.user, {
             foreignKey: 'userId',
             onDelete: 'CASCADE',
           });
         },
       },
     });
-  return Documents;
+  return document;
 };

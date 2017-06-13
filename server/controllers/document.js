@@ -1,31 +1,31 @@
-const documents = require('../models').Documents;
-const users = require('../models').Users;
+const document = require('../models').document;
+const user = require('../models').user;
 
-class DocController {
+class DocumentController {
   create(req, res) {
-    return documents
+    return document
       .create({
         title: req.body.title,
         content: req.body.content,
         access: req.body.access,
-        userId: req.body.userId
+        userId: req.header.token
       })
       .then(document => res.status(201).send(document))
       .catch(error => res.status(400).send(error));
   }
   list(req, res) {
-    return users
+    return user
       .findAll({
         include: [{
           model: 'docId',
-          as: 'documents'
+          as: 'document'
         }],
       })
       .then(user => res.status(200).send(user))
       .catch(error => res.status(400).send(error));
   }
   findOne(req, res) {
-    return documents
+    return document
       .findById(req.params.docId)
       .then((document) => {
         if (!document) {
@@ -38,7 +38,7 @@ class DocController {
       .catch(error => res.status(400).send(error));
   }
   update(req, res) {
-    return documents
+    return document
       .findById(req.params.docId)
       .then((document) => {
         if (!document) {
@@ -46,9 +46,9 @@ class DocController {
             message: 'Document not found'
           });
         }
-        return documents
+        return document
           .update({
-            title: res.body.title || documents.title
+            title: req.body.title || document.title
           })
           .then(() => res.status(200).send(document))
           .catch(error => res.status(400).send(error));
@@ -56,7 +56,7 @@ class DocController {
       .catch(error => res.status(400).send(error));
   }
   destroy(req, res) {
-    return documents
+    return document
       .findById(req.params.docId)
       .then((document) => {
         if (!document) {
@@ -64,7 +64,7 @@ class DocController {
             message: 'Document not found'
           });
         }
-        return documents
+        return document
           .destroy()
           .then(() => res.status(204).send({ message: 'Document deleted successfully.' }))
           .catch(error => res.status(400).send(error));
@@ -72,4 +72,4 @@ class DocController {
       .catch(error => res.status(400).send(error));
   }
 }
-module.exports = new DocController();
+module.exports = new DocumentController();

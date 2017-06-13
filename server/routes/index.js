@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = (app) => {
   // eslint-disable-next-line
-  require('./users')(app);
+  require('./user')(app);
   // eslint-disable-next-line
-  require('./documents')(app);
+  require('./document')(app);
 };

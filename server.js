@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
 
 const routes = require('./server/routes');
 
 const app = express();
+dotenv.load();
 
 /**
  * configure app to use bodyParser()
