@@ -1,12 +1,5 @@
-import React, { component } from 'react';
-import ReactDOM from 'reactdom';
-import './Components/Login';
+import React, { Router, browserHistory } from 'react';
+import ReactDOM from 'react-dom';
+import routes from './../server/routes/index';
 
-class App extends React {
-  render() {
-    return (
-      <Login />
-    )
-  }
-}
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<Router history={browserHistory} routes={routes} />, document.getElementById('app'));

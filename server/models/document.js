@@ -2,11 +2,23 @@ module.exports = (sequelize, DataTypes) => {
   const document = sequelize.define('document', {
     title: {
       type: DataTypes.STRING,
-      required: true
+      required: true,
+      validate: {
+        len: {
+          args: [0, 100],
+          msg: 'The title is too long'
+        }
+      }
     },
     content: {
       type: DataTypes.TEXT,
-      required: true
+      required: true,
+      validate: {
+        len: {
+          args: [0, 300],
+          msg: 'The content is too long'
+        }
+      }
     },
     access: {
       type: DataTypes.STRING,

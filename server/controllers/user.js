@@ -89,5 +89,11 @@ class userController {
           { id: user.id, username: user.username, email: user.email }, { token }));
       });
   }
+  logout(req, res) {
+    req.decoded = null;
+    return res.status(200).send({
+      message: 'successfully logged out',
+    });
+  }
 }
 module.exports = new userController();

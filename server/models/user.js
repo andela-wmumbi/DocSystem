@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
+const hash = require('object-hash');
+
 require('sequelize-isunique-validator')(Sequelize);
+
 module.exports = (sequelize, DataTypes) => {
   const user = sequelize.define('user', {
     username: {
@@ -36,9 +39,9 @@ module.exports = (sequelize, DataTypes) => {
           });
         }
       },
-      beforeSave: function (instance, options) {
+      beforeSave: (instance) => {
         if (instance.isModified('password')) {
-          return hash(instance.password).then(function (hashedPassword) {
+          return hash(instance.password).then((hashedPassword) => {
             instance.password = hashedPassword;
           });
         }

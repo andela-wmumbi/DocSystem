@@ -1,10 +1,23 @@
 {
   "root": true,
   "extends": "airbnb",
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "env": {
     "node": true,
     "es6": true,
-    "mocha": true
+    "mocha": true,
+    "browser": true
   },
   "rules": {
     "one-var": 0,
@@ -46,7 +59,12 @@
         }
       }
     ],
-    "no-underscore-dangle": 0,
-    "class-methods-use-this": 0
+    "arrow-parens": 1,
+    "no-plusplus": 0,
+    "react/forbid-prop-types": 0,
+    "class-methods-use-this": 0,
+    "array-callback-return": 0,
+    "prefer-stateless-function": 0,
+    "no-underscore-dangle": 0
   }
 }
