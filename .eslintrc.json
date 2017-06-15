@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "root": true,
   "extends": "airbnb",
   "plugins": [
@@ -65,6 +66,8 @@
     "class-methods-use-this": 0,
     "array-callback-return": 0,
     "prefer-stateless-function": 0,
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "react/jsx-filename-extension": 0,
+    "import/no-dynamic-require": 0
   }
 }

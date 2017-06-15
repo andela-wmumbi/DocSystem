@@ -13,8 +13,8 @@ class userController {
         email: req.body.email,
         password: req.body.password,
       })
-      .then(user => {
-        res.status(201).send(user)
+      .then((user) => {
+        res.status(201).send(user);
       })
       .catch(error => res.status(400).send(error));
   }
@@ -78,7 +78,7 @@ class userController {
           return res.status(401).json({ message: 'User not found' });
         }
         const password = bcrypt.compareSync(req.body.password, user.password);
-        if (req.body.password != user.password) {
+        if (req.body.password !== user.password) {
           return res.status(401).json({ message: 'Wrong password' });
         }
         const token = jwt.sign({ id: user.id }, secretKey, {

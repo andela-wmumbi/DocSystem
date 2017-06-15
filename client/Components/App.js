@@ -1,25 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from './Home';
+import About from './About';
+import Header from './Header';
+import Login from './Login';
+import Documents from './Documents';
 
-const App = (props) => {
-  return (
-    <div className="container">
-      <nav className="navbar navbar-default">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <a className="navbar-brand" href="#">Scotch Books</a>
+class App extends Component {
+  render() {
+    return (
+      <div className="container-fluid">
+        <BrowserRouter>
+          <div>
+            <Header />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/documents" component={Documents} />
+            </Switch>
           </div>
-          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul className="nav navbar-nav">
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/about">About</Link></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      {/* Each smaller components */}
-      {props.children}
-    </div>
-  );
-};
+        </BrowserRouter>
+      </div>
+    );
+  }
+}
 export default App;
