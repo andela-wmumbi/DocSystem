@@ -4,14 +4,29 @@
   "description": "Document Management System",
   "main": "server.js",
   "scripts": {
-    "start": "npm-run-all --parallel open:src ",
+    "start": "npm-run-all --parallel open:src",
     "open:src": "babel-node ./server",
     "lint": "node_modules/.bin/esw webpack.config.* client server server.*",
     "lint:watch": "npm run lint -- --watch",
     "migrations": "sequelize db:migrate:undo:all && sequelize db:migrate",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "export NODE_ENV=test && sequelize db:migrate:undo:all && sequelize db:migrate && babel-node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -R spec ./server/tests/*.spec.js",
     "e2e": "protractor ./tests/config.js",
     "e2e-driver": "webdriver-manager start"
+  },
+  "jest": {
+    "rootDir": "./",
+    "moduleNameMapper": {
+      "^.+\\.(css|scss)$": "identity-obj-proxy"
+    },
+    "transform": {
+      ".*": "<rootDir>/node_modules/babel-jest"
+    },
+    "collectCoverage": true,
+    "coverageDirectory": "<rootDir>/coverage",
+    "verbose": true,
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ]
   },
   "repository": {
     "type": "git",
@@ -33,14 +48,16 @@
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
+    "chai": "^4.0.2",
+    "chai-http": "^3.0.0",
     "classnames": "^2.2.5",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
-    "istanbul": "^0.4.5",
     "jsonwebtoken": "^7.4.1",
     "material-ui": "^0.18.3",
     "materialize-css": "^0.98.2",
     "morgan": "^1.8.2",
+    "npm-run-all": "^4.0.2",
     "object-hash": "^1.1.8",
     "pg": "^6.2.3",
     "pg-hstore": "^2.3.2",
@@ -52,28 +69,31 @@
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
     "sequelize-isunique-validator": "^1.1.1",
     "superagent": "^3.5.2",
-    "webpack": "1.12.0",
+    "webpack": "^1.15.0",
     "webpack-dev-middleware": "^1.10.2",
-    "webpack-hot-middleware": "^2.18.0",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-hot-middleware": "^2.18.0"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
     "babel-preset-react-hmre": "^1.1.1",
     "coveralls": "^2.13.1",
     "css-loader": "^0.28.4",
-    "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-react": "^7.1.0",
     "eventsource-polyfill": "^0.9.6",
     "file-loader": "^0.11.2",
     "image-webpack-loader": "^3.3.1",
+    "istanbul": "^1.1.0-alpha.1",
     "loader-utils": "^1.1.0",
+    "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
     "npm-run-all": "^4.0.2",
     "react-hot-loader": "^1.3.1",

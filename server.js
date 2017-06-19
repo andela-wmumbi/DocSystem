@@ -41,3 +41,4 @@ routes(app);
 
 // start the server
 app.listen(port);
+module.exports = app;

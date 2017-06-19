@@ -8,7 +8,7 @@ class DocumentController {
         title: req.body.title,
         content: req.body.content,
         access: req.body.access,
-        userId: req.header.token
+        userId: req.body.id,
       })
       .then(document => res.status(201).send(document))
       .catch(error => res.status(400).send(error));

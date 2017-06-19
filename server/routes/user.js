@@ -6,12 +6,12 @@ module.exports = (app) => {
   const auth = authorization.authenticate;
   app.route('/users')
     .post(user.create)
-    .get(auth, user.list);
+    .get(user.list);
   app.route('/users/:userId')
-    .get(auth, user.findOne)
-    .put(auth, user.update)
-    .delete(auth, user.destroy);
-  app.route('/login')
+    .get(user.findOne)
+    .put(user.update)
+    .delete(user.destroy);
+  app.route('/signin')
     .post(user.login);
   app.route('/logout')
     .post(user.logout);

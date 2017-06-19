@@ -14,7 +14,7 @@ class userController {
         password: req.body.password,
       })
       .then((user) => {
-        res.status(201).send(user);
+        return res.status(201).send({ message: 'User Created Successfully' });
       })
       .catch(error => res.status(400).send(error));
   }
@@ -51,8 +51,7 @@ class userController {
           })
           .then(() => res.status(200).send(user))
           .catch(error => res.status(400).send(error));
-      })
-      .catch(error => res.status(400).send(error));
+      });
   }
   destroy(req, res) {
     return user
@@ -68,7 +67,6 @@ class userController {
           .then(() => res.status(204).send({ message: 'User deleted successfully.' }))
           .catch(error => res.status(400).send(error));
       })
-      .catch(error => res.status(400).send(error));
   }
   login(req, res) {
     return user
@@ -92,7 +90,7 @@ class userController {
   logout(req, res) {
     req.decoded = null;
     return res.status(200).send({
-      message: 'successfully logged out',
+      message: 'User successfully logged out',
     });
   }
 }

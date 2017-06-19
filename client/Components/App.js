@@ -5,6 +5,7 @@ import About from './About';
 import Header from './Header';
 import Login from './Login';
 import Documents from './Documents';
+import RegisterPage from './RegisterPage';
 
 class App extends Component {
   render() {
@@ -18,6 +19,7 @@ class App extends Component {
               <Route exact path="/about" component={About} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/documents" component={Documents} />
+              <Route exact path="/register" component={RegisterPage} />
             </Switch>
           </div>
         </BrowserRouter>
