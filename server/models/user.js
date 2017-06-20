@@ -33,13 +33,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       classMethods: {
         associate(models) {
-          user.hasMany(models.document, {
-            foreignKey: 'userId',
-            as: 'document',
-          });
           user.belongsTo(models.role, {
             foreignKey: 'roleId',
             onDelete: 'CASCADE',
+          });
+          user.hasMany(models.document, {
+            foreignKey: 'userId',
+            as: 'document',
           });
         }
       },

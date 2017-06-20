@@ -12,6 +12,7 @@ class userController {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
+        roleId: req.body.id,
       })
       .then((user) => {
         return res.status(201).send({ message: 'User Created Successfully' });

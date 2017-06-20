@@ -1,10 +1,12 @@
-class Document {
+class DocumentApi {
   static getAllDocuments() {
-    return fetch('/Users/winnie/Documents/DocSystem/client/example.json').then(response => {
-      console.log(response)
-      return response.json();
-    }).catch(error => {
-      return error;
-    });
+    return fetch('http://localhost:3000/api/documents')
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      });
   }
-  export default Document;
+}
+export default DocumentApi;

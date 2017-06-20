@@ -1,11 +1,11 @@
 import React from 'react';
-import Search from './Search';
 
 const Header = () => (
   <div className="navbar-fixed">
     <ul id="dropdown1" className="dropdown-content">
       <li><a href="/documents">Documents</a></li>
       <li><a href="/about">About</a></li>
+      <li><a href="/createdoc">Create</a></li>
     </ul>
     <nav>
       <div className="nav-wrapper">
@@ -19,6 +19,5 @@ const Header = () => (
       </div>
     </nav>
   </div>
-
 );
 export default Header;

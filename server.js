@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import config from './webapck.config';
 
 const routes = require('./server/routes');
+const morgan = require('morgan');
 
 const app = express();
 dotenv.load();
@@ -17,9 +18,10 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath
 }));
 
+app.use(morgan('dev'));
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/index.html'));
 });
 
@@ -40,5 +42,7 @@ app.use('/api', router);
 routes(app);
 
 // start the server
-app.listen(port);
+app.listen(port, () => {
+  console.log('Server running at: ', port);
+});
 module.exports = app;

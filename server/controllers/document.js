@@ -14,14 +14,14 @@ class DocumentController {
       .catch(error => res.status(400).send(error));
   }
   list(req, res) {
-    return user
+    return document
       .findAll({
         include: [{
           model: 'docId',
           as: 'document'
         }],
       })
-      .then(user => res.status(200).send(user))
+      .then(document => res.status(200).send(document))
       .catch(error => res.status(400).send(error));
   }
   findOne(req, res) {
