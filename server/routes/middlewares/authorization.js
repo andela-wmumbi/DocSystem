@@ -4,23 +4,16 @@ const jwt = require('jsonwebtoken');
 const secretKey = process.env.SECRET;
 
 exports.authenticate = (req, res, next) => {
-    // check header or url parameters or post parameters for token
-  const token = req.body.token || req.query.token || req.headers['x-access-token'];
-
-    // decode token
+  const token = req.headers['x-access-token'];
   if (token) {
-        // verifies secret and checks exp
     jwt.verify(token, secretKey, (err, decoded) => {
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.' });
       }
-            // if everything is good, save to request for use in other routes
       req.decoded = decoded;
       next();
     });
   } else {
-        // if there is no token
-        // return an error
     return res.status(400).send({
       success: false,
       message: 'No token provided.'

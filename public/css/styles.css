@@ -2,5 +2,10 @@ body {
   background-color: #fafafa;
 }
 nav {
-  background-color:#311b92
+  background-color:#1a237e
+}
+.card {
+background-color:#e0f2f1;
+width: 400px;
+ margin: 5% 10px;
 }

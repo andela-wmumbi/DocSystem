@@ -1,11 +1,13 @@
 const document = require('./../controllers/document');
+const authorization = require('./middlewares/authorization');
 
 module.exports = (app) => {
+  const auth = authorization.authenticate;
   app.route('/api/documents')
-    .post(document.create)
+    .post(auth, document.create)
     .get(document.list);
   app.route('/api/documents/:docId')
-    .get(document.findOne)
-    .put(document.update)
-    .delete(document.destroy);
+    .get(auth, document.findOne)
+    .put(auth, document.update)
+    .delete(auth, document.destroy);
 };

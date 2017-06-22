@@ -21,10 +21,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(morgan('dev'));
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './client/index.html'));
-});
-
 /**
  * configure app to use bodyParser()
  * this will let us get the data from a POST
@@ -40,6 +36,9 @@ const router = express.Router(); // get an instance of the express Router
 app.use('/api', router);
 
 routes(app);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './client/index.html'));
+});
 
 // start the server
 app.listen(port, () => {

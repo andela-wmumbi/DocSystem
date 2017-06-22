@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
-import UserDetails from './UserDetails';
 import { register, login } from '../apis/UserApi';
+import UserDetails from './UserDetails';
 
 export function registerSuccess() {
   return { type: types.CREATE_USER_SUCCESS, };
@@ -13,10 +13,7 @@ export function loginSuccess() {
 export function registerUser(user) {
   return function (dispatch) {
     return register(user).then((response) => {
-      // sessionStorage.setItem('jwt', response.jwt);
       dispatch(registerSuccess(user));
-      const userId = user.id;
-      localStorage.setItem('userId', userId);
     }).catch((error) => {
       throw (error);
     });
@@ -25,7 +22,7 @@ export function registerUser(user) {
 export function logInUser(credentials) {
   return function (dispatch) {
     return login(credentials).then((response) => {
-      // sessionStorage.setItem('jwt', response.jwt);
+      sessionStorage.setItem('token', response.data.token);
       dispatch(loginSuccess(credentials));
     }).catch((error) => {
       throw (error);

@@ -8,19 +8,14 @@ class DocumentController {
         title: req.body.title,
         content: req.body.content,
         access: req.body.access,
-        userId: req.body.id,
+        userId: req.decoded.id,
       })
       .then(document => res.status(201).send(document))
       .catch(error => res.status(400).send(error));
   }
   list(req, res) {
     return document
-      .findAll({
-        include: [{
-          model: 'docId',
-          as: 'document'
-        }],
-      })
+      .findAll()
       .then(document => res.status(200).send(document))
       .catch(error => res.status(400).send(error));
   }
