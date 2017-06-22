@@ -1,10 +1,22 @@
-export default function register(user) {
-  const request = new Request('http://localhost:3000/users', {
+import axios from 'axios';
+
+export function register(user) {
+  return axios({
     method: 'POST',
-    headers: new Headers({
+    data: user,
+    url: '/api/users',
+    headers: {
       'Content-Type': 'application/json'
-    }),
-    body: JSON.stringify({ auth: user })
+    },
   });
-  return fetch(request).then((response) => response.json()).catch((error) => error);
+}
+export function login(credentials) {
+  return axios({
+    method: 'POST',
+    data: credentials,
+    url: '/api/signin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
 }

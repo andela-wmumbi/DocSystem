@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import LoginForm from './RegisterForm';
+import RegisterForm from './RegisterForm';
 import * as UserActions from './../../actions/UserActions';
 
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: { username: '', email: '', password: '' } };
+    this.state = { user: { username: '', email: '', password: '', id: 1 } };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
@@ -19,26 +19,35 @@ class Register extends Component {
   }
   onSave(event) {
     event.preventDefault();
-    this.props.actions.registerUser(this.state.user);
+    this.props.actions.registerUser(this.state.user).then(() => {
+      this.context.router.history.push('/createdoc');
+    });
   }
-
   render() {
     return (
-      <div>
-        {/* this.state.loginSuccess && <span>Invalid credentials</span>*/}
-        <LoginForm
+      <div >
+        {/* {this.state.user && <Redirect to="/documents" />}*/}
+        <RegisterForm
           onChange={this.onChange}
           onSave={this.onSave}
           user={this.state.user}
         />
-      </div>
+      </div >
     );
   }
 }
 Register.propTypes = {
   actions: PropTypes.object.isRequired
 };
+Register.contextTypes = {
+  router: PropTypes.object.isRequired
+};
 
+function mapStateToProps(state) {
+  return {
+    RegisterState: state.user
+  };
+}
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(UserActions, dispatch)

@@ -13,17 +13,19 @@ const LoginForm = props => (
           <div className="z-depth-1 grey lighten-4 row" >
             <Row>
               <Input
+                s={12}
                 type="email"
                 label="Email"
-                s={12}
+                name="email"
                 value={props.credentials.email}
                 onChange={props.onChange}
               />
               <Input
                 type="password"
                 label="password"
+                name="password"
                 s={12}
-                value={props.password}
+                value={props.credentials.password}
                 onChange={props.onChange}
               />
             </Row>
@@ -48,7 +50,6 @@ const LoginForm = props => (
 );
 LoginForm.propTypes = {
   credentials: PropTypes.object.isRequired,
-  password: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
 };

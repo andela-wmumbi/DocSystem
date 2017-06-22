@@ -5,8 +5,8 @@ import About from './common/About';
 import Header from './common/Header';
 import Login from './auth/Login';
 import Documents from './documents/Documents';
-import RegisterPage from './register/RegisterForm';
-import DocumentCreate from './documents/DocumentCreate';
+import DocumentList from './documents/DocumentList';
+import Register from './register/Register';
 
 const App = () => (
   <div className="container-fluid">
@@ -17,13 +17,13 @@ const App = () => (
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/documents" component={Documents} />
-          {/*<Route exact path="/register" component={RegisterPage} />*/}
-          <Route exact path="/createdoc" component={DocumentCreate} />
+          <Route exact path="/documents" component={DocumentList} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/createdoc" component={Documents} />
           <Route render={() => <h1>404</h1>} />
         </Switch>
       </div>
     </BrowserRouter>
   </div>
-    );
+);
 export default App;

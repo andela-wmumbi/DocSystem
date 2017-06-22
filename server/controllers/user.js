@@ -12,10 +12,10 @@ class userController {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        roleId: req.body.id,
+        roleId: req.body.id
       })
       .then((user) => {
-        return res.status(201).send({ message: 'User Created Successfully' });
+        return res.status(201).send(user);
       })
       .catch(error => res.status(400).send(error));
   }
@@ -67,7 +67,7 @@ class userController {
           .destroy()
           .then(() => res.status(204).send({ message: 'User deleted successfully.' }))
           .catch(error => res.status(400).send(error));
-      })
+      });
   }
   login(req, res) {
     return user
@@ -76,7 +76,7 @@ class userController {
         if (!user) {
           return res.status(401).json({ message: 'User not found' });
         }
-        const password = bcrypt.compareSync(req.body.password, user.password);
+        //const password = bcrypt.compareSync(req.body.password, user.password);
         if (req.body.password !== user.password) {
           return res.status(401).json({ message: 'Wrong password' });
         }

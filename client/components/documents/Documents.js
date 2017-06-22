@@ -1,25 +1,53 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { PropTypes } from 'react-proptypes';
 import { connect } from 'react-redux';
-import DocumentList from './DocumentList';
-import * as documentActions from './../../actions/documentActions';
+import { bindActionCreators } from 'redux';
+import CreateDocument from './DocumentCreate';
+import * as documentActions from './../../actions/DocumentActions';
 
 class Documents extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { document: { title: '', content: '', access: '' } };
+    this.onChange = this.onChange.bind(this);
+    this.onSave = this.onSave.bind(this);
+  }
+  onChange(event) {
+    const field = event.target.name;
+    const document = this.state.document;
+    document[field] = event.target.value;
+    this.setState({ document });
+  }
+  onSave(event) {
+    event.preventDefault();
+    this.props.actions.createDocument(this.state.document).then(() => {
+      this.context.router.history.push('/documents');
+    });
+  }
   render() {
     return (
-      <div>
-        <DocumentList documents={this.props.documents} />
-      </div>
+      <div >
+        <CreateDocument
+          onChange={this.onChange}
+          onSave={this.onSave}
+          document={this.state.document}
+        />
+      </div >
     );
   }
 }
-Document.propTypes = {
-  documents: PropTypes.array.isRequired
+Documents.propTypes = {
+  actions: PropTypes.func.isRequired
 };
-function mapStateToProps(state, ownprops) {
+Documents.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+
+function mapDispatchToProps(dispatch) {
   return {
-    documents: state.documents
+    actions: bindActionCreators(documentActions, dispatch)
   };
 }
 // connect function subscribes our container component to the store,
 // so that it will be alerted when state changes
-export default connect(mapStateToProps)(Documents);
+export default connect(null, mapDispatchToProps)(Documents);

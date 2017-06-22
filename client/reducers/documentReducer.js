@@ -11,7 +11,7 @@ export default function documentReducer(state = initialState.documents, action) 
         Object.assign({}, action.document)
       ];
 
-    case types.LOAD_DOCUMENTS_SUCCESS:
+    case types.LOAD_DOCUMENT_SUCCESS:
       /* updating the state without mutating it
       create another array of data and
       update it's content with the previous state and that changes made
