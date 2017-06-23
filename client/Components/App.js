@@ -4,6 +4,7 @@ import Home from './common/Home';
 import About from './common/About';
 import Header from './common/Header';
 import Login from './auth/Login';
+import Logout from './auth/Logout';
 import Documents from './documents/Documents';
 import DocumentList from './documents/DocumentList';
 import Register from './register/Register';
@@ -16,6 +17,7 @@ const App = () => (
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
+          <Route exact path="/logout" component={Logout} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/documents" component={DocumentList} />
           <Route exact path="/register" component={Register} />

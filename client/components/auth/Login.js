@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
-import * as UserActions from './../../actions/UserActions';
+import * as LoginActions from './../../actions/LoginActions';
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { credentials: { email: '', password: '' } };
+    this.state = { credentials: { email: '', password: '' }, };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
@@ -21,32 +21,50 @@ class Login extends Component {
     event.preventDefault();
     this.props.actions.logInUser(this.state.credentials).then(() => {
       this.context.router.history.push('/documents');
+    }).catch((error) => {
+      console.log(error);
     });
   }
 
   render() {
+    console.log(this.props.isLoginSuccess)
+    const { isLoginPending, isLoginSuccess, loginError } = this.props;
     return (
-      <div>
+      <div >
         {/* this.state.loginSuccess && <span>Invalid credentials</span>*/}
         <LoginForm
           onChange={this.onChange}
           onSave={this.onSave}
           credentials={this.state.credentials}
         />
-      </div>
+        <div className="message">
+          {isLoginPending && <div>Please wait...</div>}
+          {isLoginSuccess && <div>Success.</div>}
+          {loginError && <div>{loginError.message}</div>}
+        </div>
+      </div >
     );
   }
 }
 Login.propTypes = {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  isLoginPending: PropTypes.bool.isRequired,
+  isLoginSuccess: PropTypes.bool.isRequired,
+  loginError: PropTypes.bool.isRequired
 };
 Login.contextTypes = {
   router: PropTypes.object.isRequired
 };
-
-function mapDispatchToProps(dispatch) {
+function mapStateToProps(state) {
   return {
-    actions: bindActionCreators(UserActions, dispatch)
+    isLoginPending: state.loginReducer.isLoginPending,
+    isLoginSuccess: state.loginReducer.isLoginSuccess,
+    loginError: state.loginReducer.loginError
   };
 }
-export default connect(null, mapDispatchToProps)(Login);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(LoginActions, dispatch)
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

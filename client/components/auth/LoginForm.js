@@ -7,10 +7,14 @@ const LoginForm = props => (
     <main>
       <center>
         <div className="section" />
+        <div className="account">
+          <a href="/register">Create account</a>
+          <a href="/">Cancel</a>
+        </div>
         <h5 className="indigo-text">Please, login into your account</h5>
         <div className="section" />
         <div className="container">
-          <div className="z-depth-1 grey lighten-4 row" >
+          <div className="z-depth-1 grey lighten-4 rowdeck" >
             <Row>
               <Input
                 s={12}
@@ -32,7 +36,7 @@ const LoginForm = props => (
             <br />
           </div>
           <center>
-            <div className="row">
+            <div className="rowdeck">
               <button
                 type="submit"
                 width="20px"
@@ -41,7 +45,6 @@ const LoginForm = props => (
                 onClick={props.onSave}
               >Login</button>
             </div>
-            <a href="/register">Create account</a>
           </center>
         </div>
       </center>

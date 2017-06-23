@@ -1,9 +1,9 @@
 import React from 'react';
+import DocumentList from './../documents/DocumentList';
 
 const Home = () => (
   <div>
-    <h1>Home</h1>
-    <p>Create documents</p>
+    <DocumentList />
   </div>
 );
 export default Home;

@@ -1,7 +1,7 @@
 /* Actions are object payloads that are identified by a required property 'type'
 Action creators are methods that wrap and return the action object*/
 import { getAllDocuments, documentCreate } from './../apis/DocumentApi';
-import * as types from './actionTypes';
+import * as types from './ActionTypes';
 
 export function loadsDocumentsSuccess(documents) {
   return { type: types.LOAD_DOCUMENTS_SUCCESS, documents };

@@ -1,17 +1,12 @@
-
 class UserDetails {
-  static UserId(userId) {
-    return localStorage.setItem('userId', userId);
+  static setToken(token) {
+    return sessionStorage.setItem('token', token);
   }
-  static getUserId() {
-    return localStorage.getItem('userId');
+  static isUser() {
+    return sessionStorage.getItem('token') !== null;
   }
-  static getToken(token) {
-    return sessionStorage.setItem('jwt', token);
-  }
-  static decodeToken(token) {
-    const decoded = jwt_decode(token);
-    return decoded;
+  static isLoggedOut() {
+    return sessionStorage.removeItem('token');
   }
 }
 export default UserDetails;

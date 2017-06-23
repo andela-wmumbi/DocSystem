@@ -2,11 +2,8 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('./../../server');
-const userController = require('./../controllers/user');
-const expect = require('chai').expect;
-const should = chai.should();
 
-const docs = {
+const document = {
   title: 'enzymes',
   content: 'They accelerate biochemical processes',
   access: 'public',
@@ -18,7 +15,7 @@ chai.use(chaiHttp);
 describe('/documents', () => {
   it('it should create a document', (done) => {
     chai.request(server)
-      .post('/documents')
+      .post('/api/documents')
       .send(document)
       .end((err, res) => {
         res.should.have.status(201);

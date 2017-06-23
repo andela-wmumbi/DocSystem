@@ -9,12 +9,16 @@ const Header = () => (
     </ul>
     <nav>
       <div className="nav-wrapper">
-        <a href="/" className="brand-logo">DocSystem</a>
+        <a href="/" className="brand-logo">DOCSYSTEM</a>
         <ul className="right hide-on-med-and-down">
-          <li><a href=""><i className="material-icons">search</i></a></li>
-          <li><a href=""><i className="material-icons">refresh</i></a></li>
-          <li><a className="dropdown-button" href="#!" data-activates="dropdown1"><i className="material-icons right">arrow_drop_down</i></a></li>
-          <li><a href="/login">LOGIN</a></li>
+          {sessionStorage.token &&
+            <div>
+              <li><a href=""><i className="material-icons">search</i></a></li>
+              <li><a href=""><i className="material-icons">refresh</i></a></li>
+              <li><a className="dropdown-button" href="#!" data-activates="dropdown1"><i className="material-icons right">arrow_drop_down</i></a></li>
+              <li><a href="/logout">LOGOUT</a></li>
+            </div>
+          }
         </ul>
       </div>
     </nav>

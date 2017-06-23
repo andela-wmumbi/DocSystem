@@ -17,7 +17,7 @@ describe('/users', () => {
       password: '1234567',
     };
     chai.request(server)
-      .post('/users')
+      .post('/api/users')
       .send(user)
       .end((err, res) => {
         res.should.have.status(201);
@@ -28,7 +28,7 @@ describe('/users', () => {
   });
   it('should list all users', (done) => {
     chai.request(server)
-      .get('/users')
+      .get('/api/users')
       .end((err, res) => {
         res.should.have.status(200);
         res.should.be.json;
@@ -40,9 +40,8 @@ describe('/users', () => {
 
 describe('/user/:id', () => {
   it('should get a user by id', (done) => {
-
     chai.request(server)
-      .get('/users/1')
+      .get('/api//users/1')
       .end((err, res) => {
         res.should.have.status(200);
         res.should.be.json;
@@ -52,22 +51,22 @@ describe('/user/:id', () => {
   });
   it('should update a user by id', (done) => {
     chai.request(server)
-      .put('/users/1')
+      .put('/api/users/1')
       .send({
         email: 'jim@gmail.com'
       })
       .end((err, res) => {
         res.should.have.status(200);
-        expect(res.body.email).eql("jim@gmail.com")
+        expect(res.body.email).eql('jim@gmail.com');
         done();
       });
   });
   it('should delete a user', (done) => {
     chai.request(server)
-      .delete('/users/1')
+      .delete('/api/users/1')
       .end((err, res) => {
         res.should.have.status(200);
-        expect(res.body.message).eql("User deleted successfully.")
+        expect(res.body.message).eql('User deleted successfully.');
         done();
       });
   });
@@ -77,6 +76,6 @@ describe('/logout', () => {
     .post('/logout')
     .end((err, res) => {
       res.should.have.status(200);
-      expect(res.body.message).eql("User successfully logged out");
+      expect(res.body.message).eql('User successfully logged out');
     });
 });

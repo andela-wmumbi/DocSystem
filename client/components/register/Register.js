@@ -53,4 +53,4 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(UserActions, dispatch)
   };
 }
-export default connect(null, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

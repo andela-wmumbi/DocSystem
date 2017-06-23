@@ -2,10 +2,33 @@ body {
   background-color: #fafafa;
 }
 nav {
-  background-color:#1a237e
+  background-color:#1a237e;
+  height:52px;
+  padding-bottom: 2px;
 }
 .card {
 background-color:#e0f2f1;
 width: 400px;
- margin: 5% 10px;
+margin: 5% 10px;
+}
+nav .brand-logo{
+  font-size:22px;
+  padding-left: 22px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+nav .nav-wrapper{
+  padding-bottom:2px;
+}
+.rowdeck{
+width:380px;
+}
+.btn-large {
+    height: 40px;
+    line-height: 0px;
+    width:380px;
+}
+.account{
+margin-left:650px;
+padding-top:0px;
+margin-top: 18px
 }

@@ -11,8 +11,6 @@ exports.config = {
     const width = 2250;
     const height = 1200;
     browser.driver.manage().window().setSize(width, height);
-
-
   },
   mochaOpts: {
     enableTimeouts: false,

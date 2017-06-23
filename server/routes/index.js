@@ -3,5 +3,6 @@ module.exports = (app) => {
   require('./user')(app);
   // eslint-disable-next-line
   require('./document')(app);
+  // eslint-disable-next-line
   require('./role')(app);
 };
