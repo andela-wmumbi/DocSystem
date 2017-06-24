@@ -9,5 +9,5 @@ module.exports = (app) => {
   app.route('/api/documents/:docId')
     .get(auth, document.findOne)
     .put(auth, document.update)
-    .delete(auth, document.destroy);
+    .delete(document.destroy);
 };

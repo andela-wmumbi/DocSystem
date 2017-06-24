@@ -9,7 +9,14 @@ export default function documentReducer(state = initialState.documents, action) 
       return [
         ...state,
         Object.assign({}, action.document)];
-
+    case types.UPDATE_DOCUMENT_SUCCESS:
+      return [
+        ...state,
+        Object.assign({}, action.document)];
+    case types.DELETE_DOCUMENT_SUCCESS:
+      return [
+        ...state,
+        Object.assign({}, action.document)];
     case types.LOAD_DOCUMENTS_SUCCESS:
       /* updating the state without mutating it
       create another array of data and

@@ -27,7 +27,6 @@ class Login extends Component {
   }
 
   render() {
-    console.log(this.props.isLoginSuccess)
     const { isLoginPending, isLoginSuccess, loginError } = this.props;
     return (
       <div >

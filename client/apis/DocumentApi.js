@@ -11,6 +11,13 @@ export function getAllDocuments() {
   return request
     .get('/api/documents');
 }
-export function createDocument() {
-
+export function getDocumentUpdate(id, data) {
+  return request
+    .put('/api/documents/:docId')
+    .send(data);
+}
+export function getDocumentDelete(id, token) {
+  return request
+    .delete(`/api/documents/${id}`)
+    .set('x-access-token', sessionStorage.token);
 }

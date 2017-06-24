@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'react-proptypes';
 import { connect } from 'react-redux';
+import { Modal } from 'react-materialize';
 import { bindActionCreators } from 'redux';
 import CreateDocument from './DocumentCreate';
 import * as documentActions from './../../actions/DocumentActions';
@@ -8,7 +9,10 @@ import * as documentActions from './../../actions/DocumentActions';
 class Documents extends Component {
   constructor(props) {
     super(props);
-    this.state = { document: { title: '', content: '', access: '' } };
+    this.state = {
+      document: { title: '', content: '', access: '' },
+      isEditing: false
+    };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }

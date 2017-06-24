@@ -1,16 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, CardPanel, Pagination, Button } from 'react-materialize';
+import swal from 'sweetalert';
+import { Row, Col, CardPanel, Pagination, Button, Modal, Editor, Link } from 'react-materialize';
 import { bindActionCreators } from 'redux';
+import UserDetails from './../../actions/UserDetails';
 import * as documentActions from './../../actions/DocumentActions';
+
 
 class DocumentList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: props.documents
+      documents: props.documents,
+      isModalOpen: false,
+      documentContent: '',
+      id: ''
     };
-    this.handleClick = this.handleClick.bind();
+    this.openModal = this.openModal.bind();
   }
   componentDidMount() {
     this.props.actions.loadDocuments();
@@ -22,8 +28,28 @@ class DocumentList extends Component {
       this.setState({ documents });
     }
   }
-  handleClick(key) {
-
+  openModal(id, content) {
+    this.setState({ documentContent: content, id: id });
+    this.setState({ isModalOpen: true });
+  }
+  closeModal() {
+    this.setState({ isModalOpen: false });
+  }
+  updateDocument() {
+    this.props.actions.updateDocument(this.state.id, { content: this.state.document })
+      .then(() => {
+        console.log('mimimi')
+        swal('Document updated successfully');
+      });
+  }
+  deleteDocument(id) {
+    this.props.actions.deleteDocument(id, UserDetails.isUser())
+      .then(() => {
+        swal('Document deleted successfully');
+      });
+  }
+  handleCreateDoc() {
+    this.context.router.history.push('/createdoc');
   }
   render() {
     return (
@@ -35,19 +61,32 @@ class DocumentList extends Component {
                 <CardPanel className="card">
                   <span> <h4>{document.title}</h4>
                     <p>{document.content}</p>
-                    <a href="">EDIT</a>
-                    <button onClick={this.handleClick(document.id)}></button>
+                    <button onClick={() => this.openModal(document.id, document.content)} >
+                      EDIT
+                    </button>
+                    <button onClick={() => this.deleteDocument(document.id)}>DELETE</button>
                   </span>
                 </CardPanel>
               </Col>)
             )}
           </Row>
+          <Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()}>
+            {/*<Editor
+              handleText={this.handleTextInput}
+              updateContent={this.updateDocument}
+              label={'EDIT'}
+              content={this.state.document}
+              closeModal={this.closeModal()}
+            />*/}
+            <p><button onClick={() => this.closeModal()}>Close</button></p>
+          </Modal>
           <Button
             floating
             large
             className="#1a237e indigo darken-4"
             waves="light"
             icon="add"
+            onClick={() => this.handleCreateDoc()}
           />
           <Pagination items={8} activePage={2} maxButtons={6} />
         </center>
