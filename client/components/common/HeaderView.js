@@ -17,6 +17,7 @@ const HeaderView = () => (
               <li><a href=""><i className="material-icons">search</i></a></li>
               <li><a href=""><i className="material-icons">refresh</i></a></li>
               <li><a className="dropdown-button" href="#!" data-activates="dropdown1"><i className="material-icons right">arrow_drop_down</i></a></li>
+              <li><a href="/myprofile" className="material-icons profile-picture">account_circle</a></li>
               <li><a href="/logout">LOGOUT</a></li>
             </div>
           }

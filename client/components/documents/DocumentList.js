@@ -39,12 +39,6 @@ class DocumentList extends Component {
   closeModal() {
     this.setState({ isModalOpen: false });
   }
-  updateDocument() {
-    this.props.actions.updateDocument(this.state.id, { content: this.state.document })
-      .then(() => {
-        swal('Document updated successfully');
-      });
-  }
   deleteDocument(id) {
     this.props.actions.deleteDocument(id, UserDetails.isUser())
       .then(() => {

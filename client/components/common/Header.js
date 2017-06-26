@@ -23,7 +23,6 @@ class Header extends Component {
     }
   }
   render() {
-    console.log('docs hjnyeynye', this.state.documents);
     const { documents } = this.state;
     return (
       <div>

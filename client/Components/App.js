@@ -9,6 +9,7 @@ import Logout from './auth/Logout';
 import Documents from './documents/Documents';
 import DocumentList from './documents/DocumentList';
 import Register from './register/Register';
+import Profile from './users/Profile';
 
 const App = () => (
   <div className="container-fluid">
@@ -25,6 +26,7 @@ const App = () => (
           <Route exact path="/register" component={Register} />
           <Route exact path="/createdoc" component={Documents} />
           <Route exact path="/mydocuments" component={Header} />
+          <Route exact path="/myprofile" component={Profile} />
           <Route render={() => <h1>404</h1>} />
         </Switch>
       </div>
