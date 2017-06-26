@@ -41,7 +41,7 @@ class Documents extends Component {
   }
 }
 Documents.propTypes = {
-  actions: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired
 };
 Documents.contextTypes = {
   router: PropTypes.object.isRequired

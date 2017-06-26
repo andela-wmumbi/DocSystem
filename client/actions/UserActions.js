@@ -1,5 +1,5 @@
 import * as types from './ActionTypes';
-import { register } from '../apis/UserApi';
+import { register, getUserDocs } from '../apis/UserApi';
 
 export function registerSuccess() {
   return { type: types.CREATE_USER_SUCCESS, };

@@ -9,7 +9,6 @@ const LoginForm = props => (
         <div className="section" />
         <div className="account">
           <a href="/register">Create account</a>
-          <a href="/">Cancel</a>
         </div>
         <h5 className="indigo-text">Please, login into your account</h5>
         <div className="section" />

@@ -14,4 +14,6 @@ module.exports = (app) => {
     .post(user.login);
   app.route('/api/logout')
     .post(user.logout);
+  app.route('/users/:userId/documents')
+    .get(user.findUserDocuments);
 };

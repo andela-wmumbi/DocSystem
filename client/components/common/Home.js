@@ -1,9 +1,9 @@
 import React from 'react';
-import DocumentList from './../documents/DocumentList';
+import Login from './../auth/Login';
 
 const Home = () => (
   <div>
-    <DocumentList />
+    <Login />
   </div>
 );
 export default Home;

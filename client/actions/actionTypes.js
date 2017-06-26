@@ -7,3 +7,5 @@ export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 
 export const LOG_OUT = 'LOG_OUT';
+
+export const GET_USER_DOCUMENTS = 'GET_USER_DOCUMENTS';

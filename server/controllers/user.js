@@ -1,4 +1,5 @@
 const user = require('../models').user;
+const document = require('../models').document;
 const bcrypt = require('bcryptjs');
 
 const secretKey = process.env.SECRET;
@@ -37,6 +38,19 @@ class userController {
         return res.status(200).send(user);
       });
   }
+
+  findUserDocuments(req, res) {
+    return user
+      .findById(req.params.userId, {
+        include: [{
+          model: document,
+          as: 'document'
+        }]
+      })
+      .then(users => res.status(200).send(users.document))
+      .catch(error => res.status(404).send(error));
+  }
+
   update(req, res) {
     return user
       .findById(req.params.userId)

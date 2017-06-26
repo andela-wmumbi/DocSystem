@@ -3,11 +3,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import * as LoginActions from './../../actions/LoginActions';
+import SweetAlert from 'sweetalert-react';
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { credentials: { email: '', password: '' }, };
+    this.state = { credentials: { email: '', password: '' },
+      error: ''
+    };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
@@ -21,8 +24,8 @@ class Login extends Component {
     event.preventDefault();
     this.props.actions.logInUser(this.state.credentials).then(() => {
       this.context.router.history.push('/documents');
-    }).catch((error) => {
-      console.log(error);
+    }).catch(() => {
+      this.setState({ error: 'Wrong email password combinatio' });
     });
   }
 
@@ -30,7 +33,6 @@ class Login extends Component {
     const { isLoginPending, isLoginSuccess, loginError } = this.props;
     return (
       <div >
-        {/* this.state.loginSuccess && <span>Invalid credentials</span>*/}
         <LoginForm
           onChange={this.onChange}
           onSave={this.onSave}
@@ -49,7 +51,7 @@ Login.propTypes = {
   actions: PropTypes.object.isRequired,
   isLoginPending: PropTypes.bool.isRequired,
   isLoginSuccess: PropTypes.bool.isRequired,
-  loginError: PropTypes.bool.isRequired
+  loginError: PropTypes.bool
 };
 Login.contextTypes = {
   router: PropTypes.object.isRequired

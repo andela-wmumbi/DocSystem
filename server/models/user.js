@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Enter a valid email address'
         },
         isUnique: sequelize.validateIsUnique('email', 'The email address already exists')
-      }
+      },
+      isUnique: true
     }
   },
     {

@@ -20,7 +20,7 @@ class Register extends Component {
   onSave(event) {
     event.preventDefault();
     this.props.actions.registerUser(this.state.user).then(() => {
-      this.context.router.history.push('/createdoc');
+      this.context.router.history.push('/login');
     });
   }
   render() {

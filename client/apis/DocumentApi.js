@@ -1,4 +1,5 @@
 import request from 'superagent';
+import axios from 'axios';
 
 export function documentCreate(document) {
   return request
@@ -20,4 +21,13 @@ export function getDocumentDelete(id, token) {
   return request
     .delete(`/api/documents/${id}`)
     .set('x-access-token', sessionStorage.token);
+}
+export function getUserDocs(id) {
+  return axios({
+    method: 'GET',
+    headers: {
+      'x-access-token': sessionStorage.token
+    },
+    url: `/users/${id}/documents`
+  });
 }

@@ -1,27 +1,65 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { Row, Col, CardPanel } from 'react-materialize';
+import { connect } from 'react-redux';
+import * as DocumentActions from './../../actions/DocumentActions';
+import UserDetails from './../../actions/UserDetails';
 
-const Header = () => (
-  <div className="navbar-fixed">
-    <ul id="dropdown1" className="dropdown-content">
-      <li><a href="/documents">Documents</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/createdoc">Create</a></li>
-    </ul>
-    <nav>
-      <div className="nav-wrapper">
-        <a href="/" className="brand-logo">DOCSYSTEM</a>
-        <ul className="right hide-on-med-and-down">
-          {sessionStorage.token &&
-            <div>
-              <li><a href=""><i className="material-icons">search</i></a></li>
-              <li><a href=""><i className="material-icons">refresh</i></a></li>
-              <li><a className="dropdown-button" href="#!" data-activates="dropdown1"><i className="material-icons right">arrow_drop_down</i></a></li>
-              <li><a href="/logout">LOGOUT</a></li>
-            </div>
-          }
-        </ul>
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      documents: props.documents,
+      showmyDocuments: false
+    };
+  }
+  componentWillMount() {
+    this.props.actions.getUserDocuments(UserDetails.decodeToken(sessionStorage.token).id);
+  }
+  componentWillReceiveProps(nextProps) {
+    const { documents } = nextProps;
+    if (documents !== this.state.documents) {
+      this.setState({ documents });
+    }
+  }
+  render() {
+    console.log('docs hjnyeynye', this.state.documents);
+    const { documents } = this.state;
+    return (
+      <div>
+        <Row>
+          {documents.map(document =>
+            (<Col s={12} m={5} key={document.id}>
+              <CardPanel className="card">
+                <span> <h4>{document.title}</h4>
+                  <p>{document.content}</p>
+                  <button onClick={() =>
+                    this.openModal(document.id, document.content, document.title)}
+                  >
+                    EDIT
+                    </button>
+                  <button onClick={() => this.deleteDocument(document.id)}>DELETE</button>
+                </span>
+              </CardPanel>
+            </Col>)
+          )}
+        </Row>
       </div>
-    </nav>
-  </div>
-);
-export default Header;
+    );
+  }
+}
+Header.propTypes = {
+  actions: PropTypes.object.isRequired,
+  documents: PropTypes.array.isRequired
+};
+function mapStateToProps(state) {
+  return {
+    documents: state.documents
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(DocumentActions, dispatch)
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

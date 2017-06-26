@@ -33,13 +33,13 @@ const CreateDocument = props => (
                 s={12}
                 type="select"
                 label="Access"
-                defaultValue="Public"
+                defaultValue="public"
                 value={props.document.access}
                 name="access"
                 onChange={props.onChange}
               >
-                <option value="Public">Public</option>
-                <option value="Private">Private</option>
+                <option value="public">public</option>
+                <option value="private">private</option>
               </Input>
             </Row>
             <Row>

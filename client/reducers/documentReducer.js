@@ -23,6 +23,8 @@ export default function documentReducer(state = initialState.documents, action) 
       update it's content with the previous state and that changes made
       The spread operator just pours out the content on the array into the new array*/
       return action.documents;
+    case types.GET_USER_DOCUMENTS:
+      return action.documents;
     default:
       return state;
   }

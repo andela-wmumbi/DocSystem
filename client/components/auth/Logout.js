@@ -30,4 +30,4 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(UserActions, dispatch)
   };
 }
-export default connect(mapDispatchToProps)(Logout);
+export default connect(null, mapDispatchToProps)(Logout);

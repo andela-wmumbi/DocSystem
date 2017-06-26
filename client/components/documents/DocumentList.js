@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert';
-import { Row, Col, CardPanel, Pagination, Button, Modal, Editor, Link } from 'react-materialize';
+import { Row, Col, CardPanel, Pagination, Button } from 'react-materialize';
 import { bindActionCreators } from 'redux';
 import UserDetails from './../../actions/UserDetails';
+import Update from './Update';
 import * as documentActions from './../../actions/DocumentActions';
 
 
@@ -13,23 +14,26 @@ class DocumentList extends Component {
     this.state = {
       documents: props.documents,
       isModalOpen: false,
-      documentContent: '',
-      id: ''
+      documentContent: {
+        content: '',
+        title: '',
+        id: ''
+      }
     };
-    this.openModal = this.openModal.bind();
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
   componentDidMount() {
     this.props.actions.loadDocuments();
   }
-
   componentWillReceiveProps(nextProps) {
     const { documents } = nextProps;
     if (documents !== this.state.documents) {
       this.setState({ documents });
     }
   }
-  openModal(id, content) {
-    this.setState({ documentContent: content, id: id });
+  openModal(id, content, title) {
+    this.setState({ documentContent: { content, title, id } });
     this.setState({ isModalOpen: true });
   }
   closeModal() {
@@ -38,7 +42,6 @@ class DocumentList extends Component {
   updateDocument() {
     this.props.actions.updateDocument(this.state.id, { content: this.state.document })
       .then(() => {
-        console.log('mimimi')
         swal('Document updated successfully');
       });
   }
@@ -52,16 +55,19 @@ class DocumentList extends Component {
     this.context.router.history.push('/createdoc');
   }
   render() {
+    const { documentContent, documents } = this.state;
     return (
       <div className="documents">
         <center>
           <Row>
-            {this.state.documents.map(document =>
+            {documents.map(document =>
               (<Col s={12} m={5} key={document.id}>
                 <CardPanel className="card">
                   <span> <h4>{document.title}</h4>
                     <p>{document.content}</p>
-                    <button onClick={() => this.openModal(document.id, document.content)} >
+                    <button onClick={() =>
+                      this.openModal(document.id, document.content, document.title)}
+                    >
                       EDIT
                     </button>
                     <button onClick={() => this.deleteDocument(document.id)}>DELETE</button>
@@ -70,16 +76,13 @@ class DocumentList extends Component {
               </Col>)
             )}
           </Row>
-          <Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()}>
-            {/*<Editor
-              handleText={this.handleTextInput}
-              updateContent={this.updateDocument}
-              label={'EDIT'}
-              content={this.state.document}
-              closeModal={this.closeModal()}
-            />*/}
-            <p><button onClick={() => this.closeModal()}>Close</button></p>
-          </Modal>
+          {
+            this.state.isModalOpen &&
+            <Update
+              closeModal={this.closeModal}
+              document={documentContent}
+            />
+          }
           <Button
             floating
             large
@@ -89,8 +92,8 @@ class DocumentList extends Component {
             onClick={() => this.handleCreateDoc()}
           />
           <Pagination items={8} activePage={2} maxButtons={6} />
-        </center>
-      </div>
+        </center >
+      </div >
     );
   }
 }

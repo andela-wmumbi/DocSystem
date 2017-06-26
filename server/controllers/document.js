@@ -14,10 +14,11 @@ class DocumentController {
   }
   list(req, res) {
     return document
-      .findAll()
+      .findAll({ where: { access: 'public' } })
       .then(document => res.status(200).send(document))
       .catch(error => res.status(404).send(error));
   }
+
   findOne(req, res) {
     return document
       .findById(req.params.docId)

@@ -1,6 +1,6 @@
 /* Actions are object payloads that are identified by a required property 'type'
 Action creators are methods that wrap and return the action object*/
-import { getAllDocuments, documentCreate, getDocumentUpdate, getDocumentDelete } from './../apis/DocumentApi';
+import { getAllDocuments, documentCreate, getDocumentUpdate, getDocumentDelete, getUserDocs } from './../apis/DocumentApi';
 import * as types from './ActionTypes';
 
 export function loadsDocumentsSuccess(documents) {
@@ -14,6 +14,10 @@ export function updateDocumentsSuccess(document) {
 }
 export function deleteDocumentSuccess(id) {
   return { type: types.DELETE_DOCUMENT_SUCCESS, id };
+}
+
+export function getUserDocsSuccess(documents) {
+  return { type: types.GET_USER_DOCUMENTS, documents };
 }
 
 export function createDocument(document) {
@@ -37,9 +41,9 @@ export function loadDocuments() {
       });
   };
 }
-export function updateDocument(id, data) {
+export function updateDocument(document) {
   return (dispatch) => {
-    return getDocumentUpdate(id, data)
+    return getDocumentUpdate(document)
       .then((res) => {
         dispatch(updateDocumentsSuccess(res.body));
       })
@@ -49,11 +53,22 @@ export function updateDocument(id, data) {
   };
 }
 export function deleteDocument(id, token) {
-  console.log('mine', token);
   return (dispatch) => {
     return getDocumentDelete(id, token)
       .then((res) => {
         dispatch(deleteDocumentSuccess(res.body));
+      })
+      .catch((error) => {
+        throw (error);
+      });
+  };
+}
+export function getUserDocuments(id) {
+  console.log("I was called");
+  return (dispatch) => {
+    return getUserDocs(id)
+      .then((documents) => {
+        dispatch(getUserDocsSuccess(documents.data));
       })
       .catch((error) => {
         throw (error);
