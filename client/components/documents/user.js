@@ -1,5 +1,6 @@
 const user = require('../models').user;
 const document = require('../models').document;
+const bcrypt = require('bcryptjs');
 
 const secretKey = process.env.SECRET;
 
@@ -81,6 +82,7 @@ class userController {
       });
   }
   login(req, res) {
+    debugger;
     return user
       .findOne({ where: { email: req.body.email } })
       .then((user) => {
@@ -91,7 +93,7 @@ class userController {
         if (req.body.password !== user.password) {
           return res.status(401).json({ message: 'Wrong password' });
         }
-        const token = jwt.sign({ id: user.id, roleId: user.roleId }, secretKey, {
+        const token = jwt.sign({ id: user.id }, secretKey, {
           expiresIn: 60 * 60
         });
         user.password = null;
@@ -107,14 +109,14 @@ class userController {
     });
   }
   findUser(req, res) {
-    if (req.params.user) {
+    if (req.query.q) {
       return user
         .findAll(
         {
           where:
           {
             username: {
-              $like: `%${req.params.user}%`
+              $like: `%${req.query.q}%`
             }
           },
           include: [{
@@ -124,7 +126,7 @@ class userController {
         })
         .then((users) => {
           if (!users.length) return res.status(404).send({ message: 'User not found.' });
-          return res.status(200).send(users[0].document);
+          return res.status(200).send(users);
         });
     }
   }

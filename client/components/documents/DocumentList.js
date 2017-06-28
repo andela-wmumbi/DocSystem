@@ -5,7 +5,8 @@ import { Row, Col, CardPanel, Pagination, Button } from 'react-materialize';
 import { bindActionCreators } from 'redux';
 import UserDetails from './../../actions/UserDetails';
 import Update from './Update';
-import * as documentActions from './../../actions/DocumentActions';
+import Search from './Search';
+import * as DocumentActions from './../../actions/DocumentActions';
 
 
 class DocumentList extends Component {
@@ -55,7 +56,7 @@ class DocumentList extends Component {
         <center>
           <Row>
             {documents.map(document =>
-              (<Col s={12} m={5} key={document.id}>
+              (<Col s={6} key={document.id}>
                 <CardPanel className="card">
                   <span> <h4>{document.title}</h4>
                     <p>{document.content}</p>
@@ -111,7 +112,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(documentActions, dispatch)
+    actions: bindActionCreators(DocumentActions, dispatch)
   };
 }
 

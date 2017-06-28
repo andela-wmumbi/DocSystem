@@ -11,7 +11,6 @@ import DocumentList from './documents/DocumentList';
 import Register from './register/Register';
 import Profile from './users/Profile';
 import Search from './search/Search';
-import SearchDocument from './documents/Search';
 
 const App = () => (
   <div className="container-fluid">
@@ -29,8 +28,7 @@ const App = () => (
           <Route exact path="/createdoc" component={Documents} />
           <Route exact path="/mydocuments" component={Header} />
           <Route exact path="/myprofile" component={Profile} />
-          <Route exact path="/searchuser" component={Search} />
-          <Route exact path="/searchdocument" component={SearchDocument} />
+          <Route exact path="/displaysearch" component={Search} />
           <Route render={() => <h1>404</h1>} />
         </Switch>
       </div>

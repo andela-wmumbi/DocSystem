@@ -14,6 +14,7 @@ class Header extends Component {
     };
   }
   componentWillMount() {
+    console.log('id', UserDetails.decodeToken(sessionStorage.token));
     this.props.actions.getUserDocuments(UserDetails.decodeToken(sessionStorage.token).id);
   }
   componentWillReceiveProps(nextProps) {

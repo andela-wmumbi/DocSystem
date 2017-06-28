@@ -1,6 +1,10 @@
 /* Actions are object payloads that are identified by a required property 'type'
 Action creators are methods that wrap and return the action object*/
-import { getAllDocuments, documentCreate, getDocumentUpdate, getDocumentDelete, getUserDocs } from './../apis/DocumentApi';
+import {
+  getAllDocuments,
+  documentCreate, getDocumentUpdate,
+  getDocumentDelete, getUserDocs, getADocument
+} from './../apis/DocumentApi';
 import * as types from './ActionTypes';
 
 export function loadsDocumentsSuccess(documents) {
@@ -18,6 +22,9 @@ export function deleteDocumentSuccess(id) {
 
 export function getUserDocsSuccess(documents) {
   return { type: types.GET_USER_DOCUMENTS, documents };
+}
+export function loadsADocumentSuccess(document) {
+  return { type: types.GET_A_DOCUMENT_SUCCESS, document };
 }
 
 export function createDocument(document) {
@@ -64,11 +71,21 @@ export function deleteDocument(id, token) {
   };
 }
 export function getUserDocuments(id) {
-  console.log("I was called");
   return (dispatch) => {
     return getUserDocs(id)
       .then((documents) => {
         dispatch(getUserDocsSuccess(documents.data));
+      })
+      .catch((error) => {
+        throw (error);
+      });
+  };
+}
+export function searchDocument(title) {
+  return (dispatch) => {
+    return getADocument(title)
+      .then((res) => {
+        dispatch(loadsADocumentSuccess(res.body));
       })
       .catch((error) => {
         throw (error);

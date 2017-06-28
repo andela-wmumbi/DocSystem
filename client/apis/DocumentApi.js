@@ -32,3 +32,8 @@ export function getUserDocs(id) {
     url: `/users/${id}/documents`
   });
 }
+export function getADocument(title) {
+  return request
+    .get(`/search/documents/${title}`)
+    .set('x-access-token', sessionStorage.token);
+}

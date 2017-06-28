@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'react-proptypes';
 import { connect } from 'react-redux';
-import { Modal } from 'react-materialize';
 import { bindActionCreators } from 'redux';
 import CreateDocument from './DocumentCreate';
 import * as documentActions from './../../actions/DocumentActions';

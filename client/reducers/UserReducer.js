@@ -17,6 +17,8 @@ export default function UserReducer(state = initialState.users, action) {
       ];
     case types.LOG_OUT:
       return !!sessionStorage.token;
+    case types.LOAD_USERS_SUCCESS:
+      return action.users;
     default:
       return state;
   }
