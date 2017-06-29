@@ -27,12 +27,17 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Enter a valid email address'
         },
         isUnique: sequelize.validateIsUnique('email', 'The email address already exists')
-      }
+      },
+      isUnique: true
     }
   },
     {
       classMethods: {
         associate(models) {
+          user.belongsTo(models.role, {
+            foreignKey: 'roleId',
+            onDelete: 'CASCADE',
+          });
           user.hasMany(models.document, {
             foreignKey: 'userId',
             as: 'document',

@@ -1,11 +1,25 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
+import express from 'express';
+import webpack from 'webpack';
+import path from 'path';
+import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+import config from './webapck.config';
 
 const routes = require('./server/routes');
+const morgan = require('morgan');
 
 const app = express();
 dotenv.load();
+
+const compiler = webpack(config);
+
+app.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: true,
+  publicPath: config.output.publicPath
+}));
+
+app.use(morgan('dev'));
+app.use(require('webpack-hot-middleware')(compiler));
 
 /**
  * configure app to use bodyParser()
@@ -22,7 +36,12 @@ const router = express.Router(); // get an instance of the express Router
 app.use('/api', router);
 
 routes(app);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './client/index.html'));
+});
 
 // start the server
-app.listen(port);
-console.log(`Magic happens on port ${port}`);
+app.listen(port, () => {
+  console.log('Server running at: ', port);
+});
+module.exports = app;

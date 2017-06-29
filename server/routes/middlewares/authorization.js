@@ -2,28 +2,43 @@
 const jwt = require('jsonwebtoken');
 
 const secretKey = process.env.SECRET;
-
-exports.authenticate = (req, res, next) => {
-    // check header or url parameters or post parameters for token
-  const token = req.body.token || req.query.token || req.headers['x-access-token'];
-
-    // decode token
-  if (token) {
-        // verifies secret and checks exp
-    jwt.verify(token, secretKey, (err, decoded) => {
-      if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });
-      }
-            // if everything is good, save to request for use in other routes
-      req.decoded = decoded;
-      next();
-    });
-  } else {
-        // if there is no token
-        // return an error
-    return res.status(400).send({
-      success: false,
-      message: 'No token provided.'
-    });
+class Authenticate {
+  authenticate(req, res, next) {
+    const token = req.headers['x-access-token'];
+    if (token) {
+      jwt.verify(token, secretKey, (err, decoded) => {
+        if (err) {
+          return res.json({ success: false, message: 'Failed to authenticate token.' });
+        }
+        req.decoded = decoded;
+        next();
+      });
+    } else {
+      return res.status(400).send({
+        success: false,
+        message: 'No token provided.'
+      });
+    }
   }
-};
+  verifyAdmin(req, res, next) {
+    const role = req.decoded.roleId;
+    if (role && role === 1) {
+      next();
+    } else {
+      return res.status(403).send({
+        message: 'You do not have permission'
+      });
+    }
+  }
+  verifyOwner(req, res, next) {
+    const role = req.decoded.roleId;
+    if (role && role === 2) {
+      next();
+    } else {
+      return res.status(403).send({
+        message: 'You do not have permission'
+      });
+    }
+  }
+}
+module.exports = new Authenticate();

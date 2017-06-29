@@ -1,25 +1,40 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from './common/Home';
+import About from './common/About';
+import HeaderView from './common/HeaderView';
+import Header from './common/Header';
+import Login from './auth/Login';
+import Logout from './auth/Logout';
+import Documents from './documents/Documents';
+import DocumentList from './documents/DocumentList';
+import Register from './register/Register';
+import Profile from './users/Profile';
+import Search from './search/Search';
+import SearchDocument from './documents/Search';
 
-const App = (props) => {
-  return (
-    <div className="container">
-      <nav className="navbar navbar-default">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <a className="navbar-brand" href="#">Scotch Books</a>
-          </div>
-          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul className="nav navbar-nav">
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/about">About</Link></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      {/* Each smaller components */}
-      {props.children}
-    </div>
-  );
-};
+const App = () => (
+  <div className="container-fluid">
+    <BrowserRouter>
+      <div>
+        <HeaderView />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/logout" component={Logout} />
+          <Route exact path="/documents" component={DocumentList} />
+          <Route exact path="/documents/:id" component={DocumentList} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/createdoc" component={Documents} />
+          <Route exact path="/mydocuments" component={Header} />
+          <Route exact path="/myprofile" component={Profile} />
+          <Route exact path="/searchuser" component={Search} />
+          <Route exact path="/searchdocument" component={SearchDocument} />
+          <Route render={() => <h1>404</h1>} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  </div>
+);
 export default App;

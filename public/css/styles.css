@@ -1,0 +1,74 @@
+body {
+  background-color: #fafafa;
+}
+nav {
+  background-color:#1a237e;
+  height:52px;
+  padding-bottom: 2px;
+}
+.card {
+background-color:#e0f2f1;
+width: 400px;
+margin: 5% 10px;
+padding: 13px 10.15rem;
+}
+nav .brand-logo{
+  font-size:22px;
+  padding-left: 22px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+nav .nav-wrapper{
+  padding-bottom:2px;
+}
+.rowdeck{
+width:380px;
+}
+.btn-large {
+    height: 40px;
+    line-height: 0px;
+    width:380px;
+}
+.account{
+margin-left:650px;
+padding-top:0px;
+margin-top: 18px
+}
+.doc{
+  padding: 13px 10.15rem;
+}
+.row {
+  padding: 0 0 0 45px;
+}
+.row .col.s6 {
+  width: 35%;
+  margin-left: auto;
+  left: auto;
+  right: auto;
+  float: left;
+  padding: 13px 10.20rem;
+}
+/*.row .col {
+  float: left;
+  box-sizing: border-box;
+  padding: 13px 10.15rem;
+  min-height: 1px;
+}*/
+.row {
+    padding: 0 0 0 15px;
+}
+button {
+  margin: 4px;
+}
+/*.search {
+	border:0px;
+	width :20%;
+  float:right;
+  padding-top:10px
+}*/
+.card-panel {
+  padding: 0px
+}
+
+p.error {
+    color: red
+}
