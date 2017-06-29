@@ -1,5 +1,5 @@
 import * as types from './ActionTypes';
-import { register, getAllUsers, getAUser } from '../apis/UserApi';
+import { register, getAllUsers, getAUser, getUserDelete } from '../apis/UserApi';
 
 export function registerSuccess() {
   return { type: types.CREATE_USER_SUCCESS, };
@@ -9,6 +9,9 @@ export function loadsUsersSuccess(users) {
 }
 export function loadsUserSuccess(userdocuments) {
   return { type: types.LOAD_USER_SUCCESS, userdocuments };
+}
+export function deleteUserSuccess(id) {
+  return { type: types.DELETE_USER_SUCCESS, id };
 }
 export function registerUser(user) {
   return dispatch => register(user).then(() => {
@@ -37,6 +40,17 @@ export function searchUser(name) {
     return getAUser(name)
       .then((res) => {
         dispatch(loadsUserSuccess(res.body));
+      })
+      .catch((error) => {
+        throw (error);
+      });
+  };
+}
+export function deleteUser(id) {
+  return (dispatch) => {
+    return getUserDelete(id)
+      .then((res) => {
+        dispatch(deleteUserSuccess(res.body));
       })
       .catch((error) => {
         throw (error);

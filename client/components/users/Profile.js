@@ -2,27 +2,61 @@ import React, { Component } from 'react';
 import { ModalContainer, ModalDialog, Input } from 'react-materialize';
 import * as UserActions from './../../actions/UserActions';
 import Modal from 'react-modal';
+import UserDetails from './../../actions/UserDetails';
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      userDetails: {
+        id: '',
+        username: '',
+        createdAt: '',
+        role: '',
+        email: ''
+      },
+      isModalOpen: false
+    };
+    this.getUserDetails = this.getUserDetails.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
   componentDidMount() {
-    //this.props.actions.loadUserDetails();
+    this.getUserDetails();
   }
-
-  // openModal(id, content, title) {
-  //   this.setState({ documentContent: { content, title, id } });
-  //   this.setState({ isModalOpen: true });
-  // }
-  // closeModal() {
-  //   this.setState({ isModalOpen: false });
-  // }
+  getUserDetails() {
+    const details = UserDetails.decodeToken(sessionStorage.token);
+    this.setState({
+      userDetails: {
+        id: details.id,
+        username: details.username,
+        createdAt: details.createdAt,
+        role: details.roleId,
+        email: details.email
+      }
+    });
+  }
+  closeModal() {
+    this.setState({ isModalOpen: false });
+  }
   render() {
+    const { userDetails } = this.state;
     return (
-      <div>
-      </div>
+      <div >
+        {/*<ModalContainer>
+          <ModalDialog >
+            <h6>My profile</h6>
+            <Input
+              value={userDetails.username}
+              name="title"
+            />
+            <Input
+              name="content"
+              value={userDetails.email}
+            />
+            <button onClick={this.handleSave}>Save</button>
+          </ModalDialog>
+        </ModalContainer >*/}
+        </div>
     );
   }
 }

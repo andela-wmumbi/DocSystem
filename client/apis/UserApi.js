@@ -31,3 +31,8 @@ export function getAUser(name) {
     .get(`/search/users/${name}`)
     .set('x-access-token', sessionStorage.token);
 }
+export function getUserDelete(id) {
+  return request
+    .delete(`/api/users/${id}`)
+    .set('x-access-token', sessionStorage.token);
+}

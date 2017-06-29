@@ -1,5 +1,5 @@
-const user = require('../models').user;
-const document = require('../models').document;
+const user = require('./../models').user;
+const document = require('./../models').document;
 
 const secretKey = process.env.SECRET;
 
@@ -14,8 +14,9 @@ class userController {
         password: req.body.password,
         roleId: req.body.id
       })
-      .then((user) => res.status(201).send(user))
-      .catch(error => res.status(400).send(error));
+      .then(user => res.status(201).send(user))
+      .catch(error => (error)
+      );
   }
   list(req, res) {
     return user
@@ -91,9 +92,15 @@ class userController {
         if (req.body.password !== user.password) {
           return res.status(401).json({ message: 'Wrong password' });
         }
-        const token = jwt.sign({ id: user.id, roleId: user.roleId }, secretKey, {
-          expiresIn: 60 * 60
-        });
+        const token = jwt.sign({
+          id: user.id,
+          roleId: user.roleId,
+          username: user.username,
+          createdAt: user.createdAt,
+          email: user.email,
+        }, secretKey, {
+            expiresIn: 60 * 60
+          });
         user.password = null;
         res.status(200).json(Object.assign({},
           { id: user.id, username: user.username, email: user.email }, { token }));
@@ -124,7 +131,7 @@ class userController {
         })
         .then((users) => {
           if (!users.length) return res.status(404).send({ message: 'User not found.' });
-          return res.status(200).send(users[0].document);
+          return res.status(200).send(users);
         });
     }
   }
