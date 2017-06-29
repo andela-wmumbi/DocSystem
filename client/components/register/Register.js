@@ -2,14 +2,24 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import RegisterForm from './RegisterForm';
+import validateRegister from './Validate';
 import * as UserActions from './../../actions/UserActions';
 
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: { username: '', email: '', password: '', id: 1 } };
+    this.state = {
+      user: {
+        username: '',
+        email: '',
+        password: '',
+        id: 1
+      },
+      errors: ''
+    };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.validate = this.validate.bind(this);
   }
   onChange(event) {
     const field = event.target.name;
@@ -19,18 +29,27 @@ class Register extends Component {
   }
   onSave(event) {
     event.preventDefault();
-    this.props.actions.registerUser(this.state.user).then(() => {
-      this.context.router.history.push('/login');
-    });
+    if (this.validate()) {
+      this.props.actions.registerUser(this.state.user).then(() => {
+        this.context.router.history.push('/login');
+      });
+    }
+  }
+  validate() {
+    const { errors, valid } = validateRegister(this.state.user);
+    if (!valid) {
+      this.setState({ errors });
+    }
+    return valid;
   }
   render() {
     return (
-      <div >
-        {/* {this.state.user && <Redirect to="/documents" />}*/}
+      <div>
         <RegisterForm
           onChange={this.onChange}
           onSave={this.onSave}
           user={this.state.user}
+          errors={this.state.errors}
         />
       </div >
     );

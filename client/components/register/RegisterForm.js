@@ -20,6 +20,7 @@ const RegisterForm = props => (
                 value={props.user.username}
                 onChange={props.onChange}
               />
+              {props.errors.username && <p className="error">{props.errors.username}</p>}
               <Input
                 label="Email"
                 type="email"
@@ -28,6 +29,7 @@ const RegisterForm = props => (
                 value={props.user.email}
                 onChange={props.onChange}
               />
+              {props.errors.email && <p className="error">{props.errors.email}</p>}
               <Input
                 type="password"
                 label="password"
@@ -36,6 +38,7 @@ const RegisterForm = props => (
                 value={props.user.password}
                 onChange={props.onChange}
               />
+              {props.errors.password && <p className="error">{props.errors.password}</p>}
             </Row>
             <Row>
               <button
@@ -57,5 +60,6 @@ RegisterForm.propTypes = {
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 export default RegisterForm;

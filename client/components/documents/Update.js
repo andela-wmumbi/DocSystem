@@ -36,9 +36,9 @@ class UpdateDocument extends Component {
   }
 
   handleSave(event) {
+    const { documentContent } = this.state;
     event.preventDefault();
-    this.props.actions.updateDocument(this.state.documentContent).then(() => {
-      //this.context.router.history.push('/documents');
+    this.props.actions.updateDocument(documentContent).then(() => {
     });
     this.props.closeModal();
   }
@@ -52,6 +52,7 @@ class UpdateDocument extends Component {
   render() {
     return (
       <div >
+        { this.props.isModalOpen &&
         <ModalContainer onClose={this.props.closeModal} >
           <ModalDialog onClose={this.props.closeModal}>
             <h6>Edit your document</h6>
@@ -68,9 +69,7 @@ class UpdateDocument extends Component {
             <button onClick={this.handleSave}>Save</button>
           </ModalDialog>
         </ModalContainer >
-        <DocumentList
-          documents={this.state.document}
-        />
+        }
       </div >
     );
   }
@@ -79,6 +78,9 @@ UpdateDocument.propTypes = {
   actions: PropTypes.object,
   document: PropTypes.object.isRequired,
   closeModal: PropTypes.func.isRequired
+};
+UpdateDocument.contextTypes = {
+  router: PropTypes.object.isRequired
 };
 function mapStateToProps(state) {
   return {

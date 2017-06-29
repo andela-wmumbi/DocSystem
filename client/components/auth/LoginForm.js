@@ -23,6 +23,7 @@ const LoginForm = props => (
                 value={props.credentials.email}
                 onChange={props.onChange}
               />
+              {props.errors.email && <p className="error">{props.errors.email}</p>}
               <Input
                 type="password"
                 label="password"
@@ -31,6 +32,7 @@ const LoginForm = props => (
                 value={props.credentials.password}
                 onChange={props.onChange}
               />
+              {props.errors.password && <p className="error">{props.errors.password}</p>}
             </Row>
             <br />
           </div>
@@ -54,5 +56,6 @@ LoginForm.propTypes = {
   credentials: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 export default LoginForm;

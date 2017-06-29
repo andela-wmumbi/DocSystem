@@ -51,12 +51,13 @@ class DocumentList extends Component {
   }
   render() {
     const { documentContent, documents } = this.state;
+
     return (
-      <div className="documents">
+      <div>
         <center>
-          <Row>
+          <Row >
             {documents.map(document =>
-              (<Col s={6} key={document.id}>
+              (<Col s={6} key={document.id} className="col">
                 <CardPanel className="card">
                   <span> <h4>{document.title}</h4>
                     <p>{document.content}</p>
@@ -65,7 +66,11 @@ class DocumentList extends Component {
                     >
                       EDIT
                     </button>
-                    <button onClick={() => this.deleteDocument(document.id)}>DELETE</button>
+                    <button onClick={() =>
+                      this.deleteDocument(document.id)}
+                    >
+                      DELETE
+                    </button>
                   </span>
                 </CardPanel>
               </Col>)
@@ -75,6 +80,7 @@ class DocumentList extends Component {
             this.state.isModalOpen &&
             <Update
               closeModal={this.closeModal}
+              isModalOpen={this.state.isModalOpen}
               document={documentContent}
             />
           }
@@ -100,9 +106,9 @@ DocumentList.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-DocumentList.defaultProps = {
-  documents: []
-};
+// DocumentList.defaultProps = {
+//   documents: []
+// };
 
 function mapStateToProps(state) {
   return {

@@ -14,7 +14,7 @@ const CreateDocument = props => (
             <Row>
               <Input
                 placeholder="Input title"
-                s={6}
+                s={12}
                 label="Title"
                 type="text"
                 name="title"

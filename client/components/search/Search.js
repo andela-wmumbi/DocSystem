@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import 'react-select/dist/react-select.css';
 import * as UserActions from './../../actions/UserActions';
 import SearchDisplay from './SearchDisplay';
+import UserDetails from './../../actions/UserDetails';
 
 class Search extends Component {
   constructor(props) {
@@ -14,14 +15,24 @@ class Search extends Component {
       isViewReady: false,
       userdocuments: props.userdocuments,
       userdocs: props.users,
-      users: props.users
+      users: props.users,
+      userDetails: {
+        id: '',
+        username: '',
+        createdAt: '',
+        role: '',
+        email: ''
+      }
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.getNames = this.getNames.bind(this);
+    this.getUserDetails = this.getUserDetails.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
   }
   componentDidMount() {
     this.props.actions.loadUsers().then(() => {
       this.getNames();
+      this.getUserDetails();
     });
   }
   componentWillReceiveProps(nextProps) {
@@ -33,6 +44,18 @@ class Search extends Component {
     if (userdocuments !== this.state.userdocuments) {
       this.setState({ userdocuments });
     }
+  }
+  getUserDetails() {
+    const { users } = this.state;
+    this.setState({
+      userDetails: {
+        id: users.id,
+        username: users.username,
+        createdAt: users.createdAt,
+        role: users.roleId,
+        email: users.email
+      }
+    });
   }
   getNames() {
     const { users } = this.state;
@@ -47,21 +70,27 @@ class Search extends Component {
       this.setState({ isViewReady: true });
     });
   }
+  deleteUser() {
+    const id = this.state.userDetails.id;
+    this.props.actions.deleteUser(id);
+  }
   render() {
-    const { isViewReady, userdocuments } = this.state;
+    const { isViewReady, userdocuments, userDetails } = this.state;
     return (
       <div>
         <div className="search">
           <Select
+            placeholder="Search a user"
             name="form-field-name"
             value={''}
             options={this.state.names}
             onChange={this.handleSearch}
-            placeholder="Search a user"
           />
           {isViewReady &&
             <SearchDisplay
               documents={userdocuments}
+              userDetails={userDetails}
+              deleteUser={this.deleteUser}
             />
           }
         </div>

@@ -14,7 +14,6 @@ class Header extends Component {
     };
   }
   componentWillMount() {
-    console.log('id', UserDetails.decodeToken(sessionStorage.token));
     this.props.actions.getUserDocuments(UserDetails.decodeToken(sessionStorage.token).id);
   }
   componentWillReceiveProps(nextProps) {
@@ -27,23 +26,25 @@ class Header extends Component {
     const { documents } = this.state;
     return (
       <div>
-        <Row>
-          {documents.map(document =>
-            (<Col s={12} m={5} key={document.id}>
-              <CardPanel className="card">
-                <span> <h4>{document.title}</h4>
-                  <p>{document.content}</p>
-                  <button onClick={() =>
-                    this.openModal(document.id, document.content, document.title)}
-                  >
-                    EDIT
+        <center>
+          <Row>
+            {documents.map(document =>
+              (<Col s={12} m={5} key={document.id}>
+                <CardPanel className="card">
+                  <span> <h4>{document.title}</h4>
+                    <p>{document.content}</p>
+                    <button onClick={() =>
+                      this.openModal(document.id, document.content, document.title)}
+                    >
+                      EDIT
                     </button>
-                  <button onClick={() => this.deleteDocument(document.id)}>DELETE</button>
-                </span>
-              </CardPanel>
-            </Col>)
-          )}
-        </Row>
+                    <button onClick={() => this.deleteDocument(document.id)}>DELETE</button>
+                  </span>
+                </CardPanel>
+              </Col>)
+            )}
+          </Row>
+        </center>
       </div>
     );
   }

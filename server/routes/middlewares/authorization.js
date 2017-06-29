@@ -21,7 +21,6 @@ class Authenticate {
     }
   }
   verifyAdmin(req, res, next) {
-    console.log(req);
     const role = req.decoded.roleId;
     if (role && role === 1) {
       next();

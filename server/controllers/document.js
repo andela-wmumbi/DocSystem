@@ -1,4 +1,4 @@
-const document = require('../models').document;
+const document = require('./../models').document;
 
 class DocumentController {
   create(req, res) {
@@ -60,14 +60,14 @@ class DocumentController {
         }
         return document
           .update({
-            title: req.body.title || document.title
+            title: req.body.title || document.title,
+            content: req.body.content || document.content
           })
-          .then(() => res.status(200).send(document))
+          .then((doc) => res.status(200).send(doc))
           .catch(error => res.status(400).send(error));
       });
   }
   destroy(req, res) {
-    console.log("I was called");
     return document
       .findById(req.params.docId)
       .then((document) => {
