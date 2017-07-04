@@ -13,4 +13,6 @@ module.exports = (app) => {
     .delete(auth, authAdmin, document.destroy);
   app.route('/search/documents/:document')
     .get(document.findDocument);
+  app.route('/api/documents/?limit={integer}&offset={integer}')
+    .get(document.list);
 };

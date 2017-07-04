@@ -19,10 +19,17 @@ class userController {
       );
   }
   list(req, res) {
-    return user
-      .findAll()
-      .then(user => res.status(200).send(user))
-      .catch(error => res.status(404).send(error));
+    if (req.query.limit || req.query.offset) {
+      return user
+        .findAll(
+        {
+          limit: req.query.limit,
+          offset: req.query.offset
+        }
+        )
+        .then(user => res.status(200).send(user))
+        .catch(error => res.status(404).send(error));
+    }
   }
   findOne(req, res) {
     return user

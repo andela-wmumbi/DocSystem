@@ -20,4 +20,6 @@ module.exports = (app) => {
     .get(auth, user.findUserDocuments);
   app.route('/search/users/:user')
     .get(auth, user.findUser);
+  app.route('/api/users/?limit={integer}&offset={integer}')
+    .get(user.list);
 };

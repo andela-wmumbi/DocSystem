@@ -3,14 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import { Input } from 'react-materialize';
-import DocumentList from './DocumentList';
-import * as documentActions from './../../actions/DocumentActions';
+import * as documentActions from './../../actions/documentActions';
 
 class UpdateDocument extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: props.documents,
       document: props.document,
       documentContent: {
         title: props.document.title,
@@ -52,32 +50,33 @@ class UpdateDocument extends Component {
   render() {
     return (
       <div >
-        { this.props.isModalOpen &&
-        <ModalContainer onClose={this.props.closeModal} >
-          <ModalDialog onClose={this.props.closeModal}>
-            <h6>Edit your document</h6>
-            <Input
-              value={this.state.documentContent.title}
-              name="title"
-              onChange={this.handleChange}
-            />
-            <textarea
-              name="content"
-              onChange={this.handleChange}
-              value={this.state.documentContent.content}
-            />
-            <button onClick={this.handleSave}>Save</button>
-          </ModalDialog>
-        </ModalContainer >
+        {this.props.isModalOpen &&
+          <ModalContainer onClose={this.props.closeModal} >
+            <ModalDialog onClose={this.props.closeModal}>
+              <h6>Edit your document</h6>
+              <Input
+                value={this.state.documentContent.title}
+                name="title"
+                onChange={this.handleChange}
+              />
+              <textarea
+                name="content"
+                onChange={this.handleChange}
+                value={this.state.documentContent.content}
+              />
+              <button onClick={this.handleSave}>Save</button>
+            </ModalDialog>
+          </ModalContainer >
         }
       </div >
     );
   }
 }
 UpdateDocument.propTypes = {
-  actions: PropTypes.object,
+  actions: PropTypes.object.isRequired,
   document: PropTypes.object.isRequired,
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  isModalOpen: PropTypes.func.isRequired
 };
 UpdateDocument.contextTypes = {
   router: PropTypes.object.isRequired

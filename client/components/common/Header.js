@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { Row, Col, CardPanel } from 'react-materialize';
 import { connect } from 'react-redux';
-import * as DocumentActions from './../../actions/DocumentActions';
-import UserDetails from './../../actions/UserDetails';
+import * as DocumentActions from './../../actions/documentActions';
+import userDetails from './../../actions/userDetails';
 
 class Header extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class Header extends Component {
     };
   }
   componentWillMount() {
-    this.props.actions.getUserDocuments(UserDetails.decodeToken(sessionStorage.token).id);
+    this.props.actions.getUserDocuments(userDetails.decodeToken(sessionStorage.token).id);
   }
   componentWillReceiveProps(nextProps) {
     const { documents } = nextProps;

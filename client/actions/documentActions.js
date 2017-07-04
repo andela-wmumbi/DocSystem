@@ -3,9 +3,9 @@ Action creators are methods that wrap and return the action object*/
 import {
   getAllDocuments,
   documentCreate, getDocumentUpdate,
-  getDocumentDelete, getUserDocs, getADocument
+  getDocumentDelete, getUserDocs, getADocument, getPagination
 } from './../apis/DocumentApi';
-import * as types from './ActionTypes';
+import * as types from './actionTypes';
 
 export function loadsDocumentsSuccess(documents) {
   return { type: types.LOAD_DOCUMENTS_SUCCESS, documents };
@@ -26,69 +26,73 @@ export function getUserDocsSuccess(documents) {
 export function loadsADocumentSuccess(document) {
   return { type: types.GET_A_DOCUMENT_SUCCESS, document };
 }
+export function loadsADocumentFailure(isSearchError) {
+  return { type: types.GET_A_DOCUMENT_FAILURE, isSearchError };
+}
+export function loadsPagination(pageDocuments) {
+  return { type: types.LOAD_PAGEDOCUMENTS_SUCCESS, pageDocuments };
+}
 
 export function createDocument(document) {
-  return (dispatch) => {
-    return documentCreate(document).then((response) => {
-      // sessionStorage.setItem('jwt', response.jwt);
-      dispatch(createDocumentSuccess(response.body));
-    }).catch((error) => {
-      throw (error);
-    });
-  };
+  return (dispatch) => documentCreate(document).then((response) => {
+    dispatch(createDocumentSuccess(response.body));
+  }).catch((error) => {
+    throw (error);
+  });
 }
 export function loadDocuments() {
-  return (dispatch) => {
-    return getAllDocuments()
-      .then((res) => {
-        dispatch(loadsDocumentsSuccess(res.body));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
+  return (dispatch) => getAllDocuments()
+    .then((res) => {
+      dispatch(loadsDocumentsSuccess(res.body));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+}
+export function paginateDocuments(limit = 4, offset = 1) {
+  return (dispatch) => getPagination(limit, offset)
+    .then((res) => {
+      dispatch(loadsPagination(res.body));
+    })
+    .catch((error) => {
+      throw (error);
+    });
 }
 export function updateDocument(document) {
-  return (dispatch) => {
-    return getDocumentUpdate(document)
-      .then((res) => {
-        dispatch(updateDocumentsSuccess(res.body));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
+  return (dispatch) => getDocumentUpdate(document)
+    .then((res) => {
+      dispatch(updateDocumentsSuccess(res.body));
+    })
+    .catch((error) => {
+      throw (error);
+    });
 }
 export function deleteDocument(id, token) {
-  return (dispatch) => {
-    return getDocumentDelete(id, token)
-      .then((res) => {
-        dispatch(deleteDocumentSuccess(res.body));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
+  return (dispatch) => getDocumentDelete(id, token)
+    .then((res) => {
+      dispatch(deleteDocumentSuccess(res.body));
+    })
+    .catch((error) => {
+      throw (error);
+    });
 }
 export function getUserDocuments(id) {
-  return (dispatch) => {
-    return getUserDocs(id)
-      .then((documents) => {
-        dispatch(getUserDocsSuccess(documents.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
+  return (dispatch) => getUserDocs(id)
+    .then((documents) => {
+      dispatch(getUserDocsSuccess(documents.data));
+    })
+    .catch((error) => {
+      throw (error);
+    });
 }
 export function searchDocument(title) {
-  return (dispatch) => {
-    return getADocument(title)
-      .then((res) => {
-        dispatch(loadsADocumentSuccess(res.body));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
+  return (dispatch) => getADocument(title)
+    .then((res) => {
+      dispatch(loadsADocumentSuccess(res.body));
+    })
+    .catch((error) => {
+      dispatch(loadsADocumentFailure(error));
+      throw (error);
+    });
 }
+

@@ -37,3 +37,8 @@ export function getADocument(title) {
     .get(`/search/documents/${title}`)
     .set('x-access-token', sessionStorage.token);
 }
+export function getPagination(limit, offset) {
+  return request
+    .get(`/api/documents/?limit=${limit}&offset=${offset}`)
+    .set('x-access-token', sessionStorage.token);
+}

@@ -33,6 +33,16 @@ export function getAUser(name) {
 }
 export function getUserDelete(id) {
   return request
-    .delete(`/api/users/${id}`)
+    .delete(`/api/users/${id}`);
+}
+export function getUserUpdate(user) {
+  return request
+    .put(`/api/users/${user.id}`)
+    .set('x-access-token', sessionStorage.token)
+    .send(user);
+}
+export function getUsersPagination(limit, offset) {
+  return request
+    .get(`/api/users/?limit=${limit}&offset=${offset}`)
     .set('x-access-token', sessionStorage.token);
 }

@@ -3,4 +3,6 @@ export default {
   users: [],
   userdocuments: [],
   searchdocument: [],
+  pageDocuments: [],
+  pageUsers: []
 };

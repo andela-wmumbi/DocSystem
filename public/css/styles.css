@@ -7,7 +7,7 @@ nav {
   padding-bottom: 2px;
 }
 .card {
-background-color:#e0f2f1;
+background-color:#e3f2fd;
 width: 400px;
 margin: 5% 10px;
 padding: 13px 10.15rem;
@@ -57,7 +57,9 @@ margin-top: 18px
     padding: 0 0 0 15px;
 }
 button {
-  margin: 4px;
+  margin: 0px;
+ border:0px;
+ background-color:inherit;
 }
 /*.search {
 	border:0px;
@@ -72,3 +74,6 @@ button {
 p.error {
     color: red
 }
+/*.avatar {
+  float:left
+}*/

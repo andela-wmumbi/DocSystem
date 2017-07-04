@@ -1,8 +1,8 @@
-import * as types from './../actions/ActionTypes';
-import initialState from './InitialState';
+import * as types from './../actions/actionTypes';
+import initialState from './initialState';
 
 export default function documentReducer(state = initialState.documents, action) {
-  /* updating the state without mutating it
+	/* updating the state without mutating it
 create another array of data and
 update it's content with the previous state and that changes made
 The spread operator just pours out the content on the array into the new array*/

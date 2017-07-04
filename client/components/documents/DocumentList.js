@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import swal from 'sweetalert';
-import { Row, Col, CardPanel, Pagination, Button } from 'react-materialize';
-import { bindActionCreators } from 'redux';
-import UserDetails from './../../actions/UserDetails';
+import { Button } from 'react-materialize';
+import Pagination from 'react-js-pagination';
+import UserDetails from './../../actions/userDetails';
 import Update from './Update';
-import Search from './Search';
-import * as DocumentActions from './../../actions/DocumentActions';
+import AllDocuments from './AllDocuments';
+import * as DocumentActions from './../../actions/documentActions';
 
 
 class DocumentList extends Component {
@@ -15,6 +16,8 @@ class DocumentList extends Component {
     this.state = {
       documents: props.documents,
       isModalOpen: false,
+      activePage: 1,
+      limit: 4,
       documentContent: {
         content: '',
         title: '',
@@ -23,9 +26,10 @@ class DocumentList extends Component {
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
   componentDidMount() {
-    this.props.actions.loadDocuments();
+    this.props.actions.loadDocuments(this.state.limit, 0);
   }
   componentWillReceiveProps(nextProps) {
     const { documents } = nextProps;
@@ -49,33 +53,21 @@ class DocumentList extends Component {
   handleCreateDoc() {
     this.context.router.history.push('/createdoc');
   }
+  handlePageChange(pageNumber) {
+    this.setState({ activePage: pageNumber });
+    this.props.actions.paginateDocuments(this.state.limit, (this.state.limit * (pageNumber - 1)));
+  }
   render() {
     const { documentContent, documents } = this.state;
-
+    const { pageDocuments } = this.props
     return (
       <div>
         <center>
-          <Row >
-            {documents.map(document =>
-              (<Col s={6} key={document.id} className="col">
-                <CardPanel className="card">
-                  <span> <h4>{document.title}</h4>
-                    <p>{document.content}</p>
-                    <button onClick={() =>
-                      this.openModal(document.id, document.content, document.title)}
-                    >
-                      EDIT
-                    </button>
-                    <button onClick={() =>
-                      this.deleteDocument(document.id)}
-                    >
-                      DELETE
-                    </button>
-                  </span>
-                </CardPanel>
-              </Col>)
-            )}
-          </Row>
+          <AllDocuments
+            documents={pageDocuments}
+            openModal={this.openModal}
+            deleteDocument={this.deleteDocument}
+          />
           {
             this.state.isModalOpen &&
             <Update
@@ -92,7 +84,13 @@ class DocumentList extends Component {
             icon="add"
             onClick={() => this.handleCreateDoc()}
           />
-          <Pagination items={8} activePage={2} maxButtons={6} />
+          <Pagination
+            activePage={this.state.activePage}
+            itemsCountPerPage={this.state.limit}
+            totalItemsCount={documents.length}
+            pageRangeDisplayed={5}
+            onChange={this.handlePageChange}
+          />
         </center >
       </div >
     );
@@ -100,19 +98,16 @@ class DocumentList extends Component {
 }
 DocumentList.propTypes = {
   actions: PropTypes.object.isRequired,
-  documents: PropTypes.array,
+  documents: PropTypes.array.isRequired
 };
 DocumentList.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-// DocumentList.defaultProps = {
-//   documents: []
-// };
-
 function mapStateToProps(state) {
   return {
-    documents: state.documents
+    documents: state.documents,
+    pageDocuments: state.pageDocuments
   };
 }
 

@@ -1,5 +1,5 @@
-import * as types from './ActionTypes';
-import { register, getAllUsers, getAUser, getUserDelete } from '../apis/UserApi';
+import * as types from './actionTypes';
+import { register, getAllUsers, getAUser, getUserDelete, getUserUpdate, getUsersPagination } from '../apis/UserApi';
 
 export function registerSuccess() {
   return { type: types.CREATE_USER_SUCCESS, };
@@ -13,6 +13,16 @@ export function loadsUserSuccess(userdocuments) {
 export function deleteUserSuccess(id) {
   return { type: types.DELETE_USER_SUCCESS, id };
 }
+export function loadsUserFailure(isSearchError) {
+  return { type: types.GET_A_USER_FAILURE, isSearchError };
+}
+export function updateUserSuccess(user) {
+  return { type: types.UPDATE_USER_SUCCESS, user };
+}
+export function loadsUsersPagination(pageUsers) {
+  return { type: types.LOAD_PAGEUSERS_SUCCESS, pageUsers };
+}
+
 export function registerUser(user) {
   return dispatch => register(user).then(() => {
     dispatch(registerSuccess(user));
@@ -53,7 +63,26 @@ export function deleteUser(id) {
         dispatch(deleteUserSuccess(res.body));
       })
       .catch((error) => {
+        dispatch(loadsUserFailure(error));
         throw (error);
       });
   };
+}
+export function updateUser(userDetails) {
+  return (dispatch) => getUserUpdate(userDetails)
+    .then((res) => {
+      dispatch(updateUserSuccess(res.body));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+}
+export function paginateUsers(limit = 4, offset = 1) {
+  return (dispatch) => getUsersPagination(limit, offset)
+    .then((res) => {
+      dispatch(loadsUsersPagination(res.body));
+    })
+    .catch((error) => {
+      throw (error);
+    });
 }

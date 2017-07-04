@@ -4,7 +4,7 @@ import AlertContainer from 'react-alert';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import validateLogIn from './Validate';
-import * as LoginActions from './../../actions/LoginActions';
+import * as LoginActions from './../../actions/loginActions';
 
 
 class Login extends Component {
@@ -12,7 +12,7 @@ class Login extends Component {
     super(props);
     this.state = {
       credentials: { email: '', password: '' },
-      errors: ''
+      errors: []
     };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -53,7 +53,7 @@ class Login extends Component {
     });
   }
   render() {
-    const { isLoginPending, isLoginSuccess, loginError } = this.props;
+    const { isLoginSuccess, loginError } = this.props;
     return (
       <div >
         <LoginForm
@@ -63,7 +63,6 @@ class Login extends Component {
           errors={this.state.errors}
         />
         <div className="message">
-          {/* {isLoginPending &&}*/}
           <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
           {isLoginSuccess && <div> {this.showAlert('success', 'Succesully logged in')}</div>}
           {loginError && <div> {this.showAlert('error', 'There was a problem logging in')}</div>}
@@ -74,9 +73,8 @@ class Login extends Component {
 }
 Login.propTypes = {
   actions: PropTypes.object.isRequired,
-  isLoginPending: PropTypes.bool.isRequired,
   isLoginSuccess: PropTypes.bool.isRequired,
-  loginError: PropTypes.bool.isRequired
+  loginError: PropTypes.bool
 };
 Login.contextTypes = {
   router: PropTypes.object.isRequired
