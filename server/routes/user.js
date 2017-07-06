@@ -11,7 +11,7 @@ module.exports = (app) => {
   app.route('/api/users/:userId')
     .get(auth, user.findOne)
     .put(auth, user.update)
-    .delete(auth, authAdmin, user.destroy);
+    .delete(user.destroy);
   app.route('/api/signin')
     .post(user.login);
   app.route('/api/logout')
@@ -20,4 +20,6 @@ module.exports = (app) => {
     .get(auth, user.findUserDocuments);
   app.route('/search/users/:user')
     .get(auth, user.findUser);
+  app.route('/api/users/?limit={integer}&offset={integer}')
+    .get(user.list);
 };

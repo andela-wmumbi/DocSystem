@@ -19,6 +19,24 @@ class userController {
       );
   }
   list(req, res) {
+    if (req.query.limit || req.query.offset) {
+      return user
+        .findAll({
+          limit: req.query.limit,
+          offset: req.query.offset
+        })
+         .then((user) => {
+           if (!user) {
+             return res.status(404).send({
+               message: 'Users not found'
+             });
+           }
+           res.status(200).send(user);
+         })
+        .catch((error) => {
+          res.status(400).json(error);
+        });
+    }
     return user
       .findAll()
       .then(user => res.status(200).send(user))
@@ -60,6 +78,7 @@ class userController {
         }
         return user
           .update({
+            username: req.body.username || user.username,
             email: req.body.email || user.email,
           })
           .then(() => res.status(200).send(user))
@@ -99,8 +118,8 @@ class userController {
           createdAt: user.createdAt,
           email: user.email,
         }, secretKey, {
-            expiresIn: 60 * 60
-          });
+          expiresIn: 60 * 60
+        });
         user.password = null;
         res.status(200).json(Object.assign({},
           { id: user.id, username: user.username, email: user.email }, { token }));

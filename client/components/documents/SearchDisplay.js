@@ -19,6 +19,7 @@ const SearchDisplay = (props) => (
             </CardPanel>
           </Col>)
         )}
+        {props.error && <p>Document doesnot exist</p>}
       </Row>
     </center>
   </div >

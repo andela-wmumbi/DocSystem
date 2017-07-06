@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as UserActions from './../../actions/UserActions';
+import * as userActions from './../../actions/userActions';
 
 class Logout extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ Logout.contextTypes = {
 };
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(UserActions, dispatch)
+    actions: bindActionCreators(userActions, dispatch)
   };
 }
 export default connect(null, mapDispatchToProps)(Logout);

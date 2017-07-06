@@ -1,5 +1,5 @@
-import * as types from './../actions/ActionTypes';
-import initialState from './InitialState';
+import * as types from './../actions/actionTypes';
+import initialState from './../reducers/initialState';
 
 export default function documentReducer(state = initialState.documents, action) {
   /* updating the state without mutating it

@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import swal from 'sweetalert';
-import { Row, Col, CardPanel, Pagination, Button } from 'react-materialize';
 import { bindActionCreators } from 'redux';
-import UserDetails from './../../actions/UserDetails';
+import { connect } from 'react-redux';
+import toastr from 'toastr';
+import AlertContainer from 'react-alert';
+import { Button } from 'react-materialize';
+import Pagination from 'react-js-pagination';
 import Update from './Update';
-import Search from './Search';
-import * as DocumentActions from './../../actions/DocumentActions';
+import AllDocuments from './AllDocuments';
+import * as documentActions from './../../actions/documentActions';
 
 
 class DocumentList extends Component {
@@ -15,17 +16,23 @@ class DocumentList extends Component {
     this.state = {
       documents: props.documents,
       isModalOpen: false,
+      activePage: 1,
+      limit: 4,
       documentContent: {
         content: '',
         title: '',
         id: ''
       }
     };
+    this.showAlert = this.showAlert.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.deleteDocument = this.deleteDocument.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
   componentDidMount() {
     this.props.actions.loadDocuments();
+    this.props.actions.paginateDocuments(this.state.limit, 0);
   }
   componentWillReceiveProps(nextProps) {
     const { documents } = nextProps;
@@ -41,41 +48,41 @@ class DocumentList extends Component {
     this.setState({ isModalOpen: false });
   }
   deleteDocument(id) {
-    this.props.actions.deleteDocument(id, UserDetails.isUser())
-      .then(() => {
-        swal('Document deleted successfully');
-      });
+    this.props.actions.deleteDocument(id).then(() => {
+      toastr.success('Document deleted successfully');
+    })
+    .catch(() => {
+      toastr.error('Couldnot delete the document');
+    });
   }
   handleCreateDoc() {
     this.context.router.history.push('/createdoc');
   }
+  handlePageChange(pageNumber) {
+    this.setState({ activePage: pageNumber });
+    this.props.actions.paginateDocuments(this.state.limit, (this.state.limit * (pageNumber - 1)));
+  }
+  showAlert(error, mesg) {
+    this.msg.show(mesg, {
+      time: 5000,
+      type: error,
+      offset: 14,
+      position: 'bottom left',
+      theme: 'dark',
+      transition: 'scale'
+    });
+  }
   render() {
     const { documentContent, documents } = this.state;
-
+    const { pageDocuments, isDeleteSuccess, deleteError } = this.props;
     return (
       <div>
         <center>
-          <Row >
-            {documents.map(document =>
-              (<Col s={6} key={document.id} className="col">
-                <CardPanel className="card">
-                  <span> <h4>{document.title}</h4>
-                    <p>{document.content}</p>
-                    <button onClick={() =>
-                      this.openModal(document.id, document.content, document.title)}
-                    >
-                      EDIT
-                    </button>
-                    <button onClick={() =>
-                      this.deleteDocument(document.id)}
-                    >
-                      DELETE
-                    </button>
-                  </span>
-                </CardPanel>
-              </Col>)
-            )}
-          </Row>
+          <AllDocuments
+            documents={pageDocuments}
+            openModal={this.openModal}
+            deleteDocument={this.deleteDocument}
+          />
           {
             this.state.isModalOpen &&
             <Update
@@ -92,7 +99,18 @@ class DocumentList extends Component {
             icon="add"
             onClick={() => this.handleCreateDoc()}
           />
-          <Pagination items={8} activePage={2} maxButtons={6} />
+          <Pagination
+            activePage={this.state.activePage}
+            itemsCountPerPage={this.state.limit}
+            totalItemsCount={documents.length}
+            pageRangeDisplayed={5}
+            onChange={this.handlePageChange}
+          />
+          <div className="message">
+            <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
+            {isDeleteSuccess && <div> {this.showAlert('success', 'Document Succesully deleted')}</div>}
+            {deleteError && <div> {this.showAlert('error', 'There was a problem deleting')}</div>}
+          </div>
         </center >
       </div >
     );
@@ -100,25 +118,27 @@ class DocumentList extends Component {
 }
 DocumentList.propTypes = {
   actions: PropTypes.object.isRequired,
-  documents: PropTypes.array,
+  documents: PropTypes.object.isRequired,
+  pageDocuments: PropTypes.array.isRequired,
+  // isDeleteSuccess: PropTypes.bool.isRequired,
+  // deleteError: PropTypes.bool.isRequired
 };
 DocumentList.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-// DocumentList.defaultProps = {
-//   documents: []
-// };
-
 function mapStateToProps(state) {
   return {
-    documents: state.documents
+    isDeleteSuccess: state.isDeleteSuccess,
+    deleteError: state.deleteError,
+    documents: state.documents,
+    pageDocuments: state.pageDocuments
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(DocumentActions, dispatch)
+    actions: bindActionCreators(documentActions, dispatch)
   };
 }
 
