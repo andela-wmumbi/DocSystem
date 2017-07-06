@@ -32,16 +32,22 @@ export function loadsADocumentFailure(isSearchError) {
 export function loadsPagination(pageDocuments) {
   return { type: types.LOAD_PAGEDOCUMENTS_SUCCESS, pageDocuments };
 }
+export function setDeleteSuccess(isDeleteSuccess) {
+  return { type: types.SET_DELETE_SUCCESS, isDeleteSuccess };
+}
+export function setDeleteError(deleteError) {
+  return { type: types.SET_DELETE_ERROR, deleteError };
+}
 
 export function createDocument(document) {
-  return (dispatch) => documentCreate(document).then((response) => {
+  return dispatch => documentCreate(document).then((response) => {
     dispatch(createDocumentSuccess(response.body));
   }).catch((error) => {
     throw (error);
   });
 }
 export function loadDocuments() {
-  return (dispatch) => getAllDocuments()
+  return dispatch => getAllDocuments()
     .then((res) => {
       dispatch(loadsDocumentsSuccess(res.body));
     })
@@ -50,7 +56,7 @@ export function loadDocuments() {
     });
 }
 export function paginateDocuments(limit = 4, offset = 1) {
-  return (dispatch) => getPagination(limit, offset)
+  return dispatch => getPagination(limit, offset)
     .then((res) => {
       dispatch(loadsPagination(res.body));
     })
@@ -59,7 +65,7 @@ export function paginateDocuments(limit = 4, offset = 1) {
     });
 }
 export function updateDocument(document) {
-  return (dispatch) => getDocumentUpdate(document)
+  return dispatch => getDocumentUpdate(document)
     .then((res) => {
       dispatch(updateDocumentsSuccess(res.body));
     })
@@ -68,16 +74,21 @@ export function updateDocument(document) {
     });
 }
 export function deleteDocument(id, token) {
-  return (dispatch) => getDocumentDelete(id, token)
+  return (dispatch) => {
+    dispatch(setDeleteSuccess(false));
+    return getDocumentDelete(id, token)
     .then((res) => {
-      dispatch(deleteDocumentSuccess(res.body));
+      dispatch(deleteDocumentSuccess(res.body.message));
+      // dispatch(setDeleteSuccess(true));
     })
     .catch((error) => {
+      dispatch(setDeleteError(error));
       throw (error);
     });
+  };
 }
 export function getUserDocuments(id) {
-  return (dispatch) => getUserDocs(id)
+  return dispatch => getUserDocs(id)
     .then((documents) => {
       dispatch(getUserDocsSuccess(documents.data));
     })
@@ -86,7 +97,7 @@ export function getUserDocuments(id) {
     });
 }
 export function searchDocument(title) {
-  return (dispatch) => getADocument(title)
+  return dispatch => getADocument(title)
     .then((res) => {
       dispatch(loadsADocumentSuccess(res.body));
     })

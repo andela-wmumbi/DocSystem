@@ -7,7 +7,7 @@ const AllDocuments = (props) => (
       {props.documents.map(document =>
         (<Col s={6} key={document.id} className="col">
           <CardPanel className="card">
-            <span> <h4>{document.title}</h4>
+            <span> <h5>{document.title}</h5>
               <p>{document.content}</p>
               <hr />
               <button onClick={() =>

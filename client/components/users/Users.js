@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import toastr from 'toastr';
 import { bindActionCreators } from 'redux';
 import 'react-select/dist/react-select.css';
 import { Button } from 'react-materialize';
 import Pagination from 'react-js-pagination';
 import * as userActions from './../../actions/userActions';
-import SearchDisplay from './search/SearchDisplay';
 import UsersList from './UsersList';
 import UpdateUsers from './UpdateUsers';
 
@@ -15,8 +15,6 @@ class Users extends Component {
     this.state = {
       name: [],
       isModalOpen: false,
-      userdocuments: props.userdocuments,
-      userdocs: props.users,
       users: props.users,
       activePage: 1,
       limit: 4,
@@ -27,20 +25,19 @@ class Users extends Component {
       }
     };
     // this.handleSearch = this.handleSearch.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
   }
   componentDidMount() {
-    this.props.actions.loadUsers(this.state.limit, 0);
+    this.props.actions.loadUsers();
+    this.props.actions.paginateUsers(this.state.limit, 0);
   }
   componentWillReceiveProps(nextProps) {
     const { users } = nextProps;
     if (users !== this.state.users) {
       this.setState({ users });
-    }
-    const { userdocuments } = nextProps;
-    if (userdocuments !== this.state.userdocuments) {
-      this.setState({ userdocuments });
     }
   }
   openModal(id, username, email) {
@@ -51,9 +48,12 @@ class Users extends Component {
     this.setState({ isModalOpen: false });
   }
   deleteUser(id) {
-    this.props.actions.deleteDocument(id, UserDetails.isUser())
+    this.props.actions.deleteUser(id)
       .then(() => {
-        swal('Document deleted successfully');
+        toastr.success('User deleted succesfully');
+      })
+      .catch(() => {
+        toastr.success('Couldnot delete user');
       });
   }
   // handleCreateDoc() {
@@ -63,10 +63,6 @@ class Users extends Component {
     this.setState({ activePage: pageNumber });
     this.props.actions.paginateUsers(this.state.limit, (this.state.limit * (pageNumber - 1)));
   }
-  // handleChange(event) {
-  //   const name = event.target.value;
-  //   this.setState({ name });
-  // }
   // handleSearch(name) {
   //   this.props.actions.searchUser(name).then(() => {
   //     this.setState({ isViewReady: true });
@@ -78,7 +74,7 @@ class Users extends Component {
   //   this.props.actions.deleteUser(id);
   // }
   render() {
-    const { isViewReady, userdocuments, userDetails, name, users } = this.state;
+    const { userDetails, users } = this.state;
     const { pageUsers } = this.props;
     return (
       <div>
@@ -117,7 +113,7 @@ class Users extends Component {
 Users.propTypes = {
   actions: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired,
-  userdocuments: PropTypes.array.isRequired,
+  pageUsers: PropTypes.array.isRequired
 };
 Users.defaultProps = {
   users: []
@@ -129,7 +125,6 @@ function mapStateToProps(state) {
   // users and userdocuments are as named in reducers
   return {
     users: state.users,
-    userdocuments: state.userdocuments,
     pageUsers: state.pageUsers
   };
 }

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import toastr from 'toastr';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import { Input } from 'react-materialize';
 import * as documentActions from './../../actions/documentActions';
@@ -37,6 +38,11 @@ class UpdateDocument extends Component {
     const { documentContent } = this.state;
     event.preventDefault();
     this.props.actions.updateDocument(documentContent).then(() => {
+      toastr.success('Document updated successfully');
+      this.context.router.history.push('/documents');
+    })
+    .catch(() => {
+      toastr.error('Couldnot update the document');
     });
     this.props.closeModal();
   }

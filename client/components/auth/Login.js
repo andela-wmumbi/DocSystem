@@ -4,7 +4,7 @@ import AlertContainer from 'react-alert';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import validateLogIn from './Validate';
-import * as LoginActions from './../../actions/loginActions';
+import * as loginActions from './../../actions/loginActions';
 
 
 class Login extends Component {
@@ -88,7 +88,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(LoginActions, dispatch)
+    actions: bindActionCreators(loginActions, dispatch)
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

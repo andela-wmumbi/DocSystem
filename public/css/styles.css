@@ -74,6 +74,6 @@ button {
 p.error {
     color: red
 }
-/*.avatar {
-  float:left
-}*/
+ .material-icons {
+line-height:0.2
+ }

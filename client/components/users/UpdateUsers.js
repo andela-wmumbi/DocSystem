@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import toastr from 'toastr';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import { Input } from 'react-materialize';
 import * as userActions from './../../actions/userActions';
@@ -16,22 +17,17 @@ class UpdateUser extends Component {
         email: props.user.email
       }
     };
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
-  }
-  openModal(id, username, email) {
-    this.setState({ userDetails: { id, username, email } });
-    this.setState({ isModalOpen: true });
-  }
-  closeModal() {
-    this.setState({ isModalOpen: false });
   }
   handleSave(event) {
     const { userDetails } = this.state;
     event.preventDefault();
     this.props.actions.updateUser(userDetails).then(() => {
+      toastr.success('User updated successfully');
+    })
+    .catch(() => {
+      toastr.success('Couldnot delete user');
     });
     this.props.closeModal();
   }
@@ -48,7 +44,7 @@ class UpdateUser extends Component {
         {this.props.isModalOpen &&
           <ModalContainer onClose={this.props.closeModal} >
             <ModalDialog onClose={this.props.closeModal}>
-              <h6>Edit your document</h6>
+              <h6>Edit profile</h6>
               <Input
                 value={this.state.userDetails.username}
                 name="username"

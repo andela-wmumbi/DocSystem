@@ -11,7 +11,7 @@ module.exports = (app) => {
   app.route('/api/users/:userId')
     .get(auth, user.findOne)
     .put(auth, user.update)
-    .delete(auth, authAdmin, user.destroy);
+    .delete(user.destroy);
   app.route('/api/signin')
     .post(user.login);
   app.route('/api/logout')

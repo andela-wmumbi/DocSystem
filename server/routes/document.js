@@ -10,7 +10,7 @@ module.exports = (app) => {
   app.route('/api/documents/:docId')
     .get(auth, document.findOne)
     .put(auth, document.update)
-    .delete(auth, authAdmin, document.destroy);
+    .delete(auth, document.destroy);
   app.route('/search/documents/:document')
     .get(document.findDocument);
   app.route('/api/documents/?limit={integer}&offset={integer}')

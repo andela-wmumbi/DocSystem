@@ -30,7 +30,6 @@ export default function UserReducer(state = initialState.users, action) {
       return !!sessionStorage.token;
     case types.LOAD_USERS_SUCCESS:
       return action.users;
-
     default:
       return state;
   }

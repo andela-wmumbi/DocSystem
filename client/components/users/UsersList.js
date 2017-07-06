@@ -1,31 +1,45 @@
-import React from 'react';
-import { Collection, CollectionItem } from 'react-materialize';
+import React, { PropTypes } from 'react';
 
 const UsersList = props => (
   <div>
-    <ul className="collection">
-      {props.users.map(user => (
-        <li className="collection-item avatar">
-          <img src="./../../../public/images/user.png" alt="" className="circle" />
-          <span className="title">{user.username}</span>
-          <p>{user.email}<br />
-            {user.createdAt}
-          </p>
-          <div className="avatar">
-            <button onClick={() =>
-              props.openModal(user.id, user.username)}
-            >
-              <i className="small material-icons">mode_edit</i>
-            </button>
-            <button onClick={() =>
+    <center>
+      <table>
+        <thead>
+          <tr>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          { props.users.map(user => (
+            <tr key={user.id}>
+              <td>{user.username}</td>
+              <td>{user.email}</td>
+              <td>{''}</td>
+              <td>
+                <button onClick={() =>
+              props.openModal(user.id, user.username, user.email)}
+                >
+                  <i className="small material-icons">mode_edit</i>
+                </button>
+                <button onClick={() =>
               props.deleteUser(user.id)}
-            >
-              <i className="small material-icons">delete</i>
-            </button>
-          </div>
-        </li>
-      ))}
-    </ul>
+                >
+                  <i className="small material-icons">delete</i>
+                </button>
+
+              </td>
+            </tr>
+          ))
+          }
+        </tbody>
+      </table>
+    </center>
   </div>
 );
+UsersList.propTypes = {
+  users: PropTypes.array.isRequired
+};
 export default UsersList;

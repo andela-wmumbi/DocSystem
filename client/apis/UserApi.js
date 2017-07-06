@@ -23,8 +23,7 @@ export function login(credentials) {
 }
 export function getAllUsers() {
   return request
-    .get('/api/users')
-    .set('x-access-token', sessionStorage.token);
+    .get('/api/users');
 }
 export function getAUser(name) {
   return request
@@ -33,7 +32,8 @@ export function getAUser(name) {
 }
 export function getUserDelete(id) {
   return request
-    .delete(`/api/users/${id}`);
+    .delete(`/api/users/${id}`)
+    .set('x-access-token', sessionStorage.token);
 }
 export function getUserUpdate(user) {
   return request
