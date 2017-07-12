@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Row, CardPanel, Col } from 'react-materialize';
 
-const UserDocuments = (props) => (
+const AllDocuments = (props) => (
   <div >
     <Row >
       {props.documents.map(document =>
@@ -27,7 +27,8 @@ const UserDocuments = (props) => (
     </Row>
   </div>
 );
-UserDocuments.propTypes = {
+AllDocuments.propTypes = {
   documents: PropTypes.array.isRequired
 };
-export default UserDocuments;
+
+export default AllDocuments;

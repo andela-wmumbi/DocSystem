@@ -1,6 +1,5 @@
-import * as types from './../actions/ActionTypes';
-import initialState from './InitialState';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import * as types from './../actions/actionTypes';
+import initialState from './initialState';
 
 export default function UserReducer(state = initialState.users, action) {
   switch (action.type) {
@@ -13,7 +12,6 @@ export default function UserReducer(state = initialState.users, action) {
       ];
     case types.LOG_IN_SUCCESS:
       return [
-        NotificationManager.success('Success message', 'Title here'),
         ...state,
         Object.assign({}, action.credentials)
       ];
@@ -21,6 +19,13 @@ export default function UserReducer(state = initialState.users, action) {
       return [
         ...state,
         Object.assign({}, action.user)];
+    case types.UPDATE_USER_SUCCESS:
+      return state.map((user) => {
+        if (user.id === action.user.id) {
+          return action.user;
+        }
+        return user;
+      });
     case types.LOG_OUT:
       return !!sessionStorage.token;
     case types.LOAD_USERS_SUCCESS:

@@ -4,8 +4,10 @@ const HeaderView = () => (
   <div className="navbar-fixed">
     <ul id="dropdown1" className="dropdown-content">
       <li><a href="/documents">Documents</a></li>
-      <li><a href="/createdoc">Create</a></li>
       <li><a href="/mydocuments">Mydocuments</a></li>
+      <li><a href="/users">Users</a></li>
+      <li><a href="/roles">Roles</a></li>
+      <li><a href="/roleDocuments">RoleDocuments</a></li>
     </ul>
     <ul id="dropdown2" className="dropdown-content">
       <li><a href="/searchuser">Users</a></li>

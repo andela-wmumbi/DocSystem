@@ -23,8 +23,7 @@ export function login(credentials) {
 }
 export function getAllUsers() {
   return request
-    .get('/api/users')
-    .set('x-access-token', sessionStorage.token);
+    .get('/api/users');
 }
 export function getAUser(name) {
   return request
@@ -34,5 +33,16 @@ export function getAUser(name) {
 export function getUserDelete(id) {
   return request
     .delete(`/api/users/${id}`)
+    .set('x-access-token', sessionStorage.token);
+}
+export function getUserUpdate(user) {
+  return request
+    .put(`/api/users/${user.id}`)
+    .set('x-access-token', sessionStorage.token)
+    .send(user);
+}
+export function getUsersPagination(limit, offset) {
+  return request
+    .get(`/api/users?limit=${limit}&offset=${offset}`)
     .set('x-access-token', sessionStorage.token);
 }

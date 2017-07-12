@@ -3,17 +3,23 @@ import { PropTypes } from 'react-proptypes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CreateDocument from './DocumentCreate';
-import * as documentActions from './../../actions/DocumentActions';
+import UserDetails from './../../actions/userDetails';
+import * as documentActions from './../../actions/documentActions';
 
 class Documents extends Component {
   constructor(props) {
     super(props);
     this.state = {
       document: { title: '', content: '', access: '' },
-      isEditing: false
+      isEditing: false,
+      role: ''
     };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+  }
+  componentWillMount() {
+    const role = UserDetails.decodeToken(sessionStorage.token).roleTitle;
+    this.setState({ role });
   }
   onChange(event) {
     const field = event.target.name;
@@ -34,6 +40,7 @@ class Documents extends Component {
           onChange={this.onChange}
           onSave={this.onSave}
           document={this.state.document}
+          role={this.state.role}
         />
       </div >
     );

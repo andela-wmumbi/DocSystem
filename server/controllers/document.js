@@ -17,7 +17,10 @@ class DocumentController {
       return document
         .findAll({
           limit: req.query.limit,
-          offset: req.query.offset
+          offset: req.query.offset,
+          where: {
+            access: 'public'
+          }
         })
         .then((document) => {
           if (!document) {
@@ -32,9 +35,36 @@ class DocumentController {
         });
     }
     return document
-      .findAll({ where: { access: 'public' } })
+      .findAll({
+        where: {
+          access: 'public',
+        }
+      })
       .then(document => res.status(200).send(document))
       .catch(error => res.status(404).send(error));
+  }
+
+  roleDocuments(req, res) {
+    console.log('param', req);
+    if (req.params) {
+      return document
+        .findAll({
+          where: {
+            access: req.params.role
+          }
+        })
+        .then((document) => {
+          if (!document) {
+            return res.status(404).send({
+              message: 'Document not found'
+            });
+          }
+          res.status(200).send(document);
+        })
+        .catch((error) => {
+          res.status(400).json(error);
+        });
+    }
   }
 
   findOne(req, res) {

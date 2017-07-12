@@ -13,5 +13,19 @@ class UserDetails {
     const base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64));
   }
+  static getRole(roleId) {
+    if (roleId === 1) {
+      return ('admin');
+    }
+    return ('owner');
+  }
+  static storeRoles(roles) {
+    roles.map((role) => {
+      localStorage.setItem('roles', role.id);
+    });
+  }
+  static getRoles() {
+    return localStorage.getItem('roles');
+  }
 }
 export default UserDetails;

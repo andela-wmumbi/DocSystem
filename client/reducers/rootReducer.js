@@ -1,9 +1,13 @@
 import { combineReducers } from 'redux';
-import documents from './DocumentReducer';
-import users from './UserReducer';
-import loginReducer from './LoginReducer';
-import userdocuments from './UserDocumentReducer';
-import searchdocument from './SearchDocument';
+import documents from './documentReducer';
+import users from './userReducer';
+import loginReducer from './loginReducer';
+import userdocuments from './userDocumentReducer';
+import searchdocument from './searchDocument';
+import pageDocuments from './documentPaginate';
+import pageUsers from './userPaginate';
+import roles from './roleReducer';
+import roleDocuments from './../actions/documentActions';
 
 export default combineReducers({
   documents,
@@ -11,4 +15,8 @@ export default combineReducers({
   loginReducer,
   userdocuments,
   searchdocument,
+  pageDocuments,
+  pageUsers,
+  roles,
+  roleDocuments
 });

@@ -56,6 +56,6 @@ LoginForm.propTypes = {
   credentials: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.array.isRequired,
 };
 export default LoginForm;
