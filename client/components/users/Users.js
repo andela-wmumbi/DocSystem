@@ -21,7 +21,8 @@ class Users extends Component {
       userDetails: {
         id: '',
         username: '',
-        email: ''
+        email: '',
+        role: '',
       }
     };
     // this.handleSearch = this.handleSearch.bind(this);
@@ -40,8 +41,8 @@ class Users extends Component {
       this.setState({ users });
     }
   }
-  openModal(id, username, email) {
-    this.setState({ userDetails: { id, username, email } });
+  openModal(id, username, email, role) {
+    this.setState({ userDetails: { id, username, email, role } });
     this.setState({ isModalOpen: true });
   }
   closeModal() {
@@ -93,7 +94,7 @@ class Users extends Component {
         }
         <Button
           floating
-          large
+          small
           className="#1a237e indigo darken-4"
           waves="light"
           icon="add"

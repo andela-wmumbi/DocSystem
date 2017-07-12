@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Row, CardPanel, Col } from 'react-materialize';
 
 const AllDocuments = (props) => (
@@ -13,12 +13,12 @@ const AllDocuments = (props) => (
               <button onClick={() =>
                 props.openModal(document.id, document.content, document.title)}
               >
-                <i className="small material-icons">mode_edit</i>
+                <i className="tiny material-icons">mode_edit</i>
               </button>
               <button onClick={() =>
                 props.deleteDocument(document.id)}
               >
-                <i className="small material-icons">delete</i>
+                <i className="tiny material-icons">delete</i>
               </button>
             </span>
           </CardPanel>
@@ -27,5 +27,8 @@ const AllDocuments = (props) => (
     </Row>
   </div>
 );
+AllDocuments.propTypes = {
+  documents: PropTypes.array.isRequired
+};
 
 export default AllDocuments;

@@ -26,6 +26,7 @@ export function loadsUsersPagination(pageUsers) {
 export function registerUser(user) {
   return dispatch => register(user).then(() => {
     dispatch(registerSuccess(user));
+    console.log(user)
   }).catch((error) => {
     throw (error);
   });
@@ -77,7 +78,7 @@ export function updateUser(userDetails) {
       throw (error);
     });
 }
-export function paginateUsers(limit = 4, offset = 1) {
+export function paginateUsers(limit = 4, offset = 0) {
   return (dispatch) => getUsersPagination(limit, offset)
     .then((res) => {
       dispatch(loadsUsersPagination(res.body));

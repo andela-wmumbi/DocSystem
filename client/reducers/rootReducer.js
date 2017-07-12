@@ -6,6 +6,8 @@ import userdocuments from './userDocumentReducer';
 import searchdocument from './searchDocument';
 import pageDocuments from './documentPaginate';
 import pageUsers from './userPaginate';
+import roles from './roleReducer';
+import roleDocuments from './../actions/documentActions';
 
 export default combineReducers({
   documents,
@@ -15,4 +17,6 @@ export default combineReducers({
   searchdocument,
   pageDocuments,
   pageUsers,
+  roles,
+  roleDocuments
 });

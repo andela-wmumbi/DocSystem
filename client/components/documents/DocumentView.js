@@ -1,33 +1,33 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Row, CardPanel, Col } from 'react-materialize';
 
 const UserDocuments = (props) => (
-  <div className="documents">
-    <Row>
-      {
-        props.documents.map(document =>
-          (
-            <center key={document.id}>
-              <Col s={12} m={5}>
-                <CardPanel>
-                  <h4>{document.title}</h4>
-                  <p>{document.content}</p>
-                  <button
-                    onClick={() =>
-                      this.openModal(document.id, document.content, document.title)
-                    }
-                  >
-                    EDIT
-                  </button>
-                  <button onClick={() => this.deleteDocument(document.id)}>DELETE</button>
-                </CardPanel>
-              </Col>
-            </center>
-          )
-        )
-      }
+  <div >
+    <Row >
+      {props.documents.map(document =>
+        (<Col s={6} key={document.id} className="col">
+          <CardPanel className="card">
+            <span> <h5>{document.title}</h5>
+              <p>{document.content}</p>
+              <hr />
+              <button onClick={() =>
+                props.openModal(document.id, document.content, document.title)}
+              >
+                <i className="tiny material-icons">mode_edit</i>
+              </button>
+              <button onClick={() =>
+                props.deleteDocument(document.id)}
+              >
+                <i className="tiny material-icons">delete</i>
+              </button>
+            </span>
+          </CardPanel>
+        </Col>)
+      )}
     </Row>
   </div>
 );
-
+UserDocuments.propTypes = {
+  documents: PropTypes.array.isRequired
+};
 export default UserDocuments;

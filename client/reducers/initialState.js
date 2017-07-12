@@ -4,5 +4,6 @@ export default {
   userdocuments: [],
   searchdocument: [],
   pageDocuments: [],
-  pageUsers: []
+  pageUsers: [],
+  roles: []
 };

@@ -13,7 +13,7 @@ class Register extends Component {
         username: '',
         email: '',
         password: '',
-        id: 1
+        roleTitle: 'owner'
       },
       errors: ''
     };

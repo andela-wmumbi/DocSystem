@@ -24,6 +24,7 @@ class DocumentList extends Component {
         id: ''
       }
     };
+    this.handleCreateDoc = this.handleCreateDoc.bind(this);
     this.showAlert = this.showAlert.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -51,9 +52,9 @@ class DocumentList extends Component {
     this.props.actions.deleteDocument(id).then(() => {
       toastr.success('Document deleted successfully');
     })
-    .catch(() => {
-      toastr.error('Couldnot delete the document');
-    });
+      .catch(() => {
+        toastr.error('Couldnot delete the document');
+      });
   }
   handleCreateDoc() {
     this.context.router.history.push('/createdoc');
@@ -93,7 +94,6 @@ class DocumentList extends Component {
           }
           <Button
             floating
-            large
             className="#1a237e indigo darken-4"
             waves="light"
             icon="add"
@@ -118,10 +118,8 @@ class DocumentList extends Component {
 }
 DocumentList.propTypes = {
   actions: PropTypes.object.isRequired,
-  documents: PropTypes.object.isRequired,
+  documents: PropTypes.array.isRequired,
   pageDocuments: PropTypes.array.isRequired,
-  // isDeleteSuccess: PropTypes.bool.isRequired,
-  // deleteError: PropTypes.bool.isRequired
 };
 DocumentList.contextTypes = {
   router: PropTypes.object.isRequired

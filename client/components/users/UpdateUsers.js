@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
-import { Input } from 'react-materialize';
+import { Input, Row } from 'react-materialize';
 import * as userActions from './../../actions/userActions';
 
 class UpdateUser extends Component {
@@ -14,7 +14,8 @@ class UpdateUser extends Component {
       userDetails: {
         id: props.user.id,
         username: props.user.username,
-        email: props.user.email
+        email: props.user.email,
+        role: props.user.role
       }
     };
     this.handleChange = this.handleChange.bind(this);
@@ -26,9 +27,9 @@ class UpdateUser extends Component {
     this.props.actions.updateUser(userDetails).then(() => {
       toastr.success('User updated successfully');
     })
-    .catch(() => {
-      toastr.success('Couldnot delete user');
-    });
+      .catch(() => {
+        toastr.success('Couldnot delete user');
+      });
     this.props.closeModal();
   }
   handleChange(event) {
@@ -37,24 +38,43 @@ class UpdateUser extends Component {
     userDetails[field] = event.target.value;
     this.setState({ userDetails });
   }
-
   render() {
+    const { userDetails } = this.state;
     return (
       <div >
         {this.props.isModalOpen &&
           <ModalContainer onClose={this.props.closeModal} >
             <ModalDialog onClose={this.props.closeModal}>
               <h6>Edit profile</h6>
-              <Input
-                value={this.state.userDetails.username}
-                name="username"
-                onChange={this.handleChange}
-              />
-              <textarea
-                name="email"
-                onChange={this.handleChange}
-                value={this.state.userDetails.email}
-              />
+              <Row>
+                <Input
+                  label="Name"
+                  value={userDetails.username}
+                  name="username"
+                  onChange={this.handleChange}
+                />
+              </Row>
+              <Row>
+                <Input
+                  label="Email"
+                  name="email"
+                  onChange={this.handleChange}
+                  value={userDetails.email}
+                />
+              </Row>
+              <Row>
+                <Input
+                  s={12}
+                  type="select"
+                  label="Role"
+                  value={userDetails.role}
+                  name="role"
+                  onChange={this.handleChange}
+                >
+                  <option value={userDetails.role}>{userDetails.role}</option>
+                  <option value="staff">staff</option>
+                </Input>
+              </Row>
               <button onClick={this.handleSave}>Save</button>
             </ModalDialog>
           </ModalContainer >

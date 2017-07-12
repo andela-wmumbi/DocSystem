@@ -18,7 +18,7 @@ export function getAllDocuments() {
     .get('/api/documents');
 }
 
-export function getDocumentDelete(id, token) {
+export function getDocumentDelete(id) {
   return request
     .delete(`/api/documents/${id}`)
     .set('x-access-token', sessionStorage.token);
@@ -39,6 +39,10 @@ export function getADocument(title) {
 }
 export function getPagination(limit, offset) {
   return request
-    .get(`/api/documents/?limit=${limit}&offset=${offset}`)
+    .get(`/api/documents?limit=${limit}&offset=${offset}`)
     .set('x-access-token', sessionStorage.token);
+}
+export function getRoleDocuments(role) {
+  return request
+    .get(`/api/roleDocuments/${role}`);
 }

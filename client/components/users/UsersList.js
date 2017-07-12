@@ -13,21 +13,21 @@ const UsersList = props => (
           </tr>
         </thead>
         <tbody>
-          { props.users.map(user => (
+          {props.users.map(user => (
             <tr key={user.id}>
               <td>{user.username}</td>
               <td>{user.email}</td>
-              <td>{''}</td>
+              <td>{user.roleTitle}</td>
               <td>
                 <button onClick={() =>
-              props.openModal(user.id, user.username, user.email)}
+                  props.openModal(user.id, user.username, user.email, user.roleTitle)}
                 >
-                  <i className="small material-icons">mode_edit</i>
+                  <i className="tiny material-icons">mode_edit</i>
                 </button>
                 <button onClick={() =>
-              props.deleteUser(user.id)}
+                  props.deleteUser(user.id)}
                 >
-                  <i className="small material-icons">delete</i>
+                  <i className="tiny material-icons">delete</i>
                 </button>
 
               </td>

@@ -7,14 +7,18 @@ class Logout extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.redirect = this.redirect.bind(this);
   }
   componentDidMount() {
     this.props.actions.logOutUser();
   }
+  redirect() {
+    this.context.router.history.push('/login');
+  }
   render() {
     return (
       <div>
-        {this.context.router.history.push('/login')}
+        {this.redirect()}
       </div>
     );
   }

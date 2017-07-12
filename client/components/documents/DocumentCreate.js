@@ -40,7 +40,7 @@ const CreateDocument = props => (
               >
                 <option value="public">public</option>
                 <option value="private">private</option>
-                <option value="publisher">publisher</option>
+                <option value={props.role}>role</option>
               </Input>
             </Row>
             <Row>

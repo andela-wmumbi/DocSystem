@@ -3,7 +3,7 @@ Action creators are methods that wrap and return the action object*/
 import {
   getAllDocuments,
   documentCreate, getDocumentUpdate,
-  getDocumentDelete, getUserDocs, getADocument, getPagination
+  getDocumentDelete, getUserDocs, getADocument, getPagination, getRoleDocuments
 } from './../apis/DocumentApi';
 import * as types from './actionTypes';
 
@@ -26,17 +26,14 @@ export function getUserDocsSuccess(documents) {
 export function loadsADocumentSuccess(document) {
   return { type: types.GET_A_DOCUMENT_SUCCESS, document };
 }
+export function loadsRoleDocuments(documents) {
+  return { type: types.GET_ROLE_DOCUMENTS, documents };
+}
 export function loadsADocumentFailure(isSearchError) {
   return { type: types.GET_A_DOCUMENT_FAILURE, isSearchError };
 }
 export function loadsPagination(pageDocuments) {
   return { type: types.LOAD_PAGEDOCUMENTS_SUCCESS, pageDocuments };
-}
-export function setDeleteSuccess(isDeleteSuccess) {
-  return { type: types.SET_DELETE_SUCCESS, isDeleteSuccess };
-}
-export function setDeleteError(deleteError) {
-  return { type: types.SET_DELETE_ERROR, deleteError };
 }
 
 export function createDocument(document) {
@@ -55,7 +52,15 @@ export function loadDocuments() {
       throw (error);
     });
 }
-export function paginateDocuments(limit = 4, offset = 1) {
+export function loadRoleDocuments(role) {
+  console.log('called')
+  return dispatch => getRoleDocuments(role)
+    .then((res) => {
+      dispatch(loadsRoleDocuments(res.body));
+      console.log('called', res.body);
+    });
+}
+export function paginateDocuments(limit = 4, offset = 0) {
   return dispatch => getPagination(limit, offset)
     .then((res) => {
       dispatch(loadsPagination(res.body));
@@ -75,16 +80,13 @@ export function updateDocument(document) {
 }
 export function deleteDocument(id, token) {
   return (dispatch) => {
-    dispatch(setDeleteSuccess(false));
     return getDocumentDelete(id, token)
-    .then((res) => {
-      dispatch(deleteDocumentSuccess(res.body.message));
-      // dispatch(setDeleteSuccess(true));
-    })
-    .catch((error) => {
-      dispatch(setDeleteError(error));
-      throw (error);
-    });
+      .then((res) => {
+        dispatch(deleteDocumentSuccess(res.body.message));
+      })
+      .catch((error) => {
+        throw (error);
+      });
   };
 }
 export function getUserDocuments(id) {

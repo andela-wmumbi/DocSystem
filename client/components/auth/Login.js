@@ -64,8 +64,8 @@ class Login extends Component {
         />
         <div className="message">
           <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
-          {isLoginSuccess && <div> {this.showAlert('success', 'Succesully logged in')}</div>}
-          {loginError && <div> {this.showAlert('error', 'There was a problem logging in')}</div>}
+          {isLoginSuccess && <div> {() => this.showAlert('success', 'Succesully logged in')}</div>}
+          {loginError && <div> {() => this.showAlert('error', 'There was a problem logging in')}</div>}
         </div>
       </div >
     );
