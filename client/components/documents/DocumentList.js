@@ -7,6 +7,7 @@ import { Button } from 'react-materialize';
 import Pagination from 'react-js-pagination';
 import Update from './Update';
 import AllDocuments from './AllDocuments';
+import UserDetails from './../../actions/userDetails';
 import * as documentActions from './../../actions/documentActions';
 
 
@@ -21,7 +22,8 @@ class DocumentList extends Component {
       documentContent: {
         content: '',
         title: '',
-        id: ''
+        id: '',
+        userId: ''
       }
     };
     this.handleCreateDoc = this.handleCreateDoc.bind(this);
@@ -41,8 +43,8 @@ class DocumentList extends Component {
       this.setState({ documents });
     }
   }
-  openModal(id, content, title) {
-    this.setState({ documentContent: { content, title, id } });
+  openModal(id, content, title, userId) {
+    this.setState({ documentContent: { content, title, id, userId } });
     this.setState({ isModalOpen: true });
   }
   closeModal() {

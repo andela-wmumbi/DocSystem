@@ -4,9 +4,10 @@ const authorization = require('./middlewares/authorization');
 module.exports = (app) => {
   const auth = authorization.authenticate;
   const authAdmin = authorization.verifyAdmin;
+  const verifyAccess = authorization.verifyAccess;
   app.route('/api/documents')
     .post(auth, document.create)
-    .get(document.list);
+    .get(auth, document.list);
   app.route('/api/documents/:docId')
     .get(auth, document.findOne)
     .put(auth, document.update)

@@ -1,6 +1,5 @@
 const user = require('./../models').user;
 const document = require('./../models').document;
-const role = require('./../models').role;
 
 const secretKey = process.env.SECRET;
 
@@ -17,7 +16,9 @@ class userController {
         roleTitle
       })
       .then(user => res.status(201).send(user))
-      .catch(error => res.json(error));
+      .catch(error => {
+        res.status(400).json(error);
+      });
   }
   list(req, res) {
     if (req.query.limit || req.query.offset) {

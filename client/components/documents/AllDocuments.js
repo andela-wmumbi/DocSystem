@@ -11,7 +11,7 @@ const AllDocuments = (props) => (
               <p>{document.content}</p>
               <hr />
               <button onClick={() =>
-                props.openModal(document.id, document.content, document.title)}
+                props.openModal(document.id, document.content, document.title, document.userId)}
               >
                 <i className="tiny material-icons">mode_edit</i>
               </button>
