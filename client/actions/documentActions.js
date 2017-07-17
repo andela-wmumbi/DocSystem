@@ -19,7 +19,6 @@ export function updateDocumentsSuccess(document) {
 export function deleteDocumentSuccess(id) {
   return { type: types.DELETE_DOCUMENT_SUCCESS, id };
 }
-
 export function getUserDocsSuccess(documents) {
   return { type: types.GET_USER_DOCUMENTS, documents };
 }
@@ -35,13 +34,19 @@ export function loadsADocumentFailure(isSearchError) {
 export function loadsPagination(pageDocuments) {
   return { type: types.LOAD_PAGEDOCUMENTS_SUCCESS, pageDocuments };
 }
+export function ajaxCallError(error) {
+  return { type: types.AJAX_CALL_ERROR, error };
+}
 
 export function createDocument(document) {
-  return dispatch => documentCreate(document).then((response) => {
-    dispatch(createDocumentSuccess(response.body));
-  }).catch((error) => {
-    throw (error);
-  });
+  return dispatch => documentCreate(document)
+    .then((response) => {
+      dispatch(createDocumentSuccess(response.body));
+    })
+    .catch((error) => {
+      dispatch(ajaxCallError(error));
+      throw (error);
+    });
 }
 export function loadDocuments() {
   return dispatch => getAllDocuments()
@@ -49,23 +54,16 @@ export function loadDocuments() {
       dispatch(loadsDocumentsSuccess(res.body));
     })
     .catch((error) => {
+      dispatch(ajaxCallError(error));
       throw (error);
     });
 }
 export function loadRoleDocuments(role) {
-  console.log('called')
   return dispatch => getRoleDocuments(role)
     .then((res) => {
       dispatch(loadsRoleDocuments(res.body));
-      console.log('called', res.body);
-    });
-}
-export function paginateDocuments(limit = 4, offset = 0) {
-  return dispatch => getPagination(limit, offset)
-    .then((res) => {
-      dispatch(loadsPagination(res.body));
-    })
-    .catch((error) => {
+    }).catch((error) => {
+      dispatch(ajaxCallError(error));
       throw (error);
     });
 }
@@ -78,9 +76,10 @@ export function updateDocument(document) {
       throw (error);
     });
 }
-export function deleteDocument(id, token) {
+export function deleteDocument(id) {
+  console.log(id)
   return (dispatch) => {
-    return getDocumentDelete(id, token)
+    return getDocumentDelete(id)
       .then((res) => {
         dispatch(deleteDocumentSuccess(res.body.message));
       })
@@ -90,6 +89,7 @@ export function deleteDocument(id, token) {
   };
 }
 export function getUserDocuments(id) {
+  console.log(id)
   return dispatch => getUserDocs(id)
     .then((documents) => {
       dispatch(getUserDocsSuccess(documents.data));
@@ -105,6 +105,15 @@ export function searchDocument(title) {
     })
     .catch((error) => {
       dispatch(loadsADocumentFailure(error));
+      throw (error);
+    });
+}
+export function paginateDocuments(limit = 4, offset = 0) {
+  return dispatch => getPagination(limit, offset)
+    .then((res) => {
+      dispatch(loadsPagination(res.body));
+    })
+    .catch((error) => {
       throw (error);
     });
 }

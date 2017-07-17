@@ -26,7 +26,6 @@ export function loadsUsersPagination(pageUsers) {
 export function registerUser(user) {
   return dispatch => register(user).then(() => {
     dispatch(registerSuccess(user));
-    console.log(user)
   }).catch((error) => {
     throw (error);
   });
@@ -53,6 +52,7 @@ export function searchUser(name) {
         dispatch(loadsUserSuccess(res.body));
       })
       .catch((error) => {
+        dispatch(loadsUserFailure(error));
         throw (error);
       });
   };

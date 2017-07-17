@@ -10,7 +10,10 @@ class DocumentController {
         userId: req.decoded.id,
       })
       .then(document => res.status(201).send(document))
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(400).json({
+        message: 'Couldnot create document',
+        Error: error
+      }));
   }
   list(req, res) {
     if (req.query.limit || req.query.offset) {
@@ -45,7 +48,6 @@ class DocumentController {
   }
 
   roleDocuments(req, res) {
-    console.log('param', req);
     if (req.params) {
       return document
         .findAll({
@@ -53,8 +55,8 @@ class DocumentController {
             access: req.params.role
           }
         })
-        .then((document) => {
-          if (!document) {
+        .then((documents) => {
+          if (!documents.length) {
             return res.status(404).send({
               message: 'Document not found'
             });
@@ -93,7 +95,7 @@ class DocumentController {
             title: req.body.title || document.title,
             content: req.body.content || document.content
           })
-          .then((doc) => res.status(200).send(doc))
+          .then(doc => res.status(200).send(doc))
           .catch(error => res.status(400).send(error));
       });
   }

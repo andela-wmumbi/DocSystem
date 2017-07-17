@@ -4,7 +4,7 @@ import axios from 'axios';
 export function documentCreate(document) {
   return request
     .post('/api/documents')
-    .set('x-access-token', sessionStorage.token)
+    .set('x-access-token', sessionStorage.getItem('token'))
     .send(document);
 }
 export function getDocumentUpdate(document) {
@@ -35,7 +35,7 @@ export function getUserDocs(id) {
 export function getADocument(title) {
   return request
     .get(`/search/documents/${title}`)
-    .set('x-access-token', sessionStorage.token);
+    .set('x-access-token', sessionStorage.getItem('token'));
 }
 export function getPagination(limit, offset) {
   return request

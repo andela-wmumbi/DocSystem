@@ -32,8 +32,8 @@ class Authenticate {
   }
   verifyOwner(req, res, next) {
     const userId = req.body.userId;
-    const role = req.decoded.roleTitle;
-    if (role && role === 2) {
+    const id = req.decoded.id;
+    if (userId === id) {
       next();
     } else {
       return res.status(403).send({
