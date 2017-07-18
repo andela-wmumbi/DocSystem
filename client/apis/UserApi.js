@@ -44,5 +44,5 @@ export function getUserUpdate(user) {
 export function getUsersPagination(limit, offset) {
   return request
     .get(`/api/users?limit=${limit}&offset=${offset}`)
-    .set('x-access-token', sessionStorage.token);
+    .set('x-access-token', sessionStorage.getItem('token'));
 }

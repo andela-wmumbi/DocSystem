@@ -7,6 +7,7 @@ import { Button } from 'react-materialize';
 import Pagination from 'react-js-pagination';
 import Update from './Update';
 import AllDocuments from './AllDocuments';
+import Search from './Search';
 import UserDetails from './../../actions/userDetails';
 import * as documentActions from './../../actions/documentActions';
 
@@ -24,7 +25,8 @@ class DocumentList extends Component {
         title: '',
         id: '',
         userId: ''
-      }
+      },
+      searchResults: [],
     };
     this.handleCreateDoc = this.handleCreateDoc.bind(this);
     this.showAlert = this.showAlert.bind(this);
@@ -32,6 +34,7 @@ class DocumentList extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.deleteDocument = this.deleteDocument.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
   componentDidMount() {
     this.props.actions.loadDocuments();
@@ -81,6 +84,9 @@ class DocumentList extends Component {
     return (
       <div>
         <center>
+          <div style={{ margin: '0 auto', width: '30%' }}>
+            <Search handleSearch={this.handleSearch} />
+          </div>
           <AllDocuments
             documents={pageDocuments}
             openModal={this.openModal}

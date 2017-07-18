@@ -10,7 +10,7 @@
     "lint:watch": "npm run lint -- --watch",
     "migrations": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "test:bend": "export NODE_ENV=test && sequelize db:migrate:undo:all && sequelize db:migrate &&  babel-node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -R spec ./server/tests/*.spec.js",
-    "test:fend": "export NODE_ENV=test && babel-node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --compilers js:babel-core/register client/tests/**/*-test.js",
+    "test:fend": "export NODE_ENV=test && babel-node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --compilers js:babel-core/register client/tests/**/*.js",
     "e2e": "protractor ./tests/config.js",
     "e2e-driver": "webdriver-manager start",
     "coverage": "./node_modules/.bin/coveralls < coverage/lcov.info"
@@ -65,7 +65,9 @@
     "lodash": "^4.17.4",
     "material-ui": "^0.18.3",
     "materialize-css": "^0.98.2",
+    "mock-local-storage": "^1.0.2",
     "morgan": "^1.8.2",
+    "nock": "^9.0.14",
     "npm-run-all": "^4.0.2",
     "object-hash": "^1.1.8",
     "pg": "^6.2.3",

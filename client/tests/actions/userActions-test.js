@@ -1,14 +1,11 @@
 import configureMockStore from 'redux-mock-store';
-import request from 'superagent';
-import mocker from 'superagent-mocker';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 import expect from 'expect';
-import * as actions from '../../actions/userActions';
+import nock from 'nock';
+import * as actions from './../../actions/UserActions';
 import * as UserApi from '../../apis/UserApi';
 import * as types from './../../actions/actionTypes';
-
-const mock = mocker(request);
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -222,29 +219,19 @@ describe('User Actions', () => {
     });
   });
   describe('paginate users action ', () => {
-    it('returns a thunk function', () => {
-      const result = actions.paginateUsers({});
-      expect(result).toBeA('function');
-    });
-
-    it('should dispatch success action after paginating users', () => {
-      const fakeResponse = new Promise(resolve => (
-        resolve({
-          status: 200,
-          body: {}
-        })
-      ));
-      const stub = sinon.stub(UserApi, 'getUsersPagination').returns(fakeResponse);
+    it('should dispatch success action after paginated users', () => {
+      nock('http://localhost')
+        .get('/api/users?limit=1&offset=0')
+        .reply(200, { body: ['user'] });
       const expectedActions = [
         {
           type: types.LOAD_PAGEUSERS_SUCCESS,
-          pageUsers: {},
+          pageUsers: ['user'],
         }
       ];
-      const store = mockStore({ users: [] });
-      return store.dispatch(actions.paginateUsers({})).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-        stub.restore();
+      const store = mockStore({ documents: [] });
+      return store.dispatch(actions.paginateUsers(1, 0)).then(() => {
+        expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
       });
     });
   });

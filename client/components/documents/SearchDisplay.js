@@ -25,6 +25,12 @@ const SearchDisplay = (props) => (
   </div >
 );
 SearchDisplay.propTypes = {
-  documents: PropTypes.array.isRequired,
+  documents: PropTypes.array,
+  error: PropTypes.bool,
 };
+
+SearchDisplay.defaultProps = {
+  documents: [],
+  error: false,
+}
 export default SearchDisplay;

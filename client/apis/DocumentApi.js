@@ -10,7 +10,7 @@ export function documentCreate(document) {
 export function getDocumentUpdate(document) {
   return request
     .put(`/api/documents/${document.id}`)
-    .set('x-access-token', sessionStorage.token)
+    .set('x-access-token', sessionStorage.getItem('token'))
     .send(document);
 }
 export function getAllDocuments() {
@@ -21,16 +21,12 @@ export function getAllDocuments() {
 export function getDocumentDelete(id) {
   return request
     .delete(`/api/documents/${id}`)
-    .set('x-access-token', sessionStorage.token);
+    .set('x-access-token', sessionStorage.getItem('token'));
 }
 export function getUserDocs(id) {
-  return axios({
-    method: 'GET',
-    headers: {
-      'x-access-token': sessionStorage.token
-    },
-    url: `/users/${id}/documents`
-  });
+  return request
+    .get(`/users/${id}/documents`)
+    .set('x-access-token', sessionStorage.getItem('token'));
 }
 export function getADocument(title) {
   return request
@@ -40,7 +36,7 @@ export function getADocument(title) {
 export function getPagination(limit, offset) {
   return request
     .get(`/api/documents?limit=${limit}&offset=${offset}`)
-    .set('x-access-token', sessionStorage.token);
+    .set('x-access-token', sessionStorage.getItem('token'));
 }
 export function getRoleDocuments(role) {
   return request

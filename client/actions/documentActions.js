@@ -73,6 +73,7 @@ export function updateDocument(document) {
       dispatch(updateDocumentsSuccess(res.body));
     })
     .catch((error) => {
+      dispatch(ajaxCallError(error));
       throw (error);
     });
 }
