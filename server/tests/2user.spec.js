@@ -104,7 +104,6 @@ describe('/users/:userId/documents', () => {
     chai.request(server)
       .get('/users/1/documents')
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(200);
         res.body.should.to.be.a('array');
         done();

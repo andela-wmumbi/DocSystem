@@ -67,7 +67,6 @@ class Users extends Component {
   // handleSearch(name) {
   //   this.props.actions.searchUser(name).then(() => {
   //     this.setState({ isViewReady: true });
-  //     console.log('asdfasdSADFsd');
   //   });
   // }
   // deleteUser() {

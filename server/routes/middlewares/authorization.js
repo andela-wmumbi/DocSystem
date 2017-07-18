@@ -1,4 +1,4 @@
-
+import request from 'superagent';
 const jwt = require('jsonwebtoken');
 
 const secretKey = process.env.SECRET;
@@ -23,17 +23,6 @@ class Authenticate {
   verifyAdmin(req, res, next) {
     const role = req.decoded.roleTitle;
     if (role === 'admin') {
-      next();
-    } else {
-      return res.status(403).send({
-        message: 'You do not have permission'
-      });
-    }
-  }
-  verifyOwner(req, res, next) {
-    const userId = req.body.userId;
-    const id = req.decoded.id;
-    if (userId === id) {
       next();
     } else {
       return res.status(403).send({

@@ -1,5 +1,4 @@
 import request from 'superagent';
-import axios from 'axios';
 
 export function documentCreate(document) {
   return request
@@ -15,7 +14,8 @@ export function getDocumentUpdate(document) {
 }
 export function getAllDocuments() {
   return request
-    .get('/api/documents');
+    .get('/api/documents')
+    .set('x-access-token', sessionStorage.getItem('token'));
 }
 
 export function getDocumentDelete(id) {
@@ -30,7 +30,7 @@ export function getUserDocs(id) {
 }
 export function getADocument(title) {
   return request
-    .get(`/search/documents/${title}`)
+    .get(`/search/documents?q=${title}`)
     .set('x-access-token', sessionStorage.getItem('token'));
 }
 export function getPagination(limit, offset) {
@@ -40,5 +40,5 @@ export function getPagination(limit, offset) {
 }
 export function getRoleDocuments(role) {
   return request
-    .get(`/api/roleDocuments/${role}`);
+    .get(`/api/roleDocuments?role=${role}`);
 }

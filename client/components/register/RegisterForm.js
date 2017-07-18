@@ -14,7 +14,7 @@ const RegisterForm = props => (
             <Row>
               <Input
                 label="UserName"
-                type="username"
+                type=""
                 name="username"
                 s={12}
                 value={props.user.username}
@@ -60,6 +60,6 @@ RegisterForm.propTypes = {
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.string.isRequired,
 };
 export default RegisterForm;

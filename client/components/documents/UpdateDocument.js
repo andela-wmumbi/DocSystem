@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import toastr from 'toastr';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import { Input } from 'react-materialize';
+import toastr from 'toastr';
 import * as documentActions from './../../actions/documentActions';
 
 class UpdateDocument extends Component {

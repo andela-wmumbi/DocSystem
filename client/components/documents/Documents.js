@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'react-proptypes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import CreateDocument from './DocumentCreate';
+import CreateDocument from './CreateDocument';
 import UserDetails from './../../actions/userDetails';
 import * as documentActions from './../../actions/documentActions';
 

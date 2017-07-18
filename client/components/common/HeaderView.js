@@ -1,39 +1,57 @@
 import React from 'react';
+import UserDetails from './../../actions/userDetails';
 
-const HeaderView = () => (
-  <div className="navbar-fixed">
-    <ul id="dropdown1" className="dropdown-content">
-      <li><a href="/documents">Documents</a></li>
-      <li><a href="/mydocuments">Mydocuments</a></li>
-      <li><a href="/users">Users</a></li>
-      <li><a href="/roles">Roles</a></li>
-      <li><a href="/roleDocuments">RoleDocuments</a></li>
-    </ul>
-    <ul id="dropdown2" className="dropdown-content">
-      <li><a href="/searchuser">Users</a></li>
-      <li><a href="/searchdocument">Documents</a></li>
-    </ul>
-    <nav>
-      <div className="nav-wrapper">
-        <a href="" className="brand-logo">DOCSYSTEM</a>
-        <ul className="right hide-on-med-and-down">
-          {sessionStorage.token &&
-            <div>
-              <li><a href=""><i className="material-icons">refresh</i></a></li>
-              <li><a href="#!" className="dropdown-button" data-activates="dropdown2">
-                <i className="material-icons">search</i></a>
-              </li>
-              <li><a className="dropdown-button" href="#!" data-activates="dropdown1">
-                <i className="material-icons right">arrow_drop_down</i></a>
-              </li>
-              <li><a href="/myprofile" className="material-icons profile-picture">account_circle</a>
-              </li>
-              <li><a href="/logout">LOGOUT</a></li>
-            </div>
+const HeaderView = () => {
+  const user = UserDetails.decodeToken(sessionStorage.token);
+  return (
+    <div className="navbar-fixed">
+      <ul id="dropdown1" className="dropdown-content">
+        <li><a href="/users">Users</a></li>
+        <li><a href="/roles">Roles</a></li>
+      </ul>
+      <nav>
+        <div className="nav-wrapper">
+          <a href="" className="brand-logo">DOCSYSTEM</a>
+          <ul className="right hide-on-med-and-down">
+            {sessionStorage.token &&
+              <div>
+                <div className="nav-items">
+                <li><a href="#!">
+                  {/* <i className="material-icons">home</i> */}
+                Home</a>
+                </li>
+                <li><a href="/documents">
+                  {/* <i className="material-icons">folder</i> */}
+                Documents</a>
+                </li>
+                <li><a href="/mydocuments">
+                  {/* <i className="material-icons">folder-open</i> */}
+                My documents</a>
+                </li>
+                <li><a href="/roleDocuments">
+                  {/* <i className="material-icons">file-folder-shared</i> */}
+                Role Documents
+                </a>
+                </li>
+                <li><a href="/mydocuments">
+                  {/* <i className="material-icons">file-folder-shared</i> */}
+                </a>
+                </li>
+              </div>
+                <div>
+                <li><a className="dropdown-button" href="#!" data-activates="dropdown1">
+                  <i className="material-icons right">arrow_drop_down</i></a>
+                </li>
+              </div>
+              </div>
           }
-        </ul>
-      </div>
-    </nav>
-  </div>
-);
+            {sessionStorage.token &&
+              <li><a href="/logout">LOGOUT {user.username}</a></li>
+          }
+          </ul>
+        </div>
+      </nav>
+    </div>
+  );
+};
 export default HeaderView;

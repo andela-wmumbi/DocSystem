@@ -27,7 +27,8 @@ class RoleDocuments extends Component {
   }
 }
 RoleDocuments.propTypes = {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  documents: PropTypes.array.isRequired
 };
 function mapStateToProps(state) {
   return {

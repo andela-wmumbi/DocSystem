@@ -78,7 +78,6 @@ export function updateDocument(document) {
     });
 }
 export function deleteDocument(id) {
-  console.log(id)
   return (dispatch) => {
     return getDocumentDelete(id)
       .then((res) => {
@@ -90,10 +89,9 @@ export function deleteDocument(id) {
   };
 }
 export function getUserDocuments(id) {
-  console.log(id)
   return dispatch => getUserDocs(id)
     .then((documents) => {
-      dispatch(getUserDocsSuccess(documents.data));
+      dispatch(getUserDocsSuccess(documents.body));
     })
     .catch((error) => {
       throw (error);

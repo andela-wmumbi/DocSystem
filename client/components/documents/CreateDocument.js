@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Input } from 'react-materialize';
-import { PropTypes } from 'react-proptypes';
+import PropTypes from 'prop-types';
 
 const CreateDocument = props => (
   <div className="section">
@@ -63,6 +63,7 @@ CreateDocument.propTypes = {
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   document: PropTypes.object.isRequired,
+  role: PropTypes.any.isRequired,
 };
 
 export default CreateDocument;

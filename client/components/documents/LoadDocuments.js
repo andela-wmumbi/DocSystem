@@ -1,22 +1,20 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { PropTypes } from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import toastr from 'toastr';
-import AlertContainer from 'react-alert';
 import { Button } from 'react-materialize';
+import toastr from 'toastr';
 import Pagination from 'react-js-pagination';
-import Update from './Update';
-import AllDocuments from './AllDocuments';
-import Search from './Search';
-import UserDetails from './../../actions/userDetails';
+import UpdateDocument from './UpdateDocument';
+import DocumentView from './DocumentView';
+import SearchBox from './SearchBox';
 import * as documentActions from './../../actions/documentActions';
 
-
-class DocumentList extends Component {
+class LoadDocuments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: props.documents,
+      documents: [],
       isModalOpen: false,
       activePage: 1,
       limit: 4,
@@ -26,14 +24,14 @@ class DocumentList extends Component {
         id: '',
         userId: ''
       },
-      searchResults: [],
+      searchTitle: '',
     };
     this.handleCreateDoc = this.handleCreateDoc.bind(this);
-    this.showAlert = this.showAlert.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.deleteDocument = this.deleteDocument.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.handleSearchBoxChange = this.handleSearchBoxChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
   }
   componentDidMount() {
@@ -64,37 +62,38 @@ class DocumentList extends Component {
   handleCreateDoc() {
     this.context.router.history.push('/createdoc');
   }
+  handleSearch() {
+    this.context.router.history.push(`/documents-search?title=${this.state.searchTitle}`);
+  }
+  handleSearchBoxChange(event) {
+    let searchTitle = this.state.document;
+    searchTitle = event.target.value;
+    this.setState({ searchTitle });
+  }
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
     this.props.actions.paginateDocuments(this.state.limit, (this.state.limit * (pageNumber - 1)));
   }
-  showAlert(error, mesg) {
-    this.msg.show(mesg, {
-      time: 5000,
-      type: error,
-      offset: 14,
-      position: 'bottom left',
-      theme: 'dark',
-      transition: 'scale'
-    });
-  }
   render() {
     const { documentContent, documents } = this.state;
-    const { pageDocuments, isDeleteSuccess, deleteError } = this.props;
+    const { pageDocuments } = this.props;
     return (
       <div>
         <center>
           <div style={{ margin: '0 auto', width: '30%' }}>
-            <Search handleSearch={this.handleSearch} />
+            <SearchBox
+              handleSubmit={this.handleSearch}
+              handleSearchBoxChange={this.handleSearchBoxChange}
+            />
           </div>
-          <AllDocuments
+          <DocumentView
             documents={pageDocuments}
             openModal={this.openModal}
             deleteDocument={this.deleteDocument}
           />
           {
             this.state.isModalOpen &&
-            <Update
+            <UpdateDocument
               closeModal={this.closeModal}
               isModalOpen={this.state.isModalOpen}
               document={documentContent}
@@ -114,22 +113,17 @@ class DocumentList extends Component {
             pageRangeDisplayed={5}
             onChange={this.handlePageChange}
           />
-          <div className="message">
-            <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
-            {isDeleteSuccess && <div> {this.showAlert('success', 'Document Succesully deleted')}</div>}
-            {deleteError && <div> {this.showAlert('error', 'There was a problem deleting')}</div>}
-          </div>
         </center >
       </div >
     );
   }
 }
-DocumentList.propTypes = {
+LoadDocuments.propTypes = {
   actions: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired,
   pageDocuments: PropTypes.array.isRequired,
 };
-DocumentList.contextTypes = {
+LoadDocuments.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
@@ -148,4 +142,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentList);
+export default connect(mapStateToProps, mapDispatchToProps)(LoadDocuments);

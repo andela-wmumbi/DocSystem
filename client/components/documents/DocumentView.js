@@ -1,33 +1,46 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, CardPanel, Col } from 'react-materialize';
+import UserDetails from './../../actions/userDetails';
 
-const UserDocuments = (props) => (
-  <div >
-    <Row >
-      {props.documents.map(document =>
+const DocumentView = (props) => {
+  const user = UserDetails.decodeToken(sessionStorage.token);
+  return (
+    <div >
+      <Row >
+        {props.documents.length ? props.documents.map(document =>
         (<Col s={6} key={document.id} className="col">
           <CardPanel className="card">
             <span> <h5>{document.title}</h5>
               <p>{document.content}</p>
               <hr />
-              <button onClick={() =>
-                props.openModal(document.id, document.content, document.title)}
-              >
-                <i className="tiny material-icons">mode_edit</i>
-              </button>
-              <button onClick={() =>
+              <p>Created by: {user.username}</p>
+              {(document.userId === user.id || document.access === user.roleTitle) &&
+                <div>
+                  <button onClick={() =>
+                props.openModal(document.id, document.content, document.title, document.userId)}
+                  >
+                    <i className="tiny material-icons">mode_edit</i>
+                  </button>
+                  <button onClick={() =>
                 props.deleteDocument(document.id)}
-              >
-                <i className="tiny material-icons">delete</i>
-              </button>
+                  >
+                    <i className="tiny material-icons">delete</i>
+                  </button>
+                </div>
+                }
             </span>
           </CardPanel>
         </Col>)
-      )}
-    </Row>
-  </div>
-);
-UserDocuments.propTypes = {
+      ) :
+        <span><h4>Create a document</h4></span>
+      }
+      </Row>
+    </div>
+  );
+};
+DocumentView.propTypes = {
   documents: PropTypes.array.isRequired
 };
-export default UserDocuments;
+
+export default DocumentView;

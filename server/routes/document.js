@@ -3,8 +3,6 @@ const authorization = require('./middlewares/authorization');
 
 module.exports = (app) => {
   const auth = authorization.authenticate;
-  const authAdmin = authorization.verifyAdmin;
-  const verifyAccess = authorization.verifyAccess;
   app.route('/api/documents')
     .post(auth, document.create)
     .get(auth, document.list);
@@ -12,10 +10,10 @@ module.exports = (app) => {
     .get(auth, document.findOne)
     .put(auth, document.update)
     .delete(auth, document.destroy);
-  app.route('/search/documents/:document')
+  app.route('/search/documents')
     .get(document.findDocument);
   app.route('/api/documents?limit={integer}&offset={integer}')
     .get(document.list);
-  app.route('/api/roleDocuments/:role')
+  app.route('/api/roleDocuments/')
     .get(document.roleDocuments);
 };

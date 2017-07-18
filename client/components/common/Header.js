@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Button } from 'react-materialize';
 import toastr from 'toastr';
-import Update from './../documents/Update';
+import UpdateDocument from './../documents/UpdateDocument';
 import * as DocumentActions from './../../actions/documentActions';
 import userDetails from './../../actions/userDetails';
 import DocumentView from './../documents/DocumentView';
@@ -20,6 +21,7 @@ class Header extends Component {
         id: ''
       }
     };
+    this.handleCreateDoc = this.handleCreateDoc.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.deleteDocument = this.deleteDocument.bind(this);
@@ -32,6 +34,9 @@ class Header extends Component {
     if (documents !== this.state.documents) {
       this.setState({ documents });
     }
+  }
+  handleCreateDoc() {
+    this.context.router.history.push('/createdoc');
   }
   openModal(id, content, title) {
     this.setState({ documentContent: { content, title, id } });
@@ -60,12 +65,19 @@ class Header extends Component {
           />
           {
             this.state.isModalOpen &&
-            <Update
+            <UpdateDocument
               closeModal={this.closeModal}
               isModalOpen={this.state.isModalOpen}
               document={documentContent}
             />
           }
+          <Button
+            floating
+            className="#1a237e indigo darken-4"
+            waves="light"
+            icon="add"
+            onClick={() => this.handleCreateDoc()}
+          />
         </center>
       </div>
     );

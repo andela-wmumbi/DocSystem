@@ -48,11 +48,11 @@ class DocumentController {
   }
 
   roleDocuments(req, res) {
-    if (req.params) {
+    if (req.query.role) {
       return document
         .findAll({
           where: {
-            access: req.params.role
+            access: req.query.role
           }
         })
         .then((documents) => {
@@ -61,7 +61,7 @@ class DocumentController {
               message: 'Document not found'
             });
           }
-          res.status(200).send(document);
+          res.status(200).send(documents);
         })
         .catch((error) => {
           res.status(400).json(error);
@@ -115,14 +115,14 @@ class DocumentController {
       });
   }
   findDocument(req, res) {
-    if (req.params.document) {
+    if (req.query.q) {
       return document
         .findAll(
         {
           where:
           {
             title: {
-              $like: `%${req.params.document}%`
+              $like: `%${req.query.q}%`
             }
           }
         })

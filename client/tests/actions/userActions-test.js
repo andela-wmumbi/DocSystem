@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import sinon from 'sinon';
 import expect from 'expect';
 import nock from 'nock';
-import * as actions from './../../actions/UserActions';
+import * as actions from './../../actions/userActions';
 import * as UserApi from '../../apis/UserApi';
 import * as types from './../../actions/actionTypes';
 
