@@ -10,14 +10,20 @@ class DocumentController {
         userId: req.decoded.id,
       })
       .then(document => res.status(201).send(document))
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(400).json({
+        message: 'Couldnot create document',
+        Error: error
+      }));
   }
   list(req, res) {
     if (req.query.limit || req.query.offset) {
       return document
         .findAll({
           limit: req.query.limit,
-          offset: req.query.offset
+          offset: req.query.offset,
+          where: {
+            access: 'public'
+          }
         })
         .then((document) => {
           if (!document) {
@@ -32,9 +38,35 @@ class DocumentController {
         });
     }
     return document
-      .findAll({ where: { access: 'public' } })
+      .findAll({
+        where: {
+          access: 'public',
+        }
+      })
       .then(document => res.status(200).send(document))
       .catch(error => res.status(404).send(error));
+  }
+
+  roleDocuments(req, res) {
+    if (req.params) {
+      return document
+        .findAll({
+          where: {
+            access: req.params.role
+          }
+        })
+        .then((documents) => {
+          if (!documents.length) {
+            return res.status(404).send({
+              message: 'Document not found'
+            });
+          }
+          res.status(200).send(document);
+        })
+        .catch((error) => {
+          res.status(400).json(error);
+        });
+    }
   }
 
   findOne(req, res) {
@@ -63,7 +95,7 @@ class DocumentController {
             title: req.body.title || document.title,
             content: req.body.content || document.content
           })
-          .then((doc) => res.status(200).send(doc))
+          .then(doc => res.status(200).send(doc))
           .catch(error => res.status(400).send(error));
       });
   }

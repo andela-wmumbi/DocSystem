@@ -10,8 +10,10 @@ import Documents from './documents/Documents';
 import DocumentList from './documents/DocumentList';
 import Register from './register/Register';
 import Profile from './users/Profile';
-import Search from './search/Search';
+import Users from './users/Users';
+import RolesList from './Roles/RolesList';
 import SearchDocument from './documents/Search';
+import RoleDocuments from './Roles/RoleDocuments';
 
 const App = () => (
   <div className="container-fluid">
@@ -29,7 +31,9 @@ const App = () => (
           <Route exact path="/createdoc" component={Documents} />
           <Route exact path="/mydocuments" component={Header} />
           <Route exact path="/myprofile" component={Profile} />
-          <Route exact path="/searchuser" component={Search} />
+          <Route exact path="/users" component={Users} />
+          <Route exact path="/roles" component={RolesList} />
+          <Route exact path="/roleDocuments" component={RoleDocuments} />
           <Route exact path="/searchdocument" component={SearchDocument} />
           <Route render={() => <h1>404</h1>} />
         </Switch>

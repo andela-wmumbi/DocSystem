@@ -1,5 +1,5 @@
-import * as types from './ActionTypes';
-import UserDetails from './UserDetails';
+import * as types from './actionTypes';
+import userDetails from './userDetails';
 import { login } from './../apis/UserApi';
 
 export function setLoginPending(isLoginPending) {
@@ -28,7 +28,7 @@ export function logInUser(credentials) {
     dispatch(setLoginSuccess(false));
     dispatch(setLoginError(null));
     return login(credentials).then((response) => {
-      UserDetails.setToken(response.data.token);
+      userDetails.setToken(response.data.token);
       dispatch(setLoginPending(false));
       dispatch(setLoginSuccess(true));
     }).catch((error) => {

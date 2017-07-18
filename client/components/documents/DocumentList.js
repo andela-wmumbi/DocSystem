@@ -1,12 +1,15 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import swal from 'sweetalert';
-import { Row, Col, CardPanel, Pagination, Button } from 'react-materialize';
 import { bindActionCreators } from 'redux';
-import UserDetails from './../../actions/UserDetails';
+import { connect } from 'react-redux';
+import toastr from 'toastr';
+import AlertContainer from 'react-alert';
+import { Button } from 'react-materialize';
+import Pagination from 'react-js-pagination';
 import Update from './Update';
+import AllDocuments from './AllDocuments';
 import Search from './Search';
-import * as DocumentActions from './../../actions/DocumentActions';
+import UserDetails from './../../actions/userDetails';
+import * as documentActions from './../../actions/documentActions';
 
 
 class DocumentList extends Component {
@@ -15,17 +18,27 @@ class DocumentList extends Component {
     this.state = {
       documents: props.documents,
       isModalOpen: false,
+      activePage: 1,
+      limit: 4,
       documentContent: {
         content: '',
         title: '',
-        id: ''
-      }
+        id: '',
+        userId: ''
+      },
+      searchResults: [],
     };
+    this.handleCreateDoc = this.handleCreateDoc.bind(this);
+    this.showAlert = this.showAlert.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.deleteDocument = this.deleteDocument.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
   componentDidMount() {
     this.props.actions.loadDocuments();
+    this.props.actions.paginateDocuments(this.state.limit, 0);
   }
   componentWillReceiveProps(nextProps) {
     const { documents } = nextProps;
@@ -33,49 +46,52 @@ class DocumentList extends Component {
       this.setState({ documents });
     }
   }
-  openModal(id, content, title) {
-    this.setState({ documentContent: { content, title, id } });
+  openModal(id, content, title, userId) {
+    this.setState({ documentContent: { content, title, id, userId } });
     this.setState({ isModalOpen: true });
   }
   closeModal() {
     this.setState({ isModalOpen: false });
   }
   deleteDocument(id) {
-    this.props.actions.deleteDocument(id, UserDetails.isUser())
-      .then(() => {
-        swal('Document deleted successfully');
+    this.props.actions.deleteDocument(id).then(() => {
+      toastr.success('Document deleted successfully');
+    })
+      .catch(() => {
+        toastr.error('Couldnot delete the document');
       });
   }
   handleCreateDoc() {
     this.context.router.history.push('/createdoc');
   }
+  handlePageChange(pageNumber) {
+    this.setState({ activePage: pageNumber });
+    this.props.actions.paginateDocuments(this.state.limit, (this.state.limit * (pageNumber - 1)));
+  }
+  showAlert(error, mesg) {
+    this.msg.show(mesg, {
+      time: 5000,
+      type: error,
+      offset: 14,
+      position: 'bottom left',
+      theme: 'dark',
+      transition: 'scale'
+    });
+  }
   render() {
     const { documentContent, documents } = this.state;
-
+    const { pageDocuments, isDeleteSuccess, deleteError } = this.props;
     return (
       <div>
         <center>
-          <Row >
-            {documents.map(document =>
-              (<Col s={6} key={document.id} className="col">
-                <CardPanel className="card">
-                  <span> <h4>{document.title}</h4>
-                    <p>{document.content}</p>
-                    <button onClick={() =>
-                      this.openModal(document.id, document.content, document.title)}
-                    >
-                      EDIT
-                    </button>
-                    <button onClick={() =>
-                      this.deleteDocument(document.id)}
-                    >
-                      DELETE
-                    </button>
-                  </span>
-                </CardPanel>
-              </Col>)
-            )}
-          </Row>
+          <div style={{ margin: '0 auto', width: '30%' }}>
+            <Search handleSearch={this.handleSearch} />
+          </div>
+          <AllDocuments
+            documents={pageDocuments}
+            openModal={this.openModal}
+            deleteDocument={this.deleteDocument}
+          />
           {
             this.state.isModalOpen &&
             <Update
@@ -86,13 +102,23 @@ class DocumentList extends Component {
           }
           <Button
             floating
-            large
             className="#1a237e indigo darken-4"
             waves="light"
             icon="add"
             onClick={() => this.handleCreateDoc()}
           />
-          <Pagination items={8} activePage={2} maxButtons={6} />
+          <Pagination
+            activePage={this.state.activePage}
+            itemsCountPerPage={this.state.limit}
+            totalItemsCount={documents.length}
+            pageRangeDisplayed={5}
+            onChange={this.handlePageChange}
+          />
+          <div className="message">
+            <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
+            {isDeleteSuccess && <div> {this.showAlert('success', 'Document Succesully deleted')}</div>}
+            {deleteError && <div> {this.showAlert('error', 'There was a problem deleting')}</div>}
+          </div>
         </center >
       </div >
     );
@@ -100,25 +126,25 @@ class DocumentList extends Component {
 }
 DocumentList.propTypes = {
   actions: PropTypes.object.isRequired,
-  documents: PropTypes.array,
+  documents: PropTypes.array.isRequired,
+  pageDocuments: PropTypes.array.isRequired,
 };
 DocumentList.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-// DocumentList.defaultProps = {
-//   documents: []
-// };
-
 function mapStateToProps(state) {
   return {
-    documents: state.documents
+    isDeleteSuccess: state.isDeleteSuccess,
+    deleteError: state.deleteError,
+    documents: state.documents,
+    pageDocuments: state.pageDocuments
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(DocumentActions, dispatch)
+    actions: bindActionCreators(documentActions, dispatch)
   };
 }
 

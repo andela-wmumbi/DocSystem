@@ -21,8 +21,8 @@ class Authenticate {
     }
   }
   verifyAdmin(req, res, next) {
-    const role = req.decoded.roleId;
-    if (role && role === 1) {
+    const role = req.decoded.roleTitle;
+    if (role === 'admin') {
       next();
     } else {
       return res.status(403).send({
@@ -31,8 +31,9 @@ class Authenticate {
     }
   }
   verifyOwner(req, res, next) {
-    const role = req.decoded.roleId;
-    if (role && role === 2) {
+    const userId = req.body.userId;
+    const id = req.decoded.id;
+    if (userId === id) {
       next();
     } else {
       return res.status(403).send({

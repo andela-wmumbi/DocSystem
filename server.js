@@ -3,7 +3,7 @@ import webpack from 'webpack';
 import path from 'path';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import config from './webapck.config';
+import config from './webpack.config';
 
 const routes = require('./server/routes');
 const morgan = require('morgan');

@@ -19,11 +19,18 @@ const SearchDisplay = (props) => (
             </CardPanel>
           </Col>)
         )}
+        {props.error && <p>Document doesnot exist</p>}
       </Row>
     </center>
   </div >
 );
 SearchDisplay.propTypes = {
-  documents: PropTypes.array.isRequired,
+  documents: PropTypes.array,
+  error: PropTypes.bool,
 };
+
+SearchDisplay.defaultProps = {
+  documents: [],
+  error: false,
+}
 export default SearchDisplay;

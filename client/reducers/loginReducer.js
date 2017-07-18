@@ -1,4 +1,4 @@
-import * as types from './../actions/ActionTypes';
+import * as types from './../actions/actionTypes';
 
 export default function loginReducer(state = {
   isLoginSuccess: false,
