@@ -2,8 +2,7 @@ import React, { PropTypes } from 'react';
 
 const UsersList = props => (
   <div>
-    <center>
-      <table>
+      <table className="centered">
         <thead>
           <tr>
             <th>UserName</th>
@@ -36,7 +35,6 @@ const UsersList = props => (
           }
         </tbody>
       </table>
-    </center>
   </div>
 );
 UsersList.propTypes = {

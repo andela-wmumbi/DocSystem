@@ -8,26 +8,27 @@ class Roles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: ''
+      role: { title: '' }
     };
     this.onSave = this.onSave.bind(this);
     this.onChange = this.onChange.bind(this);
   }
   onChange(event) {
     const field = event.target.name;
-    let title = this.state.title;
-    title = event.target.value;
-    this.setState({ title });
+    const role = this.state.role;
+    role[field] = event.target.value;
+    this.setState({ role });
   }
   onSave() {
-    this.props.actions.createRole(this.state.title).then(() => {
-      this.context.router.history.push('/documents');
+    this.props.actions.createRole(this.state.role).then(() => {
+      this.context.router.history.push('/roles');
     });
   }
 
   render() {
     return (
       <CreateRole
+        role={this.state.role}
         onSave={this.onSave}
         onChange={this.onChange}
       />

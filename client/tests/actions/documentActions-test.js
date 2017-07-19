@@ -49,7 +49,7 @@ describe('Document Actions', () => {
   describe('search document action ', () => {
     it('should dispatch success action after doc is found', () => {
       nock('http://localhost')
-        .get(`/search/documents/${'doc'}`)
+        .get('/search/documents?q=doc')
         .reply(200, { body: ['doc'] });
       const expectedActions = [
         {
@@ -114,7 +114,7 @@ describe('Document Actions', () => {
   describe('loads roledocuments action ', () => {
     it('should dispatch success action after roledocuments docs are found', () => {
       nock('http://localhost')
-        .get(`/api/roleDocuments/${'admin'}`)
+        .get('/api/roleDocuments?role=admin')
         .reply(200, { body: ['doc'] });
       const expectedActions = [
         {
@@ -162,6 +162,7 @@ describe('Document Actions', () => {
       const store = mockStore({ documents: [] });
       return store.dispatch(actions.updateDocument(1)).then(() => {
         expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
+        // expect(store.getActions()[1].type).toEqual(['doc']);
       });
     });
   });

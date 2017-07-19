@@ -10,7 +10,7 @@ const CreateRole = props => (
         label="Title"
         type="text"
         name="title"
-        value={props.title}
+        value={props.role.title}
         onChange={props.onChange}
       />
       <button
@@ -26,6 +26,7 @@ const CreateRole = props => (
   </div>
 );
 CreateRole.propTypes = {
+  role: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
 };

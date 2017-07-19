@@ -6,9 +6,7 @@ class roleController {
       .create({
         title: req.body.title
       })
-      .then((role) => {
-        return res.status(201).send(role);
-      })
+      .then(role => res.status(201).send(role))
       .catch(error => res.status(400).send(error));
   }
   findOne(req, res) {
@@ -19,9 +17,24 @@ class roleController {
   }
   list(req, res) {
     return role
-      .findAll()
+      .findAll({})
       .then(role => res.status(200).send(role))
       .catch(error => res.status(404).send(error));
+  }
+  destroy(req, res) {
+    return role
+      .findById(req.params.roleId)
+      .then((role) => {
+        if (!role) {
+          return res.status(404).send({
+            message: 'Role not found'
+          });
+        }
+        return role
+          .destroy()
+          .then(() => res.status(200).send({ message: 'Role deleted successfully.' }))
+          .catch(error => res.status(400).send(error));
+      });
   }
 }
 module.exports = new roleController();

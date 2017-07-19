@@ -29,6 +29,7 @@ class Users extends Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
+    this.handleCreateUser = this.handleCreateUser.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
   }
   componentDidMount() {
@@ -57,9 +58,9 @@ class Users extends Component {
         toastr.success('Couldnot delete user');
       });
   }
-  // handleCreateDoc() {
-  //   this.context.router.history.push('/createdoc');
-  // }
+  handleCreateUser() {
+    this.context.router.history.push('/createuser');
+  }
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
     this.props.actions.paginateUsers(this.state.limit, (this.state.limit * (pageNumber - 1)));
@@ -97,7 +98,7 @@ class Users extends Component {
           className="#1a237e indigo darken-4"
           waves="light"
           icon="add"
-          onClick={() => this.handleCreateDoc()}
+          onClick={() => this.handleCreateUser()}
         />
         <Pagination
           activePage={this.state.activePage}

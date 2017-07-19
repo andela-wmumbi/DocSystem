@@ -4,7 +4,8 @@ import { Row, CardPanel, Col } from 'react-materialize';
 import UserDetails from './../../actions/userDetails';
 
 const DocumentView = (props) => {
-  const user = UserDetails.decodeToken(sessionStorage.token);
+  const token = sessionStorage.getItem('token');
+  const user = token && UserDetails.decodeToken(token);
   return (
     <div >
       <Row >

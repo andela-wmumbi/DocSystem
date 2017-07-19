@@ -10,9 +10,11 @@ import CreateDocument from './documents/Documents';
 import LoadDocuments from './documents/LoadDocuments';
 import Register from './register/Register';
 import Users from './users/Users';
-import RolesList from './Roles/RolesList';
+import RolesList from './roles/RolesList';
 import SearchDocument from './documents/SearchDocument';
-import RoleDocuments from './Roles/RoleDocuments';
+import RoleDocuments from './roles/RoleDocuments';
+import CreateUser from './users/CreateUser';
+import Roles from './roles/Roles';
 
 const App = () => (
   <div className="container-fluid">
@@ -28,6 +30,8 @@ const App = () => (
           <Route exact path="/documents/:id" component={LoadDocuments} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/createdoc" component={CreateDocument} />
+          <Route exact path="/createuser" component={CreateUser} />
+          <Route exact path="/createrole" component={Roles} />
           <Route exact path="/mydocuments" component={Header} />
           <Route exact path="/users" component={Users} />
           <Route exact path="/roles" component={RolesList} />

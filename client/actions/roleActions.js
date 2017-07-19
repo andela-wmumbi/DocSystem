@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import { roleCreate, getAllRoles } from './../apis/RoleApi';
+import { roleCreate, getAllRoles, getRoleDelete } from './../apis/RoleApi';
 import UserDetails from './userDetails';
 
 export function createRoleSuccess(role) {
@@ -8,9 +8,13 @@ export function createRoleSuccess(role) {
 export function loadsRolesSuccess(roles) {
   return { type: types.LOAD_ROLES_SUCCESS, roles };
 }
+export function deleteRoleSuccess(id) {
+  return { type: types.DELETE_ROLE_SUCCESS, id };
+}
 
 export function createRole(role) {
-  return dispatch => roleCreate(role).then((response) => {
+  return dispatch => roleCreate(role)
+  .then((response) => {
     dispatch(createRoleSuccess(response.body));
   }).catch((error) => {
     throw (error);
@@ -25,4 +29,13 @@ export function loadRoles() {
     .catch((error) => {
       throw (error);
     });
+}
+export function deleteRole(id) {
+  return dispatch => getRoleDelete(id)
+      .then((res) => {
+        dispatch(deleteRoleSuccess(res.body));
+      })
+      .catch((error) => {
+        throw (error);
+      });
 }

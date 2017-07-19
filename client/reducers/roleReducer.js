@@ -9,6 +9,8 @@ export default function roleReducer(state = initialState.roles, action) {
         Object.assign({}, action.role)];
     case types.LOAD_ROLES_SUCCESS:
       return action.roles;
+    case types.DELETE_ROLE_SUCCESS:
+      return state;
     default:
       return state;
   }

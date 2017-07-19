@@ -25,6 +25,7 @@ module.exports = {
       roleTitle: {
         type: Sequelize.STRING,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'roles',
           key: 'title',

@@ -1,7 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
   const role = sequelize.define('role', {
-    title: DataTypes.STRING,
-    unique: true
-  });
+    title: {
+      type: DataTypes.STRING,
+      isUnique: true
+    },
+  },
+    {
+      classMethods: {
+        associate: (models) => {
+          role.hasMany(models.user, {
+            foreignKey: 'roleTitle',
+            as: 'user'
+          });
+        }
+      }
+    });
   return role;
 };

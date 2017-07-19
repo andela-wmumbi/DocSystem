@@ -5,5 +5,6 @@ module.exports = (app) => {
     .post(role.create)
     .get(role.list);
   app.route('/api/roles/:roleId')
-    .get(role.findOne);
+    .get(role.findOne)
+    .delete(role.destroy);
 };
