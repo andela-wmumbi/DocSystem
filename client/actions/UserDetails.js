@@ -20,9 +20,8 @@ class UserDetails {
     return ('owner');
   }
   static storeRoles(roles) {
-    roles.map((role) => {
-      localStorage.setItem('roles', role.id);
-    });
+    localStorage.setItem('roles', [roles]);
+    return roles;
   }
   static getRoles() {
     return localStorage.getItem('roles');

@@ -82,7 +82,7 @@ class userController {
           .update({
             username: req.body.username || user.username,
             email: req.body.email || user.email,
-            roleTitle: req.body.roleTitle || user.roleTitle
+            roleTitle: req.body.role || user.role
           })
           .then(() => res.status(200).send(user))
           .catch(error => res.status(400).send(error));

@@ -6,6 +6,7 @@ import 'react-select/dist/react-select.css';
 import { Button } from 'react-materialize';
 import Pagination from 'react-js-pagination';
 import * as userActions from './../../actions/userActions';
+import * as roleActions from './../../actions/roleActions';
 import UsersList from './UsersList';
 import UpdateUsers from './UpdateUsers';
 
@@ -18,6 +19,7 @@ class Users extends Component {
       users: props.users,
       activePage: 1,
       limit: 4,
+      roles: [],
       userDetails: {
         id: '',
         username: '',
@@ -31,9 +33,13 @@ class Users extends Component {
     this.deleteUser = this.deleteUser.bind(this);
     this.handleCreateUser = this.handleCreateUser.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.getRoles = this.getRoles.bind(this);
   }
   componentDidMount() {
     this.props.actions.loadUsers();
+    this.props.actions.loadRoles().then(() => {
+      this.getRoles();
+    });
     this.props.actions.paginateUsers(this.state.limit, 0);
   }
   componentWillReceiveProps(nextProps) {
@@ -42,6 +48,15 @@ class Users extends Component {
       this.setState({ users });
     }
   }
+  getRoles() {
+    const roles = this.props.roles;
+    const copy = [];
+    roles.forEach((role) => {
+      copy.push(role.title);
+      this.setState({ roles: copy });
+    });
+  }
+
   openModal(id, username, email, role) {
     this.setState({ userDetails: { id, username, email, role } });
     this.setState({ isModalOpen: true });
@@ -75,7 +90,7 @@ class Users extends Component {
   //   this.props.actions.deleteUser(id);
   // }
   render() {
-    const { userDetails, users } = this.state;
+    const { userDetails, users, roles } = this.state;
     const { pageUsers } = this.props;
     return (
       <div>
@@ -90,6 +105,7 @@ class Users extends Component {
             closeModal={this.closeModal}
             isModalOpen={this.state.isModalOpen}
             user={userDetails}
+            roles={roles}
           />
         }
         <Button
@@ -114,6 +130,7 @@ class Users extends Component {
 Users.propTypes = {
   actions: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired,
+  roles: PropTypes.array.isRequired,
   pageUsers: PropTypes.array.isRequired
 };
 Users.defaultProps = {
@@ -125,6 +142,7 @@ Users.contextTypes = {
 function mapStateToProps(state) {
   // users and userdocuments are as named in reducers
   return {
+    roles: state.roles,
     users: state.users,
     pageUsers: state.pageUsers
   };
@@ -132,7 +150,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(userActions, dispatch)
+    actions: bindActionCreators(Object.assign({}, userActions, roleActions), dispatch)
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Users);
