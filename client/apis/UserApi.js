@@ -28,17 +28,17 @@ export function getAllUsers() {
 export function getAUser(name) {
   return request
     .get(`/search/users/${name}`)
-    .set('x-access-token', sessionStorage.token);
+    .set('x-access-token', sessionStorage.getItem('token'));
 }
 export function getUserDelete(id) {
   return request
     .delete(`/api/users/${id}`)
-    .set('x-access-token', sessionStorage.token);
+    .set('x-access-token', sessionStorage.getItem('token'));
 }
 export function getUserUpdate(user) {
   return request
     .put(`/api/users/${user.id}`)
-    .set('x-access-token', sessionStorage.token)
+    .set('x-access-token', sessionStorage.getItem('token'))
     .send(user);
 }
 export function getUsersPagination(limit, offset) {

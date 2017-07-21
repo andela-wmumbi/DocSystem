@@ -1,4 +1,3 @@
-import request from 'superagent';
 const jwt = require('jsonwebtoken');
 
 const secretKey = process.env.SECRET;

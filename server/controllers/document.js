@@ -95,7 +95,7 @@ class DocumentController {
             title: req.body.title || document.title,
             content: req.body.content || document.content
           })
-          .then(doc => res.status(200).send(doc))
+          .then(doc => res.status(200).send({ doc, message: 'Document updated successfully' }))
           .catch(error => res.status(400).send(error));
       });
   }
@@ -123,6 +123,9 @@ class DocumentController {
           {
             title: {
               $like: `%${req.query.q}%`
+            },
+            $and: {
+              access: 'public'
             }
           }
         })

@@ -1,11 +1,9 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import localStorage from 'mock-local-storage';
-import sinon from 'sinon';
 import expect from 'expect';
 import nock from 'nock';
 import * as actions from '../../actions/documentActions';
-import * as DocApi from '../../apis/DocumentApi';
 import * as types from './../../actions/actionTypes';
 
 const middlewares = [thunk];
@@ -33,16 +31,16 @@ describe('Document Actions', () => {
       });
     });
 
-    xit('should dispatch failure action if  doc is not created', () => {
+    it('should dispatch failure action if  doc is not created', () => {
       nock('http://localhost')
         .post('/api/documents')
-        .reply(400);
+        .reply(500);
       const expectedActions = {
         type: types.AJAX_CALL_ERROR
       };
       const store = mockStore({ documents: [] });
-      return store.dispatch(actions.createDocument()).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
+      return store.dispatch(actions.createDocument()).catch(() => {
+        expect(store.getActions()[0].type).toEqual(expectedActions.type);
       });
     });
   });
@@ -95,14 +93,13 @@ describe('Document Actions', () => {
         expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
       });
     });
-    xit('should dispatch failure to load documents action', () => {
+    it('should dispatch failure to load documents action', () => {
       nock('http://localhost')
         .get('/api/documents')
         .reply(500);
       const expectedActions = [
         {
-          type: types.AJAX_CALL_ERROR,
-          error: {},
+          type: types.AJAX_CALL_ERROR
         }
       ];
       const store = mockStore({ documents: [] });
@@ -127,24 +124,18 @@ describe('Document Actions', () => {
         expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
       });
     });
-    xit('should dispatch failure to load roledocuments action', () => {
-      const fakeResponse = new Promise((reject) => {
-        reject(new Error({
-          status: 404,
-          body: { error: 'failure to load roledocuments' }
-        }));
-      });
-      const stub = sinon.stub(DocApi, 'getRoleDocuments').rejects(fakeResponse);
+    it('should dispatch failure to load roledocuments action', () => {
+      nock('http://localhost')
+        .get('/api/roleDocuments?role=admin')
+        .reply(500);
       const expectedActions = [
         {
           type: types.AJAX_CALL_ERROR,
-          error: {},
         }
       ];
       const store = mockStore({ documents: [] });
-      return store.dispatch(actions.loadRoleDocuments({})).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-        stub.restore();
+      return store.dispatch(actions.loadRoleDocuments('admin')).catch(() => {
+        expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
       });
     });
   });
@@ -152,15 +143,21 @@ describe('Document Actions', () => {
     xit('should dispatch success action after updating document', () => {
       nock('http://localhost')
         .put('/api/documents/1')
-        .reply(200, { body: ['doc'] });
+        .reply(200, { body: ['title'] });
+      const document =
+        {
+          title: 'title',
+          id: 1
+        };
       const expectedActions = [
         {
           type: types.UPDATE_DOCUMENT_SUCCESS,
-          document: ['doc'],
+          documents: ['title'],
         }
       ];
       const store = mockStore({ documents: [] });
-      return store.dispatch(actions.updateDocument(1)).then(() => {
+      return store.dispatch(actions.updateDocument(document.id)).then(() => {
+        console.log(store.getActions())
         expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
         // expect(store.getActions()[1].type).toEqual(['doc']);
       });
@@ -170,11 +167,11 @@ describe('Document Actions', () => {
     it('should dispatch success action after deleting document', () => {
       nock('http://localhost')
         .delete('/api/documents/1')
-        .reply(200, { body: [] });
+        .reply(200, { data: ['doc'] });
       const expectedActions = [
         {
           type: types.DELETE_DOCUMENT_SUCCESS,
-          document: [],
+          id: 1,
         }
       ];
       const store = mockStore({ documents: [] });
@@ -182,7 +179,7 @@ describe('Document Actions', () => {
         expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
       });
     });
-    xit('should dispatch success action after deleting document', () => {
+    it('should dispatch failure action after deleting document', () => {
       nock('http://localhost')
         .delete('/api/documents/1')
         .reply(500);
@@ -192,8 +189,8 @@ describe('Document Actions', () => {
         }
       ];
       const store = mockStore({ documents: [] });
-      return store.dispatch(actions.deleteDocument(1)).then(() => {
-        expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
+      return store.dispatch(actions.deleteDocument(1)).catch(() => {
+        expect(store.getActions().type).toEqual(expectedActions.type);
       });
     });
   });

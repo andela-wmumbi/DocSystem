@@ -15,6 +15,7 @@ import SearchDocument from './documents/SearchDocument';
 import RoleDocuments from './roles/RoleDocuments';
 import CreateUser from './users/CreateUser';
 import Roles from './roles/Roles';
+import SearchUser from './users/search/SearchUser';
 
 const App = () => (
   <div className="container-fluid">
@@ -37,6 +38,7 @@ const App = () => (
           <Route exact path="/roles" component={RolesList} />
           <Route exact path="/roleDocuments" component={RoleDocuments} />
           <Route exact path="/documents-search" component={SearchDocument} />
+          <Route exact path="/users-search" component={SearchUser} />
           <Route render={() => <h1>404</h1>} />
         </Switch>
       </div>

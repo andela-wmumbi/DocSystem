@@ -1,5 +1,6 @@
 /* Actions are object payloads that are identified by a required property 'type'
 Action creators are methods that wrap and return the action object*/
+import toastr from 'toastr';
 import {
   getAllDocuments,
   documentCreate, getDocumentUpdate,
@@ -70,9 +71,11 @@ export function loadRoleDocuments(role) {
 export function updateDocument(document) {
   return dispatch => getDocumentUpdate(document)
     .then((res) => {
-      dispatch(updateDocumentsSuccess(res.body));
+      // toastr.success(res.body.message);
+      dispatch(updateDocumentsSuccess(res.body.doc));
     })
     .catch((error) => {
+      // toastr.error(error.response.data.message);
       dispatch(ajaxCallError(error));
       throw (error);
     });
@@ -81,9 +84,11 @@ export function deleteDocument(id) {
   return (dispatch) => {
     return getDocumentDelete(id)
       .then((res) => {
-        dispatch(deleteDocumentSuccess(res.body.message));
+        // toastr.success(res.body.message);
+        dispatch(deleteDocumentSuccess(id));
       })
       .catch((error) => {
+        // toastr.error(error.response.data.message);
         throw (error);
       });
   };

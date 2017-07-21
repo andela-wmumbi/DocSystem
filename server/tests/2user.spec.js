@@ -175,6 +175,7 @@ describe('/api/logout', () => {
   xit('should logout user', (done) => {
     chai.request(server)
       .post('/api/logout')
+      .send(token)
       .set('x-access-token', token)
       .end((err, res) => {
         res.should.have.status(200);

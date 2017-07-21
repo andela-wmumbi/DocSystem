@@ -7,6 +7,7 @@ import { Button } from 'react-materialize';
 import Pagination from 'react-js-pagination';
 import * as userActions from './../../actions/userActions';
 import * as roleActions from './../../actions/roleActions';
+import SearchBox from './../documents/SearchBox';
 import UsersList from './UsersList';
 import UpdateUsers from './UpdateUsers';
 
@@ -25,7 +26,8 @@ class Users extends Component {
         username: '',
         email: '',
         role: '',
-      }
+      },
+      searchName: '',
     };
     // this.handleSearch = this.handleSearch.bind(this);
     this.openModal = this.openModal.bind(this);
@@ -33,6 +35,8 @@ class Users extends Component {
     this.deleteUser = this.deleteUser.bind(this);
     this.handleCreateUser = this.handleCreateUser.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.handleSearchBoxChange = this.handleSearchBoxChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.getRoles = this.getRoles.bind(this);
   }
   componentDidMount() {
@@ -80,20 +84,26 @@ class Users extends Component {
     this.setState({ activePage: pageNumber });
     this.props.actions.paginateUsers(this.state.limit, (this.state.limit * (pageNumber - 1)));
   }
-  // handleSearch(name) {
-  //   this.props.actions.searchUser(name).then(() => {
-  //     this.setState({ isViewReady: true });
-  //   });
-  // }
-  // deleteUser() {
-  //   const id = this.state.userDetails.id;
-  //   this.props.actions.deleteUser(id);
-  // }
+  handleSearch() {
+    this.context.router.history.push(`/users-search?title=${this.state.searchName}`);
+  }
+  handleSearchBoxChange(event) {
+    let searchName = this.state.searchName;
+    searchName = event.target.value;
+    this.setState({ searchName });
+  }
   render() {
     const { userDetails, users, roles } = this.state;
     const { pageUsers } = this.props;
     return (
       <div>
+        <center>
+        {/* <div style={{ margin: '0 auto', width: '30%' }}>
+          <SearchBox
+            handleSubmit={this.handleSearch}
+            handleSearchBoxChange={this.handleSearchBoxChange}
+          />
+        </div> */}
         <UsersList
           users={pageUsers}
           deleteUser={this.deleteUser}
@@ -123,6 +133,7 @@ class Users extends Component {
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
         />
+        </center>
       </div >
     );
   }

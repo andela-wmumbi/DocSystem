@@ -15,7 +15,6 @@ const DocumentView = (props) => {
             <span> <h5>{document.title}</h5>
               <p>{document.content}</p>
               <hr />
-              <p>Created by: {user.username}</p>
               {(document.userId === user.id || document.access === user.roleTitle) &&
                 <div>
                   <button onClick={() =>

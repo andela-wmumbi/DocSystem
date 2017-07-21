@@ -10,8 +10,8 @@ module.exports = {
       },
       username: {
         allowNull: false,
+        unique: true,
         type: Sequelize.STRING,
-        unique: true
       },
       password: {
         allowNull: false,
@@ -19,8 +19,8 @@ module.exports = {
       },
       email: {
         allowNull: false,
+        unique: true,
         type: Sequelize.STRING,
-        unique: true
       },
       roleTitle: {
         type: Sequelize.STRING,

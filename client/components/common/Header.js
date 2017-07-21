@@ -76,7 +76,7 @@ class Header extends Component {
             className="#1a237e indigo darken-4"
             waves="light"
             icon="add"
-            onClick={() => this.handleCreateDoc()}
+            onClick={this.handleCreateDoc}
           />
         </center>
       </div>
@@ -86,6 +86,9 @@ class Header extends Component {
 Header.propTypes = {
   actions: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired
+};
+Header.contextTypes = {
+  router: PropTypes.object.isRequired
 };
 function mapStateToProps(state) {
   return {

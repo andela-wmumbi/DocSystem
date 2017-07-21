@@ -18,17 +18,20 @@ const UsersList = props => (
               <td>{user.email}</td>
               <td>{user.roleTitle}</td>
               <td>
+                { user.username !== 'admin' &&
                 <button onClick={() =>
                   props.openModal(user.id, user.username, user.email, user.roleTitle)}
                 >
                   <i className="tiny material-icons">mode_edit</i>
                 </button>
+                }
+                { user.username !== 'admin' &&
                 <button onClick={() =>
                   props.deleteUser(user.id)}
                 >
                   <i className="tiny material-icons">delete</i>
                 </button>
-
+                }
               </td>
             </tr>
           ))

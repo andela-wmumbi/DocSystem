@@ -82,7 +82,7 @@ class userController {
           .update({
             username: req.body.username || user.username,
             email: req.body.email || user.email,
-            roleTitle: req.body.role || user.role
+            roleTitle: req.body.roleTitle || user.roleTitle
           })
           .then(() => res.status(200).send(user))
           .catch(error => res.status(400).send(error));
@@ -121,8 +121,8 @@ class userController {
           createdAt: user.createdAt,
           email: user.email,
         }, secretKey, {
-            expiresIn: 60 * 60 * 60
-          });
+          expiresIn: 60 * 60 * 60
+        });
         user.password = null;
         res.status(200).json(Object.assign({},
           { id: user.id, username: user.username, email: user.email, roleTitle: user.roleTitle }, { token }));

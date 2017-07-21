@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import { Input, Row } from 'react-materialize';
-import UserDetails from './../../actions/userDetails';
 import * as userActions from './../../actions/userActions';
 
 class UpdateUser extends Component {
@@ -16,7 +15,7 @@ class UpdateUser extends Component {
         id: props.user.id,
         username: props.user.username,
         email: props.user.email,
-        role: props.user.role
+        roleTitle: props.user.roleTitle
       }
     };
     this.handleChange = this.handleChange.bind(this);
@@ -64,25 +63,18 @@ class UpdateUser extends Component {
                 />
               </Row>
               <Row>
-                <Input
-                  s={12}
-                  type="select"
-                  label="Role"
-                  value={userDetails.role}
-                  name="role"
+                <select
+                  value={userDetails.roleTitle}
+                  name="roleTitle"
                   onChange={this.handleChange}
                 >
-                   <option value={userDetails.role}>{userDetails.role}</option>
-                  <option value="admin">admin</option>
-                  <option value="facilitator">facilitator</option>
-                  <option value="supervisor">supervisor</option>
-                  {/* {this.props.roles.map((role) => {
-                    <option value={role}>
-                      {role}</option>;
-                  })} */}
-                </Input>
+                  {
+                    this.props.roles.map(role => (
+                      <option value={role}> {role}</option>
+                  ))};
+                </select>
               </Row>
-                <button onClick={this.handleSave}>Save</button>
+              <button onClick={this.handleSave}>Save</button>
             </ModalDialog>
           </ModalContainer >
         }

@@ -66,5 +66,14 @@ p.error {
 line-height:0.2
  }
 .nav-items{
-    margin-right: 400px;
+    margin-right: 500px;
+}
+.nav-items2{
+    float: right;
+}
+select {
+  display: block !important;
+}
+a:active {
+  color:yellow
 }

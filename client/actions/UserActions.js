@@ -1,5 +1,8 @@
+import toastr from 'toastr';
 import * as types from './actionTypes';
-import { register, getAllUsers, getAUser, getUserDelete, getUserUpdate, getUsersPagination } from '../apis/UserApi';
+import { register, getAllUsers, getAUser,
+  getUserDelete, getUserUpdate, getUsersPagination }
+  from '../apis/UserApi';
 
 export function registerSuccess() {
   return { type: types.CREATE_USER_SUCCESS, };
@@ -22,11 +25,16 @@ export function updateUserSuccess(user) {
 export function loadsUsersPagination(pageUsers) {
   return { type: types.LOAD_PAGEUSERS_SUCCESS, pageUsers };
 }
+export function ajaxCallError(error) {
+  return { type: types.AJAX_CALL_ERROR, error };
+}
 
 export function registerUser(user) {
   return dispatch => register(user).then(() => {
     dispatch(registerSuccess(user));
   }).catch((error) => {
+    dispatch(ajaxCallError(error));
+    // toastr.error(error.response.data.errors[0].message);
     throw (error);
   });
 }
@@ -41,6 +49,7 @@ export function loadUsers() {
         dispatch(loadsUsersSuccess(res.body));
       })
       .catch((error) => {
+        dispatch(ajaxCallError(error));
         throw (error);
       });
   };
@@ -61,10 +70,11 @@ export function deleteUser(id) {
   return (dispatch) => {
     return getUserDelete(id)
       .then((res) => {
+        console.log('Rest:', res.body);
         dispatch(deleteUserSuccess(res.body));
       })
       .catch((error) => {
-        dispatch(loadsUserFailure(error));
+        dispatch(ajaxCallError(error));
         throw (error);
       });
   };
