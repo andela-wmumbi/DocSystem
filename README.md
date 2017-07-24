@@ -1,4 +1,5 @@
-[![Test Coverage](https://codeclimate.com/github/codeclimate/codeclimate/badges/coverage.svg)](https://codeclimate.com/github/codeclimate/andela-wmumbi/DocSystem/coverage)
+[![Coverage Status](https://coveralls.io/repos/andela-wmumbi/DocSystem//badge.svg?branch=edit-user-roles)](https://coveralls.io/r/andela-wmumbi/DocSystem/?branch=master)
+
 [![Build Status](https://travis-ci.org/andela-wmumbi/DocSystem.svg?branch=master)](https://travis-ci.org/andela-wmumbi/DocSystem)
 
 <<<<<<< Updated upstream

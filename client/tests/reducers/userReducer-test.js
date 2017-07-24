@@ -9,103 +9,57 @@ describe('users reducer', () => {
     });
     it('should handle create user', () => {
       const initialState = {
-        users: [
-          { username: 'me' }
-        ]
+        users: []
       };
-      const user = { username: 'you' };
+      const user = { id: 1, username: 'you', email: 'you@gmail.com', password: 'youyou', roleTitle: 'admin' };
       const action = actions.registerSuccess(user);
-
       const newState = userReducer(initialState.users, action);
-      console.log(newState)
-      expect(newState.length).toBe(2);
+      expect(newState.length).toBe(1);
       expect(newState[0].username).toBe('you');
     });
   });
-  describe('update document reducer', () => {
-    xit('should handle document update', () => {
-      const initialState = {
-        documents: [
-          { id: 1, title: 'old' }
+  describe('update user reducer', () => {
+    it('should handle user update', () => {
+      const initialState =
+        [
+          { id: 1, username: 'old' }
         ]
-      };
-      const document = { id: 2, title: 'new' };
-      const action = actions.updateDocumentsSuccess(document);
+      ;
+      const user = { id: 1, username: 'new' };
+      const action = actions.updateUserSuccess(user);
 
       const newState = userReducer(initialState, action);
-
-      expect(newState[0]).toEqual(2);
-      expect(newState[0].title).toEqual('new');
+      expect(newState[0].username).toEqual('new');
     });
   });
-  describe('delete document reducer', () => {
-    xit('should handle document delete', () => {
+  describe('delete user reducer', () => {
+    xit('should handle user delete', () => {
       const initialState = {
-        documents: [
-           { id: 1, title: 'one' },
-           { id: 2, title: 'two' }
+        users: [
+           { id: 1, username: 'one' },
+           { id: 2, username: 'two' }
         ]
       };
-      const action = actions.deleteDocumentSuccess(1);
-      const newState = userReducer(initialState.documents, action);
+      const action = actions.deleteUserSuccess({});
+      const newState = userReducer(initialState.users, action);
       expect(newState.length).toEqual(1);
       expect(newState[0].id).toEqual(2);
     });
   });
-  describe('load documents reducer', () => {
-    xit('should handle load documents', () => {
+  describe('load users reducer', () => {
+    it('should handle load users', () => {
       const initialState = {
-        documents: []
+        users: []
       };
-      const documents = [
-      { title: 'docs' },
-      { title: 'doc' }
+      const users = [
+      { username: 'user1' },
+      { username: 'user2' }
       ];
-      const action = actions.loadsDocumentsSuccess(documents);
-      const newState = userReducer(initialState.documents, action);
-      expect(newState[0].title).toEqual('docs');
-      expect(newState[1].title).toEqual('doc');
+      const action = actions.loadsUsersSuccess(users);
+      const newState = userReducer(initialState.users, action);
+      expect(newState[0].username).toEqual('user1');
+      expect(newState[1].username).toEqual('user2');
       expect(newState.length).toEqual(2);
-    });
-  });
-  describe('load user documents reducer', () => {
-    xit('should handle load user documents', () => {
-      const initialState = {
-        documents: [
-          { title: 'doc', userId: '1' },
-          { title: 'doc2', userId: '2' },
-          { title: 'doc3', userId: '2' },
-          { title: 'doc4', userId: '4' }
-        ]
-      };
-      const documents = [
-          { title: 'doc2', userId: '2' },
-          { title: 'doc3', userId: '2' },
-      ];
-      const action = actions.getUserDocsSuccess(documents);
-      const newState = userReducer(initialState.documents, action);
-
-      expect(newState.length).toBe(2);
-    });
-  });
-  describe('load role document reducer', () => {
-    xit('should handle load role documents', () => {
-      const initialState = {
-        documents: [
-          { title: 'role', access: 'admin' },
-          { title: 'role2', access: 'admin' },
-          { title: 'role3', access: 'owner' },
-          { title: 'role4', access: 'editor' }
-        ]
-      };
-      const documents = [
-         { title: 'role', access: 'admin' },
-        { title: 'role2', access: 'admin' },
-      ];
-      const action = actions.loadRoleDocuments(documents);
-      const newState = userReducer(initialState.documents, action);
-      expect(newState.length).toBe(2);
-      expect(newState[0].access).toEqual('admin');
     });
   });
 });

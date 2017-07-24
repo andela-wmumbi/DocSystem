@@ -27,6 +27,7 @@ export default function documentReducer(state = initialState.documents, action) 
     case types.GET_USER_DOCUMENTS:
       return action.documents;
     case types.GET_ROLE_DOCUMENTS:
+    console.log(action.documents)
       return action.documents;
     default:
       return state;

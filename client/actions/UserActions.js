@@ -4,8 +4,8 @@ import { register, getAllUsers, getAUser,
   getUserDelete, getUserUpdate, getUsersPagination }
   from '../apis/UserApi';
 
-export function registerSuccess() {
-  return { type: types.CREATE_USER_SUCCESS, };
+export function registerSuccess(user) {
+  return { type: types.CREATE_USER_SUCCESS, user };
 }
 export function loadsUsersSuccess(users) {
   return { type: types.LOAD_USERS_SUCCESS, users };
@@ -70,7 +70,7 @@ export function deleteUser(id) {
   return (dispatch) => {
     return getUserDelete(id)
       .then((res) => {
-        console.log('Rest:', res.body);
+        console.log('hello world', res);
         dispatch(deleteUserSuccess(res.body));
       })
       .catch((error) => {

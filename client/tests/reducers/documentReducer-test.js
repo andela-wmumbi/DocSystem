@@ -29,7 +29,6 @@ describe('documents reducer', () => {
       const document = { id: 1, title: 'new' };
       const action = actions.updateDocumentsSuccess(document);
       const newState = documentReducer(initialState, action);
-
       expect(newState[0].title).toEqual('new');
     });
   });
@@ -84,7 +83,7 @@ describe('documents reducer', () => {
     });
   });
   describe('load role document reducer', () => {
-    xit('should handle load role documents', () => {
+    it('should handle load role documents', () => {
       const initialState = {
         documents: [
           { title: 'role', access: 'admin' },
@@ -94,7 +93,7 @@ describe('documents reducer', () => {
         ]
       };
       const document = [
-         { title: 'role', access: 'admin' },
+        { title: 'role', access: 'admin' },
         { title: 'role2', access: 'admin' },
       ];
       const action = actions.loadRoleDocuments(document);
