@@ -1,20 +1,33 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
-import { Row, Col, CardPanel } from 'react-materialize';
 import { connect } from 'react-redux';
-import * as DocumentActions from './../../actions/DocumentActions';
-import UserDetails from './../../actions/UserDetails';
+import { Button } from 'react-materialize';
+import toastr from 'toastr';
+import UpdateDocument from './../documents/UpdateDocument';
+import * as DocumentActions from './../../actions/documentActions';
+import userDetails from './../../actions/userDetails';
+import DocumentView from './../documents/DocumentView';
+
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       documents: props.documents,
-      showmyDocuments: false
+      showmyDocuments: false,
+      documentContent: {
+        content: '',
+        title: '',
+        id: ''
+      }
     };
+    this.handleCreateDoc = this.handleCreateDoc.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.deleteDocument = this.deleteDocument.bind(this);
   }
   componentWillMount() {
-    this.props.actions.getUserDocuments(UserDetails.decodeToken(sessionStorage.token).id);
+    this.props.actions.getUserDocuments(userDetails.decodeToken(sessionStorage.token).id);
   }
   componentWillReceiveProps(nextProps) {
     const { documents } = nextProps;
@@ -22,28 +35,49 @@ class Header extends Component {
       this.setState({ documents });
     }
   }
+  handleCreateDoc() {
+    this.context.router.history.push('/createdoc');
+  }
+  openModal(id, content, title) {
+    this.setState({ documentContent: { content, title, id } });
+    this.setState({ isModalOpen: true });
+  }
+  closeModal() {
+    this.setState({ isModalOpen: false });
+  }
+  deleteDocument(id) {
+    this.props.actions.deleteDocument(id).then(() => {
+      toastr.success('Document deleted successfully');
+    })
+      .catch(() => {
+        toastr.error('Couldnot delete the document');
+      });
+  }
   render() {
-    const { documents } = this.state;
+    const { documents, documentContent } = this.state;
     return (
       <div>
         <center>
-          <Row>
-            {documents.map(document =>
-              (<Col s={12} m={5} key={document.id}>
-                <CardPanel className="card">
-                  <span> <h4>{document.title}</h4>
-                    <p>{document.content}</p>
-                    <button onClick={() =>
-                      this.openModal(document.id, document.content, document.title)}
-                    >
-                      EDIT
-                    </button>
-                    <button onClick={() => this.deleteDocument(document.id)}>DELETE</button>
-                  </span>
-                </CardPanel>
-              </Col>)
-            )}
-          </Row>
+          <DocumentView
+            documents={documents}
+            openModal={this.openModal}
+            deleteDocument={this.deleteDocument}
+          />
+          {
+            this.state.isModalOpen &&
+            <UpdateDocument
+              closeModal={this.closeModal}
+              isModalOpen={this.state.isModalOpen}
+              document={documentContent}
+            />
+          }
+          <Button
+            floating
+            className="#1a237e indigo darken-4"
+            waves="light"
+            icon="add"
+            onClick={this.handleCreateDoc}
+          />
         </center>
       </div>
     );
@@ -52,6 +86,9 @@ class Header extends Component {
 Header.propTypes = {
   actions: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired
+};
+Header.contextTypes = {
+  router: PropTypes.object.isRequired
 };
 function mapStateToProps(state) {
   return {

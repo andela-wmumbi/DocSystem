@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import RegisterForm from './RegisterForm';
 import validateRegister from './Validate';
-import * as UserActions from './../../actions/UserActions';
+import * as userActions from './../../actions/userActions';
 
 class Register extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class Register extends Component {
         username: '',
         email: '',
         password: '',
-        id: 1
+        roleTitle: 'owner'
       },
       errors: ''
     };
@@ -69,7 +69,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(UserActions, dispatch)
+    actions: bindActionCreators(userActions, dispatch)
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

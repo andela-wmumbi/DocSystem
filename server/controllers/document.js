@@ -10,14 +10,21 @@ class DocumentController {
         userId: req.decoded.id,
       })
       .then(document => res.status(201).send(document))
-      .catch(error => res.status(400).send(error));
+      .catch((error) => {
+        res.status(400).json({
+          message: 'Couldnot create document', error
+        });
+      });
   }
   list(req, res) {
     if (req.query.limit || req.query.offset) {
       return document
         .findAll({
           limit: req.query.limit,
-          offset: req.query.offset
+          offset: req.query.offset,
+          where: {
+            access: 'public'
+          }
         })
         .then((document) => {
           if (!document) {
@@ -26,15 +33,35 @@ class DocumentController {
             });
           }
           res.status(200).send(document);
-        })
-        .catch((error) => {
-          res.status(400).json(error);
         });
     }
     return document
-      .findAll({ where: { access: 'public' } })
+      .findAll({
+        where: {
+          access: 'public',
+        }
+      })
       .then(document => res.status(200).send(document))
       .catch(error => res.status(404).send(error));
+  }
+
+  roleDocuments(req, res) {
+    if (req.query.role) {
+      return document
+        .findAll({
+          where: {
+            access: req.query.role
+          }
+        })
+        .then((documents) => {
+          if (!documents.length) {
+            return res.status(404).send({
+              message: 'Document not found'
+            });
+          }
+          res.status(200).send(documents);
+        });
+    }
   }
 
   findOne(req, res) {
@@ -63,8 +90,9 @@ class DocumentController {
             title: req.body.title || document.title,
             content: req.body.content || document.content
           })
-          .then((doc) => res.status(200).send(doc))
-          .catch(error => res.status(400).send(error));
+          .then(doc => res.status(202).send(
+            { doc, message: 'Document updated successfully' }
+          ));
       });
   }
   destroy(req, res) {
@@ -78,19 +106,21 @@ class DocumentController {
         }
         return document
           .destroy()
-          .then(() => res.status(200).send({ message: 'Document deleted successfully.' }))
-          .catch(error => res.status(400).send(error));
+          .then(() => res.status(204).send({ message: 'Document deleted successfully.' }));
       });
   }
   findDocument(req, res) {
-    if (req.params.document) {
+    if (req.query.q) {
       return document
         .findAll(
         {
           where:
           {
             title: {
-              $like: `%${req.params.document}%`
+              $like: `%${req.query.q}%`
+            },
+            $and: {
+              access: 'public'
             }
           }
         })

@@ -22,5 +22,14 @@
     "host": "127.0.0.1",
     "port": 5432,
     "dialect": "postgres"
+  },
+  "staging": {
+    "host": "ec2-23-23-244-83.compute-1.amazonaws.com",
+    "database": "d9plcln6rns7ja",
+    "username": "gqzlkbfqftagyd",
+    "port": "5432",
+    "password": "ffa49e58f5fc9ff290b53bbf1a9bcc439d390df3ed74af30413be163d4716c45",
+    "dialect": "postgres",
+    "logging": false
   }
 }

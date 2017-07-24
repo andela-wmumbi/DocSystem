@@ -9,21 +9,27 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
-        type: Sequelize.STRING
+        allowNull: false,
+        unique: true,
+        type: Sequelize.STRING,
       },
       password: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING
-      },
-      roleId: {
-        type: Sequelize.INTEGER,
         allowNull: false,
+        unique: true,
+        type: Sequelize.STRING,
+      },
+      roleTitle: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'roles',
-          key: 'id',
-          as: 'roleId',
+          key: 'title',
+          as: 'roleTitle',
         }
       },
       createdAt: {
