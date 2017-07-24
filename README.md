@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/andela-wmumbi/DocSystem/badge.svg?branch=edit-user-roles)](https://coveralls.io/github/andela-wmumbi/DocSystem?branch=edit-user-roles)
+[![Coverage Status](https://coveralls.io/repos/github/andela-wmumbi/DocSystem/badge.svg?branch=master)](https://coveralls.io/github/andela-wmumbi/DocSystem?branch=master)
 
 [![Build Status](https://travis-ci.org/andela-wmumbi/DocSystem.svg?branch=master)](https://travis-ci.org/andela-wmumbi/DocSystem)
 
