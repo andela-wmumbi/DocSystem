@@ -11,7 +11,7 @@ describe('/documents', function () {
   before('create a token', (done) => {
     const user = {
       email: 'jim@gmail.com',
-      password: '1234567',
+      password: 'password',
     };
     chai.request(server)
       .post('/api/signin')
@@ -25,7 +25,7 @@ describe('/documents', function () {
     const document = {
       title: 'enzymes',
       content: 'They accelerate biochemical processes',
-      access: 'public',
+      access: 'admin',
       userId: 1,
     };
     chai.request(server)
@@ -36,6 +36,19 @@ describe('/documents', function () {
         res.should.have.status(201);
         res.body.should.be.a('object');
         res.body.should.have.property('title').equal('enzymes');
+        done();
+      });
+  });
+  it('it should not create a document if a field is missing', (done) => {
+    const document = {
+      content: 'They accelerate biochemical processes',
+    };
+    chai.request(server)
+      .post('/api/documents')
+      .set('x-access-token', token)
+      .send(document)
+      .end((err, res) => {
+        res.should.have.status(400);
         done();
       });
   });
@@ -62,9 +75,9 @@ describe('/documents', function () {
         done();
       });
   });
-  xit('should get documents by role', (done) => {
+  it('should get documents by access', (done) => {
     chai.request(server)
-      .get('/api/documents/admin')
+      .get('/api/roleDocuments?role=admin')
       .set('x-access-token', token)
       .end((err, res) => {
         res.should.have.status(200);
@@ -72,14 +85,33 @@ describe('/documents', function () {
         done();
       });
   });
+  it('should not get document by access when it doesnt exist', (done) => {
+    chai.request(server)
+      .get('/api/roleDocuments?role=supervisor')
+      .set('x-access-token', token)
+      .end((err, res) => {
+        res.should.have.status(404);
+        expect(res.body.message).eql('Document not found');
+        done();
+      });
+  });
 });
-describe('/document/:id', () => {
+describe('/api/documents/:id', () => {
   it('should get a document by id', (done) => {
     chai.request(server)
-      .get('/api/document/1')
+      .get('/api/documents/1')
       .set('x-access-token', token)
       .end((err, res) => {
         res.should.have.status(200);
+        done();
+      });
+  });
+  it('should get no document if the id doesnot exist', (done) => {
+    chai.request(server)
+      .get('/api/documents/101')
+      .set('x-access-token', token)
+      .end((err, res) => {
+        res.should.have.status(404);
         done();
       });
   });
@@ -90,11 +122,23 @@ describe('/api/document:id', () => {
       .put('/api/documents/1')
       .set('x-access-token', token)
       .send({
-        title: 'timmy'
+        title: 'tommy'
       })
       .end((err, res) => {
-        res.should.have.status(200);
-        expect(res.body.title).eql('timmy');
+        res.should.have.status(202);
+        expect(res.body.doc.title).eql('tommy');
+        done();
+      });
+  });
+  it('shouldnot update a document if it doenot exist', (done) => {
+    chai.request(server)
+      .put('/api/documents/101')
+      .set('x-access-token', token)
+      .send({
+        title: 'tommy'
+      })
+      .end((err, res) => {
+        res.should.have.status(404);
         done();
       });
   });
@@ -119,20 +163,36 @@ describe('/api/documents', function () {
   });
   it('should search for a document by title', (done) => {
     chai.request(server)
-      .get('/search/documents/jim')
+      .get('/search/documents?q=jim')
       .end((err, res) => {
         res.should.have.status(200);
         res.body[0].should.have.property('title').equal('jim');
         done();
       });
   });
+  it('when document doesnot exist', (done) => {
+    chai.request(server)
+      .get('/search/documents?q=jiiiim')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+  });
   it('should delete a document', (done) => {
     chai.request(server)
-      .delete('/api/documents/2')
+      .delete('/api/documents/3')
       .set('x-access-token', token)
       .end((err, res) => {
-        res.should.have.status(200);
-        expect(res.body.message).eql('Document deleted successfully.');
+        res.should.have.status(204);
+        done();
+      });
+  });
+  it('shouldnot delete if document doesnot exist', (done) => {
+    chai.request(server)
+      .delete('/api/documents/40')
+      .set('x-access-token', token)
+      .end((err, res) => {
+        res.should.have.status(404);
         done();
       });
   });

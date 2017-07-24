@@ -16,6 +16,7 @@ const LoginForm = props => (
           <div className="z-depth-1 grey lighten-4 rowdeck" >
             <Row>
               <Input
+                id="email"
                 s={12}
                 type="email"
                 label="Email"
@@ -25,6 +26,7 @@ const LoginForm = props => (
               />
               {props.errors.email && <p className="error">{props.errors.email}</p>}
               <Input
+                id="password"
                 type="password"
                 label="password"
                 name="password"
@@ -39,6 +41,7 @@ const LoginForm = props => (
           <center>
             <div className="rowdeck">
               <button
+                id="submit"
                 type="submit"
                 width="20px"
                 name="btn_login"

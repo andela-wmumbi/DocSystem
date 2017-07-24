@@ -37,6 +37,16 @@ describe('/api/users', function () {
         done();
       });
   });
+  it('should get all users', (done) => {
+    chai.request(server)
+      .get('/api/users')
+      .set('x-access-token', token)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('array');
+        done();
+      });
+  });
 });
 describe('/api/signin', function () {
   this.timeout(5000);
@@ -55,6 +65,34 @@ describe('/api/signin', function () {
         done();
       });
   });
+  it('should not signin when user doesnot exist', (done) => {
+    const user = {
+      email: 'ex@gmail.com',
+      password: '1234567',
+    };
+    chai.request(server)
+      .post('/api/signin')
+      .send(user)
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+  });
+  it('should not signin when password is wrong', (done) => {
+    const user = {
+      email: 'example@gmail.com',
+      password: '12347',
+    };
+    chai.request(server)
+      .post('/api/signin')
+      .send(user)
+      .end((err, res) => {
+        res.should.have.status(401);
+        done();
+      });
+  });
+});
+describe('/api/users', () => {
   it('should get all users', (done) => {
     chai.request(server)
       .get('/api/users')
@@ -79,7 +117,7 @@ describe('/api/signin', function () {
       });
   });
 });
-describe('/user/:id', () => {
+describe('/api/users/:id', () => {
   it('should get a user by id', (done) => {
     chai.request(server)
       .get('/api/users/1')
@@ -128,12 +166,25 @@ describe('/api/users/:id', () => {
         email: 'jim@gmail.com'
       })
       .end((err, res) => {
-        res.should.have.status(200);
+        res.should.have.status(202);
         expect(res.body.email).eql('jim@gmail.com');
         done();
       });
   });
+  it('shouldnot update a user if they do not exist', (done) => {
+    chai.request(server)
+      .put('/api/users/11')
+      .set('x-access-token', token)
+      .send({
+        email: 'yoh@gmail.com'
+      })
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+  });
 });
+
 describe('/api/users', function () {
   this.timeout(5000);
   it('it should create a test user', (done) => {
@@ -153,54 +204,41 @@ describe('/api/users', function () {
   });
   it('should search for a user by username', (done) => {
     chai.request(server)
-      .get('/search/users/tim')
+      .get('/search/users?name=tim')
       .end((err, res) => {
         res.should.have.status(200);
         res.body[0].should.have.property('username').equal('tim');
         done();
       });
   });
-  it('should delete a user', (done) => {
+  it('should delete a the user', (done) => {
+    this.timeout(5000);
+    setTimeout(done, 5000);
     chai.request(server)
-      .delete('/api/users/2')
+      .delete('/api/users/3')
       .set('x-access-token', token)
       .end((err, res) => {
-        res.should.have.status(200);
-        expect(res.body.message).eql('User deleted successfully.');
+        res.should.have.status(204);
+        done();
+      });
+  });
+  it('shouldnot delete if user doesnot exist', (done) => {
+    chai.request(server)
+      .delete('/api/users/40')
+      .set('x-access-token', token)
+      .end((err, res) => {
+        res.should.have.status(404);
         done();
       });
   });
 });
 describe('/api/logout', () => {
-  xit('should logout user', (done) => {
+  it('should logout user', (done) => {
     chai.request(server)
       .post('/api/logout')
-      .send(token)
       .set('x-access-token', token)
       .end((err, res) => {
-        res.should.have.status(200);
         expect(res.body.message).eql('User successfully logged out');
-        done();
-      });
-  });
-});
-describe('return no users', () => {
-  xit('should delete a user', (done) => {
-    chai.request(server)
-      .delete('/api/users/1')
-      .set('x-access-token', token)
-      .end((err, res) => {
-        res.should.have.status(200);
-        expect(res.body.message).eql('User deleted successfully.');
-        done();
-      });
-  });
-  xit('return no users if they do not exist', (done) => {
-    chai.request(server)
-      .get('/api/users')
-      .set('x-access-token', token)
-      .end((err, res) => {
-        res.should.have.status(40);
         done();
       });
   });

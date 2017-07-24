@@ -99,13 +99,15 @@ class LoadDocuments extends Component {
               document={documentContent}
             />
           }
-          <Button
-            floating
-            className="#1a237e indigo darken-4"
-            waves="light"
-            icon="add"
-            onClick={() => this.handleCreateDoc()}
-          />
+          <div id="create">
+            <Button
+              floating
+              className="#1a237e indigo darken-4"
+              waves="light"
+              icon="add"
+              onClick={() => this.handleCreateDoc()}
+            />
+          </div>
           <Pagination
             activePage={this.state.activePage}
             itemsCountPerPage={this.state.limit}

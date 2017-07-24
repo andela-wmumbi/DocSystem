@@ -34,9 +34,6 @@ class userController {
             });
           }
           res.status(200).send(user);
-        })
-        .catch((error) => {
-          res.status(400).json(error);
         });
     }
     return user
@@ -84,8 +81,7 @@ class userController {
             email: req.body.email || user.email,
             roleTitle: req.body.roleTitle || user.roleTitle
           })
-          .then(() => res.status(200).send(user))
-          .catch(error => res.status(400).send(error));
+          .then(() => res.status(202).send(user));
       });
   }
   destroy(req, res) {
@@ -99,8 +95,7 @@ class userController {
         }
         return user
           .destroy()
-          .then(() => res.status(200).send({ message: 'User deleted successfully.' }))
-          .catch(error => res.status(400).send(error));
+          .then(() => res.status(204));
       });
   }
   login(req, res) {
@@ -110,7 +105,6 @@ class userController {
         if (!user) {
           return res.status(404).json({ message: 'User not found' });
         }
-        // const password = bcrypt.compareSync(req.body.password, user.password);
         if (req.body.password !== user.password) {
           return res.status(401).json({ message: 'Wrong password' });
         }
@@ -130,20 +124,19 @@ class userController {
   }
   logout(req, res) {
     req.decoded = null;
-    sessionStorage.removeItem('token');
     return res.status(200).send({
       message: 'User successfully logged out',
     });
   }
   findUser(req, res) {
-    if (req.params.user) {
+    if (req.query.name) {
       return user
         .findAll(
         {
           where:
           {
             username: {
-              $like: `%${req.params.user}%`
+              $like: `%${req.query.name}%`
             }
           },
           include: [{

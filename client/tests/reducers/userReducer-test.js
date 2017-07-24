@@ -4,10 +4,10 @@ import * as actions from './../../actions/userActions';
 
 describe('users reducer', () => {
   describe('create user reducer', () => {
-    xit('should return initial state', () => {
+    it('should return initial state', () => {
       expect(userReducer(undefined, {})).toEqual([]);
     });
-    xit('should handle create user', () => {
+    it('should handle create user', () => {
       const initialState = {
         users: [
           { username: 'me' }
@@ -17,8 +17,8 @@ describe('users reducer', () => {
       const action = actions.registerSuccess(user);
 
       const newState = userReducer(initialState.users, action);
-      expect(newState.length).toBe(2);
       console.log(newState)
+      expect(newState.length).toBe(2);
       expect(newState[0].username).toBe('you');
     });
   });

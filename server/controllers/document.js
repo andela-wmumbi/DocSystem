@@ -10,10 +10,11 @@ class DocumentController {
         userId: req.decoded.id,
       })
       .then(document => res.status(201).send(document))
-      .catch(error => res.status(400).json({
-        message: 'Couldnot create document',
-        Error: error
-      }));
+      .catch((error) => {
+        res.status(400).json({
+          message: 'Couldnot create document', error
+        });
+      });
   }
   list(req, res) {
     if (req.query.limit || req.query.offset) {
@@ -32,9 +33,6 @@ class DocumentController {
             });
           }
           res.status(200).send(document);
-        })
-        .catch((error) => {
-          res.status(400).json(error);
         });
     }
     return document
@@ -62,9 +60,6 @@ class DocumentController {
             });
           }
           res.status(200).send(documents);
-        })
-        .catch((error) => {
-          res.status(400).json(error);
         });
     }
   }
@@ -95,8 +90,9 @@ class DocumentController {
             title: req.body.title || document.title,
             content: req.body.content || document.content
           })
-          .then(doc => res.status(200).send({ doc, message: 'Document updated successfully' }))
-          .catch(error => res.status(400).send(error));
+          .then(doc => res.status(202).send(
+            { doc, message: 'Document updated successfully' }
+          ));
       });
   }
   destroy(req, res) {
@@ -110,8 +106,7 @@ class DocumentController {
         }
         return document
           .destroy()
-          .then(() => res.status(200).send({ message: 'Document deleted successfully.' }))
-          .catch(error => res.status(400).send(error));
+          .then(() => res.status(204).send({ message: 'Document deleted successfully.' }));
       });
   }
   findDocument(req, res) {

@@ -13,6 +13,7 @@ const RegisterForm = props => (
           <div className="z-depth-1 grey lighten-4 rowdeck" >
             <Row>
               <Input
+                id="username"
                 label="UserName"
                 type=""
                 name="username"
@@ -22,6 +23,7 @@ const RegisterForm = props => (
               />
               {props.errors.username && <p className="error">{props.errors.username}</p>}
               <Input
+                id="register-email"
                 label="Email"
                 type="email"
                 name="email"
@@ -31,6 +33,7 @@ const RegisterForm = props => (
               />
               {props.errors.email && <p className="error">{props.errors.email}</p>}
               <Input
+                id="register-password"
                 type="password"
                 label="password"
                 name="password"
@@ -42,6 +45,7 @@ const RegisterForm = props => (
             </Row>
             <Row>
               <button
+                id="register-submit"
                 type="submit"
                 width="20px"
                 label="login"

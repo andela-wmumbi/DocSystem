@@ -9,12 +9,6 @@ class roleController {
       .then(role => res.status(201).send(role))
       .catch(error => res.status(400).send(error));
   }
-  findOne(req, res) {
-    return role
-    .findById(req.params.roleId)
-    .then(role => res.status(200).send(role))
-    .catch(error => res.status(404).send(error));
-  }
   list(req, res) {
     return role
       .findAll({})
@@ -32,8 +26,7 @@ class roleController {
         }
         return role
           .destroy()
-          .then(() => res.status(200).send({ message: 'Role deleted successfully.' }))
-          .catch(error => res.status(400).send(error));
+          .then(() => res.status(200).send({ message: 'Role deleted successfully.' }));
       });
   }
 }

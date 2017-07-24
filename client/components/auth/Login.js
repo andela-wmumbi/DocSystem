@@ -42,7 +42,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <div >
+      <div>
         <LoginForm
           onChange={this.onChange}
           onSave={this.onSave}

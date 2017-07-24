@@ -3,7 +3,6 @@ const authorization = require('./middlewares/authorization');
 
 module.exports = (app) => {
   const auth = authorization.authenticate;
-  const authAdmin = authorization.verifyAdmin;
 
   app.route('/api/users')
     .post(user.create)
@@ -18,7 +17,7 @@ module.exports = (app) => {
     .post(user.logout);
   app.route('/users/:userId/documents')
     .get(user.findUserDocuments);
-  app.route('/search/users/:user')
+  app.route('/search/users')
     .get(user.findUser);
   app.route('/api/users?limit={integer}&offset={integer}')
     .get(user.list);

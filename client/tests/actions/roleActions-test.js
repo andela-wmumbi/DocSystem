@@ -1,10 +1,8 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import sinon from 'sinon';
 import expect from 'expect';
 import nock from 'nock';
 import * as actions from './../../actions/roleActions';
-import * as UserApi from '../../apis/RoleApi';
 import * as types from './../../actions/actionTypes';
 
 const middlewares = [thunk];
@@ -38,6 +36,24 @@ describe('role actions', () => {
     const store = mockStore({ roles: [] });
     return store.dispatch(actions.loadRoles()).then(() => {
       expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
+    });
+  });
+  it('should dispatch success action after deleting role ', (done) => {
+    nock('http://localhost.com')
+      .delete('api/roles/1')
+      .reply(200, {
+        body: {
+          roles: { role: 'admin' }
+        }
+      });
+
+    const expectedActions = [
+      { type: types.DELETE_ROLE_SUCCESS }
+    ];
+    const store = mockStore({ roles: [] }, done());
+    store.dispatch(actions.deleteRole()).then(() => {
+      expect(store.getActions()).to.equal(expectedActions);
+      done();
     });
   });
 });
