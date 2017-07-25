@@ -1,21 +1,9 @@
 process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = require('./../../server');
-<<<<<<< HEAD
-const roleController = require('./../controllers/role');
+const server = require('./../../../server');
 const expect = require('chai').expect;
-const should = chai.should();
-chai.use(chaiHttp);
 
-describe('/api/roles', () => {
-  it('it should create a new role', (done) => {
-    chai.request(server)
-      .post('/api/roles')
-      .send({
-        title: 'admin'
-=======
-const expect = require('chai').expect;
 const should = chai.should();
 
 chai.use(chaiHttp);
@@ -68,15 +56,12 @@ describe('/api/roles', function () {
       .set('x-access-token', token)
       .send({
         title: 'supervisor'
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6
       })
       .end((err, res) => {
         res.should.have.status(201);
         done();
       });
   });
-<<<<<<< HEAD
-=======
   it('it should delete a test role', (done) => {
     chai.request(server)
       .delete('/api/roles/5')
@@ -105,5 +90,4 @@ describe('/api/roles', function () {
         done();
       });
   });
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6
 });

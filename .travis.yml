@@ -1,3 +1,11 @@
 language: node_js
 node_js:
 - "6"
+services:
+  - postgresql
+before_script:
+- psql -c 'create database docsystem_test;' -U postgres
+- psql -c 'CREATE USER winnie;' -U postgres
+env:
+- SECRET = 'fakesecret' NODE_ENV=test
+

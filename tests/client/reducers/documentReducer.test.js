@@ -1,6 +1,6 @@
 import expect from 'expect';
-import documentReducer from './../../reducers/documentReducer';
-import * as actions from './../../actions/documentActions';
+import documentReducer from '../../../client/reducers/documentReducer';
+import * as actions from '../../../client/actions/documentActions';
 
 describe('documents reducer', () => {
   describe('create document reducer', () => {
@@ -24,7 +24,7 @@ describe('documents reducer', () => {
   describe('update document reducer', () => {
     it('should handle document update', () => {
       const initialState = [
-          { id: 1, title: 'old' }
+        { id: 1, title: 'old' }
       ];
       const document = { id: 1, title: 'new' };
       const action = actions.updateDocumentsSuccess(document);
@@ -34,10 +34,12 @@ describe('documents reducer', () => {
   });
   describe('delete document reducer', () => {
     it('should handle document delete', () => {
-      const initialState = { documents: [
-           { id: 1, title: 'one' },
-           { id: 2, title: 'two' }
-      ] };
+      const initialState = {
+        documents: [
+          { id: 1, title: 'one' },
+          { id: 2, title: 'two' }
+        ]
+      };
 
       const action = actions.deleteDocumentSuccess({ id: 1 });
       const newState = documentReducer(initialState.documents, action);
@@ -51,8 +53,8 @@ describe('documents reducer', () => {
         documents: []
       };
       const documents = [
-      { title: 'docs' },
-      { title: 'doc' }
+        { title: 'docs' },
+        { title: 'doc' }
       ];
       const action = actions.loadsDocumentsSuccess(documents);
       const newState = documentReducer(initialState.documents, action);
@@ -72,8 +74,8 @@ describe('documents reducer', () => {
         ]
       };
       const documents = [
-          { title: 'doc2', userId: '2' },
-          { title: 'doc3', userId: '2' },
+        { title: 'doc2', userId: '2' },
+        { title: 'doc3', userId: '2' },
       ];
       const action = actions.getUserDocsSuccess(documents);
       const newState = documentReducer(initialState.documents, action);

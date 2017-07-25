@@ -1,6 +1,6 @@
 import toastr from 'toastr';
 import { SET_LOGIN_PENDING, SET_LOGIN_SUCCESS, SET_LOGIN_ERROR } from './actionTypes';
-import userDetails from './userDetails';
+import userDetails from './userDetail';
 import { login } from './../apis/UserApi';
 
 export function setLoginPending(isLoginPending) {

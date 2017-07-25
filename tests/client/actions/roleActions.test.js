@@ -2,8 +2,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import expect from 'expect';
 import nock from 'nock';
-import * as actions from './../../actions/roleActions';
-import * as types from './../../actions/actionTypes';
+import * as actions from '../../../client/actions/roleActions';
+import * as types from '../../../client/actions/actionTypes';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -16,8 +16,8 @@ describe('role actions', () => {
   });
   it('should dispatch success action after role is created', () => {
     nock('http://localhost')
-        .post('/api/roles')
-        .reply(201, { body: ['role'] });
+      .post('/api/roles')
+      .reply(201, { body: ['role'] });
 
     const expectedActions = [{
       type: types.CREATE_ROLE_SUCCESS,
@@ -30,8 +30,8 @@ describe('role actions', () => {
   });
   it('should dispatch failure action if role is not created', () => {
     nock('http://localhost')
-        .post('/api/roles')
-        .reply(500);
+      .post('/api/roles')
+      .reply(500);
     const expectedActions = {
       type: types.AJAX_CALL_ERROR
     };
@@ -42,8 +42,8 @@ describe('role actions', () => {
   });
   it('should dispatch success action after all roles are found', () => {
     nock('http://localhost')
-        .get('/api/roles')
-        .reply(200, { body: ['role'] });
+      .get('/api/roles')
+      .reply(200, { body: ['role'] });
     const expectedActions = [
       {
         type: types.LOAD_ROLES_SUCCESS,
@@ -57,8 +57,8 @@ describe('role actions', () => {
   });
   it('should dispatch failure to load roles action', () => {
     nock('http://localhost')
-        .get('/api/roles')
-        .reply(500);
+      .get('/api/roles')
+      .reply(500);
     const expectedActions = [
       {
         type: types.AJAX_CALL_ERROR
@@ -77,7 +77,8 @@ describe('role actions', () => {
       });
 
     const expectedActions = [
-      { type: types.DELETE_ROLE_SUCCESS,
+      {
+        type: types.DELETE_ROLE_SUCCESS,
         id: 2,
       }
     ];
@@ -88,8 +89,8 @@ describe('role actions', () => {
   });
   it('should dispatch failure action if unable to delete role', () => {
     nock('http://localhost')
-        .delete('/api/roles/1')
-        .reply(500);
+      .delete('/api/roles/1')
+      .reply(500);
     const expectedActions = [
       {
         type: types.AJAX_CALL_ERROR

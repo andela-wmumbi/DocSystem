@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import swal from 'sweetalert';
 import { Row, Col, CardPanel, Pagination, Button } from 'react-materialize';
 import { bindActionCreators } from 'redux';
-import UserDetails from './../../actions/UserDetails';
-import Update from './Update';
-import Search from './Search';
-import * as DocumentActions from './../../actions/DocumentActions';
+import UserDetails from './../../actions/userDetail';
+import Update from './UpdateDocument';
+import * as DocumentActions from './../../actions/documentActions';
 
 
 class DocumentList extends Component {

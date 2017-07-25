@@ -5,7 +5,7 @@ import { Button } from 'react-materialize';
 import toastr from 'toastr';
 import UpdateDocument from './../documents/UpdateDocument';
 import * as DocumentActions from './../../actions/documentActions';
-import userDetails from './../../actions/userDetails';
+import userDetails from './../../actions/userDetail';
 import DocumentView from './../documents/DocumentView';
 
 

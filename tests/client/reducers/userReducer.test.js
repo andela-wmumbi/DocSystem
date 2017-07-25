@@ -1,6 +1,6 @@
 import expect from 'expect';
-import userReducer from './../../reducers/userReducer';
-import * as actions from './../../actions/userActions';
+import userReducer from '../../../client/reducers/UserReducer';
+import * as actions from '../../../client/actions/UserActions';
 
 describe('users reducer', () => {
   describe('create user reducer', () => {
@@ -24,7 +24,7 @@ describe('users reducer', () => {
         [
           { id: 1, username: 'old' }
         ]
-      ;
+        ;
       const user = { id: 1, username: 'new' };
       const action = actions.updateUserSuccess(user);
 
@@ -36,8 +36,8 @@ describe('users reducer', () => {
     it('should handle user delete', () => {
       const initialState = {
         users: [
-           { id: 1, username: 'one' },
-           { id: 2, username: 'two' }
+          { id: 1, username: 'one' },
+          { id: 2, username: 'two' }
         ]
       };
       const action = actions.deleteUserSuccess({ id: 1 });
@@ -52,8 +52,8 @@ describe('users reducer', () => {
         users: []
       };
       const users = [
-      { username: 'user1' },
-      { username: 'user2' }
+        { username: 'user1' },
+        { username: 'user2' }
       ];
       const action = actions.loadsUsersSuccess(users);
       const newState = userReducer(initialState.users, action);

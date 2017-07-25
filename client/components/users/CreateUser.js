@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import { Input, Row } from 'react-materialize';
-import * as userActions from './../../actions/userActions';
+import * as userActions from './../../actions/UserActions';
 
 class CreateUser extends Component {
   constructor(props) {

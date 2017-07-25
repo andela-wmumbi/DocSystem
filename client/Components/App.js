@@ -10,11 +10,11 @@ import CreateDocument from './documents/Documents';
 import LoadDocuments from './documents/LoadDocuments';
 import Register from './register/Register';
 import Users from './users/Users';
-import RolesList from './roles/RolesList';
+import RolesList from './Roles/RolesList';
 import SearchDocument from './documents/SearchDocument';
-import RoleDocuments from './roles/RoleDocuments';
+import RoleDocuments from './Roles/RoleDocuments';
 import CreateUser from './users/CreateUser';
-import Roles from './roles/Roles';
+import Roles from './Roles/Roles';
 import SearchUser from './users/search/SearchUser';
 
 const App = () => (

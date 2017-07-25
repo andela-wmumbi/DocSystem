@@ -1,33 +1,19 @@
 process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = require('./../../server');
-<<<<<<< HEAD
-const userController = require('./../controllers/user');
-const expect = require('chai').expect;
-const should = chai.should();
-chai.use(chaiHttp);
-
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwic…5Nzh9.-xN0bTKw5pKzTSUyh0MNPAS05aZ_f7fmO1lJ1MN8e3Q';
-describe('/api/users', () => {
-=======
+const server = require('./../../../server');
 const expect = require('chai').expect;
 
 chai.use(chaiHttp);
 let token = null;
 describe('/api/users', function () {
   this.timeout(5000);
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6
   it('it should create a new user', (done) => {
     const user = {
       username: 'winnie',
       email: 'example@gmail.com',
       password: '1234567',
-<<<<<<< HEAD
-      roleId: 1
-=======
       roleTitle: 'admin'
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6
     };
     chai.request(server)
       .post('/api/users/')
@@ -37,14 +23,6 @@ describe('/api/users', function () {
         done();
       });
   });
-<<<<<<< HEAD
-  it('should list all users', (done) => {
-    chai.request(server)
-      .get('/api/users')
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.should.be.json();
-=======
   it('it should not create a user if a field is missing', (done) => {
     const user = {
       email: 'example@gmail.com',
@@ -121,22 +99,10 @@ describe('/api/users', () => {
       .set('x-access-token', token)
       .end((err, res) => {
         res.should.have.status(200);
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6
         res.body.should.be.a('array');
         done();
       });
   });
-<<<<<<< HEAD
-});
-describe('/user/:id', () => {
-  it('should get a user by id', (done) => {
-    chai.request(server)
-      .get('/api/users/35')
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a('object');
-=======
   it('should get paginated users', (done) => {
     const limit = 1;
     const offset = 0;
@@ -187,43 +153,10 @@ describe('/users/:userId/documents', () => {
       .set('x-access-token', token)
       .end((err, res) => {
         res.should.have.status(404);
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6
         done();
       });
   });
 });
-<<<<<<< HEAD
-//   it('should update a user by id', (done) => {
-//     chai.request(server)
-//       .put('/api/users/1')
-//       .send({
-//         email: 'jim@gmail.com'
-//       })
-//       .end((err, res) => {
-//         res.should.have.status(200);
-//         expect(res.body.email).eql('jim@gmail.com');
-//         done();
-//       });
-//   });
-//   it('should delete a user', (done) => {
-//     chai.request(server)
-//       .delete('/api/users/1')
-//       .end((err, res) => {
-//         res.should.have.status(200);
-//         expect(res.body.message).eql('User deleted successfully.');
-//         done();
-//       });
-//   });
-// });
-// describe('/logout', () => {
-//   chai.request(server)
-//     .post('/logout')
-//     .end((err, res) => {
-//       res.should.have.status(200);
-//       expect(res.body.message).eql('User successfully logged out');
-//     });
-// });
-=======
 describe('/api/users/:id', () => {
   it('should update a user by id', (done) => {
     chai.request(server)
@@ -311,4 +244,3 @@ describe('/api/logout', () => {
   });
 });
 
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6

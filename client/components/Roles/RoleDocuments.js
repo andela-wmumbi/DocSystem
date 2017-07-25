@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button } from 'react-materialize';
-import UserDetails from './../../actions/userDetails';
+import UserDetails from './../../actions/userDetail';
 import * as documentActions from './../../actions/documentActions';
 import DocumentView from './../documents/DocumentView';
 import UpdateDocument from './../documents/UpdateDocument';
@@ -52,13 +52,13 @@ class RoleDocuments extends Component {
           deleteDocument={this.deleteDocument}
         />
         {
-            this.state.isModalOpen &&
-            <UpdateDocument
-              closeModal={this.closeModal}
-              isModalOpen={this.state.isModalOpen}
-              document={documentContent}
-            />
-          }
+          this.state.isModalOpen &&
+          <UpdateDocument
+            closeModal={this.closeModal}
+            isModalOpen={this.state.isModalOpen}
+            document={documentContent}
+          />
+        }
         <Button
           floating
           className="#1a237e indigo darken-4"

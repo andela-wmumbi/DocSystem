@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import RegisterForm from './RegisterForm';
 import validateRegister from './Validate';
-import * as userActions from './../../actions/userActions';
+import * as userActions from './../../actions/UserActions';
 
 class Register extends Component {
   constructor(props) {

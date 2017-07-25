@@ -1,5 +1,5 @@
 import React from 'react';
-import UserDetails from './../../actions/userDetails';
+import UserDetails from './../../actions/userDetail';
 
 const HeaderView = () => {
   const token = sessionStorage.getItem('token');

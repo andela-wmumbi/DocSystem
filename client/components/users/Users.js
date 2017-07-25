@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import 'react-select/dist/react-select.css';
 import { Button } from 'react-materialize';
 import Pagination from 'react-js-pagination';
-import * as userActions from './../../actions/userActions';
+import * as userActions from './../../actions/UserActions';
 import * as roleActions from './../../actions/roleActions';
 import SearchBox from './../documents/SearchBox';
 import UsersList from './UsersList';
@@ -98,41 +98,41 @@ class Users extends Component {
     return (
       <div>
         <center>
-        {/* <div style={{ margin: '0 auto', width: '30%' }}>
+          {/* <div style={{ margin: '0 auto', width: '30%' }}>
           <SearchBox
             handleSubmit={this.handleSearch}
             handleSearchBoxChange={this.handleSearchBoxChange}
           />
         </div> */}
-        <UsersList
-          users={pageUsers}
-          deleteUser={this.deleteUser}
-          openModal={this.openModal}
-        />
-        {
-          this.state.isModalOpen &&
-          <UpdateUsers
-            closeModal={this.closeModal}
-            isModalOpen={this.state.isModalOpen}
-            user={userDetails}
-            roles={roles}
+          <UsersList
+            users={pageUsers}
+            deleteUser={this.deleteUser}
+            openModal={this.openModal}
           />
-        }
-        <Button
-          floating
-          small
-          className="#1a237e indigo darken-4"
-          waves="light"
-          icon="add"
-          onClick={() => this.handleCreateUser()}
-        />
-        <Pagination
-          activePage={this.state.activePage}
-          itemsCountPerPage={this.state.limit}
-          totalItemsCount={users.length}
-          pageRangeDisplayed={5}
-          onChange={this.handlePageChange}
-        />
+          {
+            this.state.isModalOpen &&
+            <UpdateUsers
+              closeModal={this.closeModal}
+              isModalOpen={this.state.isModalOpen}
+              user={userDetails}
+              roles={roles}
+            />
+          }
+          <Button
+            floating
+            small
+            className="#1a237e indigo darken-4"
+            waves="light"
+            icon="add"
+            onClick={() => this.handleCreateUser()}
+          />
+          <Pagination
+            activePage={this.state.activePage}
+            itemsCountPerPage={this.state.limit}
+            totalItemsCount={users.length}
+            pageRangeDisplayed={5}
+            onChange={this.handlePageChange}
+          />
         </center>
       </div >
     );

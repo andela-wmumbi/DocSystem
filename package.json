@@ -9,10 +9,11 @@
     "lint": "node_modules/.bin/esw webpack.config.* client server server.*",
     "lint:watch": "npm run lint -- --watch",
     "migrations": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all ",
-    "test:bend": "export NODE_ENV=test && npm run migrations && babel-node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -R ./server/tests/*.spec.js",
-    "test:fend": "export NODE_ENV=test && babel-node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --compilers js:babel-core/register client/tests/**/*-test.js",
-    "e2e": "npm run migrations; ./node_modules/.bin/_mocha ./client/tests/e2e/*.js  npm run start ",
-    "coverage": "./node_modules/.bin/coveralls < coverage/lcov.info"
+    "pretest": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && sequelize db:seed:all --env test ",
+    "test": "export NODE_ENV=test && babel-node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --require ./tests/server/config tests/**/**/*.test.js",
+    "test:e2e": "npm run migrations && ./node_modules/.bin/_mocha tests/client/e2e/*.js  npm run start ",
+    "coverage": "./node_modules/.bin/coveralls < coverage/lcov.info",
+    "postinstall": "sequelize db:migrate && sequelize db:seed:all"
   },
   "mocha": {
     "rootDir": "./",
@@ -41,6 +42,7 @@
   "homepage": "https://github.com/andela-wmumbi/DocSystem#readme",
   "dependencies": {
     "axios": "^0.16.2",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",

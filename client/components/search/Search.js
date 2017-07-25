@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import 'react-select/dist/react-select.css';
 import * as UserActions from './../../actions/UserActions';
-import SearchDisplay from './SearchDisplay';
-import UserDetails from './../../actions/UserDetails';
+import SearchDisplay from '../users/search/SearchDisplay';
 
 class Search extends Component {
   constructor(props) {

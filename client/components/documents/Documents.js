@@ -3,7 +3,7 @@ import { PropTypes } from 'react-proptypes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CreateDocument from './CreateDocument';
-import UserDetails from './../../actions/userDetails';
+import UserDetails from './../../actions/userDetail';
 import * as documentActions from './../../actions/documentActions';
 
 class Documents extends Component {

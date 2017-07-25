@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as userActions from './../../actions/userActions';
+import * as userActions from './../../actions/UserActions';
 
 class Logout extends Component {
   constructor(props) {

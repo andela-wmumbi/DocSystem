@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import 'react-select/dist/react-select.css';
-import * as userActions from './../../../actions/userActions';
+import * as userActions from './../../../actions/UserActions';
 import SearchDisplay from './SearchDisplay';
 
 class SearchUser extends Component {
@@ -22,8 +22,6 @@ class SearchUser extends Component {
   }
 
   render() {
-    const { userdocuments } = this.props;
-    console.log('sd', userdocuments);
     return (
       <div>
         <SearchDisplay

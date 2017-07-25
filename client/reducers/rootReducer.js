@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import documents from './documentReducer';
-import users from './userReducer';
+import users from './UserReducer';
 import loginReducer from './loginReducer';
-import userdocuments from './userDocumentReducer';
-import searchdocument from './searchDocument';
+import userdocuments from './UserDocumentReducer';
+import searchdocument from './SearchDocument';
 import pageDocuments from './documentPaginate';
 import pageUsers from './userPaginate';
 import roles from './roleReducer';

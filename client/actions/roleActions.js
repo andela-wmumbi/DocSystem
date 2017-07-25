@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 import { roleCreate, getAllRoles, getRoleDelete } from './../apis/RoleApi';
-import UserDetails from './userDetails';
+import UserDetails from './userDetail';
 
 export function createRoleSuccess(role) {
   return { type: types.CREATE_ROLE_SUCCESS, role };
@@ -17,12 +17,12 @@ export function ajaxCallError(error) {
 
 export function createRole(role) {
   return dispatch => roleCreate(role)
-  .then((response) => {
-    dispatch(createRoleSuccess(response.body));
-  }).catch((error) => {
-    dispatch(ajaxCallError(error));
-    throw (error);
-  });
+    .then((response) => {
+      dispatch(createRoleSuccess(response.body));
+    }).catch((error) => {
+      dispatch(ajaxCallError(error));
+      throw (error);
+    });
 }
 export function loadRoles() {
   return dispatch => getAllRoles()
@@ -37,11 +37,11 @@ export function loadRoles() {
 }
 export function deleteRole(id) {
   return dispatch => getRoleDelete(id)
-      .then((res) => {
-        dispatch(deleteRoleSuccess(res.body));
-      })
-      .catch((error) => {
-        dispatch(ajaxCallError(error));
-        throw (error);
-      });
+    .then((res) => {
+      dispatch(deleteRoleSuccess(res.body));
+    })
+    .catch((error) => {
+      dispatch(ajaxCallError(error));
+      throw (error);
+    });
 }

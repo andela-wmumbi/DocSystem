@@ -3,9 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 
 export default function validateLogIn(user) {
   const errors = {};
-  // if ((user.username).length <= 0) {
-  //   errors.password = 'This field is required';
-  // }
   if (user.password <= 0) {
     errors.password = 'This field is required';
   }

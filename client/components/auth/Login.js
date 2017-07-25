@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
-import AlertContainer from 'react-alert';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import validateLogIn from './Validate';
-import * as loginActions from './../../actions/loginActions';
+import * as loginActions from '../../actions/LoginActions';
 
 class Login extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import expect from 'expect';
-import roleReducer from './../../reducers/roleReducer';
-import * as actions from './../../actions/roleActions';
+import roleReducer from '../../../client/reducers/roleReducer';
+import * as actions from '../../../client/actions/roleActions';
 
 describe('roles reducer', () => {
   describe('create role reducer', () => {
@@ -23,10 +23,12 @@ describe('roles reducer', () => {
   });
   describe('delete role reducer', () => {
     it('should handle role delete', () => {
-      const initialState = { roles: [
-           { id: 1, title: 'one' },
-           { id: 2, title: 'two' }
-      ] };
+      const initialState = {
+        roles: [
+          { id: 1, title: 'one' },
+          { id: 2, title: 'two' }
+        ]
+      };
       const action = actions.deleteRoleSuccess({ id: 1 });
       const newState = roleReducer(initialState.roles, action);
       expect(newState.length).toEqual(1);
@@ -39,8 +41,8 @@ describe('roles reducer', () => {
         roles: []
       };
       const roles = [
-      { title: 'admin' },
-      { title: 'owner' }
+        { title: 'admin' },
+        { title: 'owner' }
       ];
       const action = actions.loadsRolesSuccess(roles);
       const newState = roleReducer(initialState.roles, action);
