@@ -1,13 +1,10 @@
-<<<<<<< HEAD
-import * as types from './ActionTypes';
-import { register, getAllUsers, getAUser, getUserDelete } from '../apis/UserApi';
-=======
 import toastr from 'toastr';
 import * as types from './actionTypes';
-import { register, getAllUsers, getAUser,
-  getUserDelete, getUserUpdate, getUsersPagination }
+import {
+  register, getAllUsers, getAUser,
+  getUserDelete, getUserUpdate, getUsersPagination
+}
   from '../apis/UserApi';
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6
 
 export function registerSuccess(user) {
   return { type: types.CREATE_USER_SUCCESS, user };

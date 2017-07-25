@@ -4,12 +4,7 @@ import AlertContainer from 'react-alert';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import validateLogIn from './Validate';
-<<<<<<< HEAD
-import * as LoginActions from './../../actions/LoginActions';
-
-=======
 import * as loginActions from './../../actions/loginActions';
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6
 
 class Login extends Component {
   constructor(props) {
@@ -20,10 +15,6 @@ class Login extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
-<<<<<<< HEAD
-    this.showAlert = this.showAlert.bind(this);
-=======
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6
     this.validate = this.validate.bind(this);
   }
 

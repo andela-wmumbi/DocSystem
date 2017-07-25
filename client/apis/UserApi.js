@@ -46,8 +46,3 @@ export function getUsersPagination(limit, offset) {
     .get(`/api/users?limit=${limit}&offset=${offset}`)
     .set('x-access-token', sessionStorage.getItem('token'));
 }
-export function getUserDelete(id) {
-  return request
-    .delete(`/api/users/${id}`)
-    .set('x-access-token', sessionStorage.token);
-}

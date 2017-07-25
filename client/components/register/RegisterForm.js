@@ -64,10 +64,6 @@ RegisterForm.propTypes = {
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-<<<<<<< HEAD
-  errors: PropTypes.object.isRequired,
-=======
   errors: PropTypes.string.isRequired,
->>>>>>> 3d276948119e00cff4c1c6b6efc96cd6daa0d2a6
 };
 export default RegisterForm;
