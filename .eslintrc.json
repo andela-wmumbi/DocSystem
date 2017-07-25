@@ -68,6 +68,8 @@
     "prefer-stateless-function": 0,
     "no-underscore-dangle": 0,
     "react/jsx-filename-extension": 0,
-    "import/no-dynamic-require": 0
+    "import/no-dynamic-require": 0,
+    "no-unused-expressions": 0,
+    "no-sequences": 0
   }
 }

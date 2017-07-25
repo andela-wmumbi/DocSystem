@@ -1,4 +1,3 @@
-
 const jwt = require('jsonwebtoken');
 
 const secretKey = process.env.SECRET;
@@ -21,18 +20,8 @@ class Authenticate {
     }
   }
   verifyAdmin(req, res, next) {
-    const role = req.decoded.roleId;
-    if (role && role === 1) {
-      next();
-    } else {
-      return res.status(403).send({
-        message: 'You do not have permission'
-      });
-    }
-  }
-  verifyOwner(req, res, next) {
-    const role = req.decoded.roleId;
-    if (role && role === 2) {
+    const role = req.decoded.roleTitle;
+    if (role === 'admin') {
       next();
     } else {
       return res.status(403).send({
