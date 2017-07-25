@@ -9,7 +9,18 @@ Each document defines access rights; the document defines which roles can access
 Users are categorized by roles. Each user must have a role defined for them.
 
 ### Installation
-    git clone https://github.com/andela-wmumbi/NewsAPI.git
+    git clone https://github.com/andela-wmumbi/DocSystem.git
+=======
+A full stack document management system, complete with roles and privileges. Each document defines access rights; the document defines which roles can access it. Also, each document specifies the date it was published.
+
+### Features
+Users can:
+    -Create documents and give them access rights.
+    -Search through a list of documents.
+    -Edit and delete document they have rights to.
+
+### Installation
+    git clone https://github.com/andela-wmumbi/DocSystem.git
 
     npm install
 
