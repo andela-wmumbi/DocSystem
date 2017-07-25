@@ -33,7 +33,7 @@ describe('documents reducer', () => {
     });
   });
   describe('delete document reducer', () => {
-    xit('should handle document delete', () => {
+    it('should handle document delete', () => {
       const initialState = { documents: [
            { id: 1, title: 'one' },
            { id: 2, title: 'two' }
@@ -41,8 +41,7 @@ describe('documents reducer', () => {
 
       const action = actions.deleteDocumentSuccess({ id: 1 });
       const newState = documentReducer(initialState.documents, action);
-
-      //expect(newState.length).toEqual(1);
+      expect(newState.length).toEqual(1);
       expect(newState[0].id).toEqual(2);
     });
   });
@@ -96,7 +95,7 @@ describe('documents reducer', () => {
         { title: 'role', access: 'admin' },
         { title: 'role2', access: 'admin' },
       ];
-      const action = actions.loadRoleDocuments(document);
+      const action = actions.loadsRoleDocuments(document);
       const newState = documentReducer(initialState.documents, action);
       expect(newState.length).toBe(2);
       expect(newState[0].access).toEqual('admin');

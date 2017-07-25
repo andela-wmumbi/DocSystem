@@ -8,8 +8,11 @@ export function createRoleSuccess(role) {
 export function loadsRolesSuccess(roles) {
   return { type: types.LOAD_ROLES_SUCCESS, roles };
 }
-export function deleteRoleSuccess(id) {
-  return { type: types.DELETE_ROLE_SUCCESS, id };
+export function deleteRoleSuccess(role) {
+  return { type: types.DELETE_ROLE_SUCCESS, role };
+}
+export function ajaxCallError(error) {
+  return { type: types.AJAX_CALL_ERROR, error };
 }
 
 export function createRole(role) {
@@ -17,6 +20,7 @@ export function createRole(role) {
   .then((response) => {
     dispatch(createRoleSuccess(response.body));
   }).catch((error) => {
+    dispatch(ajaxCallError(error));
     throw (error);
   });
 }
@@ -27,6 +31,7 @@ export function loadRoles() {
       UserDetails.storeRoles(res.body);
     })
     .catch((error) => {
+      dispatch(ajaxCallError(error));
       throw (error);
     });
 }
@@ -36,6 +41,7 @@ export function deleteRole(id) {
         dispatch(deleteRoleSuccess(res.body));
       })
       .catch((error) => {
+        dispatch(ajaxCallError(error));
         throw (error);
       });
 }

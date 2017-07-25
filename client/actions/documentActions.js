@@ -17,8 +17,8 @@ export function createDocumentSuccess(document) {
 export function updateDocumentsSuccess(document) {
   return { type: types.UPDATE_DOCUMENT_SUCCESS, document };
 }
-export function deleteDocumentSuccess(id) {
-  return { type: types.DELETE_DOCUMENT_SUCCESS, id };
+export function deleteDocumentSuccess(document) {
+  return { type: types.DELETE_DOCUMENT_SUCCESS, document };
 }
 export function getUserDocsSuccess(documents) {
   return { type: types.GET_USER_DOCUMENTS, documents };
@@ -71,27 +71,25 @@ export function loadRoleDocuments(role) {
 export function updateDocument(document) {
   return dispatch => getDocumentUpdate(document)
     .then((res) => {
-      // toastr.success(res.body.message);
+      toastr.success(res.body.message),
       dispatch(updateDocumentsSuccess(res.body.doc));
     })
     .catch((error) => {
-      // toastr.error(error.response.data.message);
+      toastr.error(error.response.data.message),
       dispatch(ajaxCallError(error));
       throw (error);
     });
 }
 export function deleteDocument(id) {
-  return (dispatch) => {
-    return getDocumentDelete(id)
+  return dispatch => getDocumentDelete(id)
       .then((res) => {
-        // toastr.success(res.body.message);
-        dispatch(deleteDocumentSuccess(id));
+        toastr.success(res.body.message),
+        dispatch(deleteDocumentSuccess(res.body));
       })
       .catch((error) => {
         // toastr.error(error.response.data.message);
         throw (error);
       });
-  };
 }
 export function getUserDocuments(id) {
   return dispatch => getUserDocs(id)

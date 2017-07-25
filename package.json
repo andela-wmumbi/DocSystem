@@ -11,7 +11,7 @@
     "migrations": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all ",
     "test:bend": "export NODE_ENV=test && npm run migrations && babel-node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -R ./server/tests/*.spec.js",
     "test:fend": "export NODE_ENV=test && babel-node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --compilers js:babel-core/register client/tests/**/*-test.js",
-    "e2e": "npm run start && npm run migrations && ./node_modules/.bin/_mocha ./client/tests/e2e/*.js",
+    "e2e": "npm run migrations; ./node_modules/.bin/_mocha ./client/tests/e2e/*.js  npm run start ",
     "coverage": "./node_modules/.bin/coveralls < coverage/lcov.info"
   },
   "mocha": {

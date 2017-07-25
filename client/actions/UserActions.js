@@ -13,8 +13,8 @@ export function loadsUsersSuccess(users) {
 export function loadsUserSuccess(userdocuments) {
   return { type: types.LOAD_USER_SUCCESS, userdocuments };
 }
-export function deleteUserSuccess(id) {
-  return { type: types.DELETE_USER_SUCCESS, id };
+export function deleteUserSuccess(user) {
+  return { type: types.DELETE_USER_SUCCESS, user };
 }
 export function loadsUserFailure(isSearchError) {
   return { type: types.GET_A_USER_FAILURE, isSearchError };
@@ -33,8 +33,8 @@ export function registerUser(user) {
   return dispatch => register(user).then(() => {
     dispatch(registerSuccess(user));
   }).catch((error) => {
+    toastr.error(error.response.data.errors[0].message),
     dispatch(ajaxCallError(error));
-    // toastr.error(error.response.data.errors[0].message);
     throw (error);
   });
 }
@@ -70,7 +70,6 @@ export function deleteUser(id) {
   return (dispatch) => {
     return getUserDelete(id)
       .then((res) => {
-        console.log('hello world', res);
         dispatch(deleteUserSuccess(res.body));
       })
       .catch((error) => {

@@ -9,6 +9,7 @@ const driver = new webdriver.Builder()
     .build();
 
 describe('login form', function () {
+  console.log('here')
   this.timeout(50000);
   before((done) => {
     driver.navigate().to('http://localhost:3000')

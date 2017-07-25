@@ -15,7 +15,7 @@ describe('Users Actions', () => {
   afterEach(() => {
     nock.cleanAll();
   });
-  describe('Create user action ', () => {
+  describe('Register user action ', () => {
     it('should dispatch success action after user is created', () => {
       nock('http://localhost')
         .post('/api/users')
@@ -45,7 +45,7 @@ describe('Users Actions', () => {
     });
   });
   describe('search user action ', () => {
-    xit('should dispatch success action after user is found', () => {
+    it('should dispatch success action after user is found', () => {
       nock('http://localhost')
         .get('/search/users/tim')
         .reply(200, { body: ['tim'] });
@@ -56,7 +56,7 @@ describe('Users Actions', () => {
         }
       ];
       const store = mockStore({ users: [] });
-      return store.dispatch(actions.searchUser({})).then(() => {
+      return store.dispatch(actions.searchUser('tim')).then(() => {
         expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
       });
     });
@@ -110,21 +110,16 @@ describe('Users Actions', () => {
   describe('update user action ', () => {
     xit('should dispatch success action after updating user', () => {
       nock('http://localhost')
-        .put('/api/users/1')
-        .reply(200, { body: ['username'] });
-      const user =
-        {
-          username: 'timmy',
-          id: 1
-        };
+        .put('/api/users/2')
+        .reply(200, { body: { user: 'user1' } });
       const expectedActions = [
         {
           type: types.UPDATE_USER_SUCCESS,
-          users: ['username'],
+          user: 'user2',
         }
       ];
       const store = mockStore({ users: [] });
-      return store.dispatch(actions.updateUser(user.id)).then(() => {
+      return store.dispatch(actions.updateUser(2)).then(() => {
         expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
       });
     });

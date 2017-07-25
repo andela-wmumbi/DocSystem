@@ -21,13 +21,16 @@ export default function documentReducer(state = initialState.documents, action) 
         return document;
       });
     case types.DELETE_DOCUMENT_SUCCESS:
-      return state;
+      return [...state].filter((document) => {
+        if (document.id !== action.document.id) {
+          return document;
+        }
+      });
     case types.LOAD_DOCUMENTS_SUCCESS:
       return action.documents;
     case types.GET_USER_DOCUMENTS:
       return action.documents;
     case types.GET_ROLE_DOCUMENTS:
-    console.log(action.documents)
       return action.documents;
     default:
       return state;

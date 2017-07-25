@@ -14,5 +14,5 @@ export function getAllRoles() {
 export function getRoleDelete(id) {
   return request
     .delete(`/api/roles/${id}`)
-    .set('x-access-token', sessionStorage.token);
+    .set('x-access-token', sessionStorage.getItem('token'));
 }

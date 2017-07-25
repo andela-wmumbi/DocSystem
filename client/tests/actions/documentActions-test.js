@@ -70,12 +70,12 @@ describe('Document Actions', () => {
         {
           type: types.GET_A_DOCUMENT_SUCCESS,
           document: { body:
-            { id: 1,
-              title: 'enzymes',
-              content: 'accelerate porocesses',
-              access: 'public',
-              userId: 1 }
-            },
+          { id: 1,
+            title: 'enzymes',
+            content: 'accelerate porocesses',
+            access: 'public',
+            userId: 1 }
+          },
         }
       ];
       const store = mockStore({ documents: [] }, expectedActions);
@@ -180,7 +180,7 @@ describe('Document Actions', () => {
       ];
       const store = mockStore({ documents: [] });
       return store.dispatch(actions.updateDocument(document.id)).then(() => {
-        console.log(store.getActions())
+        console.log(store.getActions());
         expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
         // expect(store.getActions()[1].type).toEqual(['doc']);
       });
@@ -202,7 +202,7 @@ describe('Document Actions', () => {
         expect(store.getActions()[0].type).toEqual(expectedActions[0].type);
       });
     });
-    it('should dispatch failure action after deleting document', () => {
+    it('should dispatch failure action if unable to delete document', () => {
       nock('http://localhost')
         .delete('/api/documents/1')
         .reply(500);

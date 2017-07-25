@@ -10,7 +10,11 @@ export default function roleReducer(state = initialState.roles, action) {
     case types.LOAD_ROLES_SUCCESS:
       return action.roles;
     case types.DELETE_ROLE_SUCCESS:
-      return state;
+      return [...state].filter((role) => {
+        if (role.id !== action.role.id) {
+          return role;
+        }
+      });
     default:
       return state;
   }

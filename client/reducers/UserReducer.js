@@ -10,15 +10,12 @@ export default function userReducer(state = initialState.users, action) {
         ...state,
         Object.assign({}, action.user)
       ];
-    case types.LOG_IN_SUCCESS:
-      return [
-        ...state,
-        Object.assign({}, action.credentials)
-      ];
     case types.DELETE_USER_SUCCESS:
-      return [
-        ...state,
-        Object.assign({}, action.user)];
+      return [...state].filter((user) => {
+        if (user.id !== action.user.id) {
+          return user;
+        }
+      });
     case types.UPDATE_USER_SUCCESS:
       return state.map((user) => {
         if (user.id === action.user.id) {

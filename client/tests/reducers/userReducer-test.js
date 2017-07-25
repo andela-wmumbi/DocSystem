@@ -33,14 +33,14 @@ describe('users reducer', () => {
     });
   });
   describe('delete user reducer', () => {
-    xit('should handle user delete', () => {
+    it('should handle user delete', () => {
       const initialState = {
         users: [
            { id: 1, username: 'one' },
            { id: 2, username: 'two' }
         ]
       };
-      const action = actions.deleteUserSuccess({});
+      const action = actions.deleteUserSuccess({ id: 1 });
       const newState = userReducer(initialState.users, action);
       expect(newState.length).toEqual(1);
       expect(newState[0].id).toEqual(2);
