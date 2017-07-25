@@ -9,10 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       content: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       access: {
         type: Sequelize.STRING
@@ -20,6 +22,7 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'users',
           key: 'id',

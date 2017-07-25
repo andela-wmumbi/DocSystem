@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Input } from 'react-materialize';
-import { PropTypes } from 'react-proptypes';
+import PropTypes from 'prop-types';
 
 const CreateDocument = props => (
   <div className="section">
@@ -13,6 +13,7 @@ const CreateDocument = props => (
           <div className="z-depth-1 grey lighten-4 rowdeck" >
             <Row>
               <Input
+                id="title"
                 placeholder="Input title"
                 s={12}
                 label="Title"
@@ -22,6 +23,7 @@ const CreateDocument = props => (
                 onChange={props.onChange}
               />
               <Input
+                id="content"
                 type="text"
                 label="Content"
                 name="content"
@@ -30,6 +32,7 @@ const CreateDocument = props => (
                 onChange={props.onChange}
               />
               <Input
+                id="access"
                 s={12}
                 type="select"
                 label="Access"
@@ -38,12 +41,15 @@ const CreateDocument = props => (
                 name="access"
                 onChange={props.onChange}
               >
-                <option value="public">public</option>
+              <option value="">Choose an option</option>
+               <option value="public">public</option>
                 <option value="private">private</option>
+                <option value={props.role}>role</option>
               </Input>
             </Row>
             <Row>
               <button
+                id="document-submit"
                 type="submit"
                 width="20px"
                 label="login"
@@ -62,6 +68,7 @@ CreateDocument.propTypes = {
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   document: PropTypes.object.isRequired,
+  role: PropTypes.any.isRequired,
 };
 
 export default CreateDocument;

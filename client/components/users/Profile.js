@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { ModalContainer, ModalDialog, Input } from 'react-materialize';
-import * as UserActions from './../../actions/UserActions';
-import Modal from 'react-modal';
-import UserDetails from './../../actions/UserDetails';
+import * as userActions from './../../actions/userActions';
+import UserDetails from './../../actions/userDetails';
 
 class Profile extends Component {
   constructor(props) {
@@ -56,7 +54,7 @@ class Profile extends Component {
             <button onClick={this.handleSave}>Save</button>
           </ModalDialog>
         </ModalContainer >*/}
-        </div>
+      </div>
     );
   }
 }

@@ -1,20 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as UserActions from './../../actions/UserActions';
+import * as userActions from './../../actions/userActions';
 
 class Logout extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.redirect = this.redirect.bind(this);
   }
   componentDidMount() {
     this.props.actions.logOutUser();
   }
+  redirect() {
+    this.context.router.history.push('/login');
+  }
   render() {
     return (
       <div>
-        {this.context.router.history.push('/login')}
+        {this.redirect()}
       </div>
     );
   }
@@ -27,7 +31,7 @@ Logout.contextTypes = {
 };
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(UserActions, dispatch)
+    actions: bindActionCreators(userActions, dispatch)
   };
 }
 export default connect(null, mapDispatchToProps)(Logout);

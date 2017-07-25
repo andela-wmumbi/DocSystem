@@ -1,29 +1,42 @@
 import React, { PropTypes } from 'react';
 import { Row, CardPanel, Col } from 'react-materialize';
 
-const SearchDisplay = (props) => (
+const SearchDisplay = props => (
   <div className="documents" >
-    <center>
+    <div>
+      <ul>
+        <li>Username: {props.documents[0].username}</li>
+        <li>Email: {props.documents[0].email}</li>
+        <li>createdAt: {props.documents[0].createdAt}</li>
+        <li>Role: {props.documents[0].roleId}</li>
+      </ul>
+    </div>
+    <div><button onClick={props.deleteUser}>Delete user</button></div>
+    <h5>Documents:</h5>
+    <center >
       <Row>
-        {props.documents.map(document =>
+        {props.documents.length ? props.documents.map(document =>
           (<Col s={12} m={5} key={document.id}>
             <CardPanel className="card">
               <span> <h4>{document.title}</h4>
                 <p>{document.content}</p>
-                <button onClick={() =>
-                  this.openModal(document.id, document.content, document.title)}
-                >EDIT
-                </button>
-                <button onClick={() => this.deleteDocument(document.id)}>DELETE</button>
               </span>
             </CardPanel>
           </Col>)
-        )}
+        ) :
+          <p>Document does not exist</p>
+        }
       </Row>
-    </center>
+    </center >
   </div >
 );
 SearchDisplay.propTypes = {
-  documents: PropTypes.array.isRequired,
+  documents: PropTypes.array,
+  error: PropTypes.bool,
+};
+
+SearchDisplay.defaultProps = {
+  documents: [],
+  error: false,
 };
 export default SearchDisplay;
