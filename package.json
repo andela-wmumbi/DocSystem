@@ -12,8 +12,7 @@
     "pretest": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && sequelize db:seed:all --env test ",
     "test": "export NODE_ENV=test && babel-node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --require ./tests/server/config tests/**/**/*.test.js",
     "test:e2e": "npm run migrations && ./node_modules/.bin/_mocha tests/client/e2e/*.js  npm run start ",
-    "coverage": "./node_modules/.bin/coveralls < coverage/lcov.info",
-    "postinstall": "sequelize db:migrate"
+    "coverage": "./node_modules/.bin/coveralls < coverage/lcov.info"
   },
   "mocha": {
     "rootDir": "./",
